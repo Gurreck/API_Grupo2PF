@@ -11,7 +11,7 @@ import org.una.aeropuerto.entities.Usuario;
 
 /**
  *
- * @author adria
+ * @author adrian
  */
 public interface IUsuarioService {
     
