@@ -18,6 +18,8 @@ public interface IServicioRepository extends JpaRepository<Servicio, Long> {
 
     public Optional<List<Servicio>> findByFechaRegistroBetween(Date startDate, Date endDate);
      
-   // public List<Servicio> findByAvion(long avion);
+   // public List<Servicio> findByAvionId(long avion);
+    
+    public List<Servicio> findByTipoServicioId(long tipoServicio);
  
 }

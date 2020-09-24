@@ -133,6 +133,22 @@ public class ServicioController {
         }
     }*/
     
+    @GetMapping("/tiposervicio/{id}")
+    @ApiOperation(value = "Obtiene una lista con los Servicios por tipo de Servicio", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    public ResponseEntity<?> findByTipoServicioId(@PathVariable(value = "term") long term) {
+        try {
+            Optional<List<Servicio>> result = servicioService.findByTipoServicioId(term);
+            if (result.isPresent()) {
+                List<ServicioDTO> servicioDto = MapperUtils.DtoListFromEntityList(result.get(), ServicioDTO.class);
+                return new ResponseEntity<>(servicioDto, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody

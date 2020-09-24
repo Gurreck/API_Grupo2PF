@@ -56,6 +56,12 @@ public class ServicioServiceImplementation implements IServicioService {
     }*/
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<List<Servicio>> findByTipoServicioId(Long id) {
+        return Optional.ofNullable(servicioRepository.findByTipoServicioId(id));
+    }
+        
+    @Override
     @Transactional
     public Servicio create(Servicio servicio) {
         return servicioRepository.save(servicio);
