@@ -1,5 +1,5 @@
 package org.una.aeropuerto;
-
+/*
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     private IUsuarioService usuarioService;
 
-    @Autowired
+   // @Autowired
    // private IPermisoOtorgadoService permisoOtorgadoService;
 
     @Override
@@ -79,7 +79,7 @@ public class DataLoader implements ApplicationRunner {
         usuario.setPasswordEncriptado(password);
         usuario = usuarioService.create(usuario);
         
-          /*rolCrearUsuario = new Rol();
+          rolCrearUsuario = new Rol();
           rolCrearUsuario.setTipo("GES");
           
           rolCrearUsuario.setEstado(true);
@@ -90,7 +90,7 @@ public class DataLoader implements ApplicationRunner {
         PermisoOtorgado permisoOtorgado = new PermisoOtorgado();
         permisoOtorgado.setPermiso(permisoCrearUsuario);
         permisoOtorgado.setUsuario(usuario);
-        permisoOtorgadoService.create(permisoOtorgado);*/
+        permisoOtorgadoService.create(permisoOtorgado);
     }
 }
-
+*/

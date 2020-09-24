@@ -29,7 +29,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     @Autowired
     private IUsuarioRepository usuarioRepository;
     
-    @Autowired
+   @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -43,7 +43,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         if (!password.isBlank()) {
             usuario.setPasswordEncriptado(bCryptPasswordEncoder.encode(password));
         }
-    } 
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -104,7 +104,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
 
 
     @Override
-    public UserDetails loadUserByUsername(String username)throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Usuario> usuarioBuscado = usuarioRepository.findByCedula(username);
         if (usuarioBuscado.isPresent()) {
             Usuario usuario = usuarioBuscado.get();
