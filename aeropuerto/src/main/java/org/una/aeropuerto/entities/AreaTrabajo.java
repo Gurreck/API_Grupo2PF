@@ -60,14 +60,14 @@ public class AreaTrabajo implements Serializable {
     
     @ManyToMany(mappedBy = "areaTrabajo")
     private List<Usuario> usuarios;
-    /*
+    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "areasTrabajo_aviones", 
       joinColumns = @JoinColumn(name = "aviones_id", referencedColumnName = "id"), 
       inverseJoinColumns = @JoinColumn(name = "areas_trabajo_id", 
       referencedColumnName = "id"))
     private List<Avion> avion;
-    */
+    
     private static final long serialVersionUID = 1L;
 
     @PrePersist

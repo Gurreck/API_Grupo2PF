@@ -69,8 +69,8 @@ public class Avion implements Serializable {
     @JoinColumn(name="aerolineas_id")
     private Aerolinea aerolinea;
     
-    //@ManyToMany(mappedBy = "avion")
-    //private List<AreaTrabajo> areasTrabajo;
+    @ManyToMany(mappedBy = "avion")
+    private List<AreaTrabajo> areasTrabajo;
 
     
     private static final long serialVersionUID = 1L;
