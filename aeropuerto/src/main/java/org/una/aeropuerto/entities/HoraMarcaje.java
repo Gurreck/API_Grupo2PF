@@ -45,11 +45,11 @@ public class HoraMarcaje implements Serializable {
     private Long id;
     
     @Column(name = "hora_entrada")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP) 
     private Date horaEntrada;
     
     @Column(name = "hora_salida")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP) 
     private Date horaSalida;
     
     @Column(name = "fecha_registro", updatable = false)
