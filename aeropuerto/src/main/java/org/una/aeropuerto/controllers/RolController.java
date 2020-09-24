@@ -1,4 +1,6 @@
-package org.una.aeropuerto.controllers;
+ package org.una.aeropuerto.controllers;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.una.aeropuerto.dto.RolDTO;
+import org.una.aeropuerto.dto.UsuarioDTO;
 import org.una.aeropuerto.entities.Rol;
 import org.una.aeropuerto.services.IRolService;
 import org.una.aeropuerto.utils.MapperUtils;
 
 @RestController
-@RequestMapping("/roles") 
+@RequestMapping("/roles")
+@Api(tags = {"Roles"})
 public class RolController {
 
     @Autowired
@@ -27,6 +31,7 @@ public class RolController {
     
     
     @GetMapping() 
+    @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -43,6 +48,7 @@ public class RolController {
     }
 
     @GetMapping("/{id}") 
+    @ApiOperation(value = "Obtiene una lista con el rol por medio del Id", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -59,6 +65,7 @@ public class RolController {
     }
     
     @GetMapping("/{Tipo}") 
+    @ApiOperation(value = "Obtiene una lista con el rol por medio del tipo", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findByTipo(@PathVariable(value = "tipo") String tipo) {
         try {
             Optional<List<Rol>> rolFound = rolService.findByTipo(tipo);
@@ -74,6 +81,7 @@ public class RolController {
     }
     
     @GetMapping("/{Estado}") 
+    @ApiOperation(value = "Obtiene una lista con el rol por medio del estado", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Rol>> rolFound = rolService.findByEstado(estado);
@@ -90,6 +98,7 @@ public class RolController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
+   @ApiOperation(value = "Permite crear un rol", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> create(@RequestBody Rol rol) {
         try {
             Rol rolCreated = rolService.create(rol);
@@ -102,6 +111,7 @@ public class RolController {
 
     @PutMapping("/{id}") 
     @ResponseBody
+    @ApiOperation(value = "Permite actualizar un rol", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Rol rolModified) {
         try {
             Optional<Rol> rolUpdated = rolService.update(rolModified, id);

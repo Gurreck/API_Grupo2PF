@@ -33,29 +33,26 @@ import lombok.ToString;
  */
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "parametros_sistema")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 
-public class Usuario implements Serializable {
+public class ParametroSistema implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 25, unique = true)
-    private String cedula;
+    @Column(name = "nombre", length = 50)
+    private String nombre;
 
-    @Column(name = "nombre_completo", length = 100)
-    private String nombreCompleto;
-
-    @Column
-    private boolean estado;
-
-    @Column(length = 100, name = "password_encriptado")
-    private String passwordEncriptado;
+    @Column(name = "valor")
+    private String valor;
+    
+    @Column(name = "descripcion")
+    private String descripcion;   
 
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.DATE)
@@ -67,25 +64,9 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;
     
-    @Column(length = 100, name = "correo")
-    private String correo;
-
-    @ManyToOne 
-    @JoinColumn(name="roles_id")
-    private Rol rol;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<Transaccion> transacciones = new ArrayList<>();
-    
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<HoraMarcaje> horaMarcaje= new ArrayList<>();
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<Horario> horarios= new ArrayList<>();
-    
-    //@ManyToMany
-    
+    @Column
+    private boolean estado;
+       
     
     private static final long serialVersionUID = 1L;
 
@@ -101,3 +82,4 @@ public class Usuario implements Serializable {
         fechaModificacion = new Date();
     }
 }
+

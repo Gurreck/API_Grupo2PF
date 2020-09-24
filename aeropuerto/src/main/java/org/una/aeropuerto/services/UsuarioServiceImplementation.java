@@ -55,20 +55,7 @@ public class UsuarioServiceImplementation implements IUsuarioService {
         }
 
     }
-
-    @Override
-    @Transactional
-    public void delete(Long id) {
-
-        usuarioRepository.deleteById(id);
-    }
-
-    @Override
-    @Transactional
-    public void deleteAll() {
-        usuarioRepository.deleteAll();
-    }
-
+    
     @Override
     @Transactional(readOnly = true)
     public Optional<Usuario> login(Usuario usuario) {

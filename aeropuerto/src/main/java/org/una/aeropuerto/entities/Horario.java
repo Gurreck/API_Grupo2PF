@@ -1,6 +1,7 @@
 package org.una.aeropuerto.entities;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -26,37 +26,36 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 /**
  *
  * @author adrian
  */
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "horarios")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 
-public class Usuario implements Serializable {
+public class Horario implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 25, unique = true)
-    private String cedula;
+    @Column(name = "dia_entrada", length = 50)
+    private String diaEntrada;
+    
+    @Column(name = "dia_salida", length = 45)
+    private String diaSalida;
+    
+    @Column(name = "hora_entrada")
+    private Time horaEntrada;
 
-    @Column(name = "nombre_completo", length = 100)
-    private String nombreCompleto;
-
-    @Column
-    private boolean estado;
-
-    @Column(length = 100, name = "password_encriptado")
-    private String passwordEncriptado;
-
+    @Column(name = "hora_salida")
+    private Time horaSalida;
+    
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.DATE)
     @Setter(AccessLevel.NONE)
@@ -67,24 +66,12 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;
     
-    @Column(length = 100, name = "correo")
-    private String correo;
-
+    @Column
+    private boolean estado;
+    
     @ManyToOne 
-    @JoinColumn(name="roles_id")
-    private Rol rol;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<Transaccion> transacciones = new ArrayList<>();
-    
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<HoraMarcaje> horaMarcaje= new ArrayList<>();
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<Horario> horarios= new ArrayList<>();
-    
-    //@ManyToMany
+    @JoinColumn(name="usuarios_id")
+    private Usuario usuario;
     
     
     private static final long serialVersionUID = 1L;

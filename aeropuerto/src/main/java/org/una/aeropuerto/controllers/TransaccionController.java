@@ -1,4 +1,6 @@
 package org.una.aeropuerto.controllers;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +30,15 @@ import org.una.aeropuerto.services.IUsuarioService;
 import org.una.aeropuerto.utils.MapperUtils;
 
 @RestController
-@RequestMapping("/transacciones") 
+@RequestMapping("/transacciones")
+@Api(tags = {"Transacciones"})
 public class TransaccionController {
     
     @Autowired
     private ITransaccionService transaccionService;
     
     @GetMapping() 
+    @ApiOperation(value = "Obtiene una lista de todas las transacciones", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -51,6 +55,7 @@ public class TransaccionController {
     }
 
     @GetMapping("/{id}") 
+    @ApiOperation(value = "Obtiene un rol por medio del Id", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -67,6 +72,7 @@ public class TransaccionController {
     }
     
     @GetMapping("/{Estado}") 
+    @ApiOperation(value = "Obtiene una lista con las transacciones por medio del estado", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Transaccion>> transaccionFound = transaccionService.findByEstado(estado);
@@ -84,6 +90,7 @@ public class TransaccionController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
+    @ApiOperation(value = "Permite crear una transaccion", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> create(@RequestBody Transaccion transaccion) {
         try {
             Transaccion transaccionCreated = transaccionService.create(transaccion);
@@ -96,6 +103,7 @@ public class TransaccionController {
 
     @PutMapping("/{id}") 
     @ResponseBody
+    @ApiOperation(value = "Permite modificar una transaccion", response = UsuarioDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Transaccion transaccionModified) {
         try {
             Optional<Transaccion> transaccionUpdated = transaccionService.update(transaccionModified, id);

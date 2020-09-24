@@ -150,18 +150,6 @@ public class UsuarioController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @DeleteMapping("/{id}") 
-    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-        return null;
-        //TODO: Implementar este método
-    }
-
-    @DeleteMapping("/") 
-    public ResponseEntity<?> deleteAll() {
-        return null;
- 	//TODO: Implementar este método
-    } 
 }
 
     
