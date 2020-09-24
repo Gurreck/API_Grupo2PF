@@ -45,12 +45,12 @@ public class Vuelo implements Serializable {
     private String aeropuerto;
 
     @Column(name = "fecha_salida", updatable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP) 
     @Setter(AccessLevel.NONE)
     private Date fechaSalida;
 
     @Column(name = "fecha_llegada")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP) 
     @Setter(AccessLevel.NONE)
     private Date fechaLlegada;
     

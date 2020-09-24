@@ -42,7 +42,7 @@ public class Aerolinea implements Serializable {
     @Column(name = "nombre_responsable", length = 100)
     private String nombreResponsable;
     
-     @Column(name = "fecha_registro", updatable = false)
+    @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.DATE)
     @Setter(AccessLevel.NONE)
     private Date fechaRegistro;

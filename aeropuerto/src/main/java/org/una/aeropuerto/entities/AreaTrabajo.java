@@ -1,7 +1,6 @@
 package org.una.aeropuerto.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -14,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -34,76 +32,54 @@ import lombok.ToString;
  */
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "areas_trabajo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 
-public class Usuario implements Serializable {
+public class AreaTrabajo implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 25, unique = true)
-    private String cedula;
-
-    @Column(name = "nombre_completo", length = 100)
-    private String nombreCompleto;
+    @Column(name = "nombre_area", length = 50)
+    private String nombreArea;
 
     @Column
     private boolean estado;
 
-    @Column(length = 100, name = "password_encriptado")
-    private String passwordEncriptado;
-
     @Column(name = "fecha_registro", updatable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP) 
     @Setter(AccessLevel.NONE)
     private Date fechaRegistro;
-
-    @Column(name = "fecha_modificacion")
-    @Setter(AccessLevel.NONE)
-    @Temporal(TemporalType.DATE)
-    private Date fechaModificacion;
     
-    @Column(length = 100, name = "correo")
-    private String correo;
-
-    @ManyToOne 
-    @JoinColumn(name="roles_id")
-    private Rol rol;
+    @Column(name = "nombre_responsable", length = 50)
+    private String nombreResponsable;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<Transaccion> transacciones = new ArrayList<>();
-    
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<HoraMarcaje> horaMarcaje= new ArrayList<>();
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<Horario> horarios= new ArrayList<>();
-    
+    @ManyToMany(mappedBy = "areaTrabajo")
+    private List<Usuario> usuarios;
+    /*
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "usuarios_areasTrabajo", 
-      joinColumns = @JoinColumn(name = "areas_trabajo_id", referencedColumnName = "id"), 
-      inverseJoinColumns = @JoinColumn(name = "usuarios_id", 
+    @JoinTable(name = "areasTrabajo_aviones", 
+      joinColumns = @JoinColumn(name = "aviones_id", referencedColumnName = "id"), 
+      inverseJoinColumns = @JoinColumn(name = "areas_trabajo_id", 
       referencedColumnName = "id"))
-    private List<AreaTrabajo> areaTrabajo;
-    
-    
+    private List<Avion> avion;
+    */
     private static final long serialVersionUID = 1L;
 
     @PrePersist
     public void prePersist() {
         estado=true;
         fechaRegistro = new Date();
-        fechaModificacion = new Date();
+        
     }
 
     @PreUpdate
     public void preUpdate() {
-        fechaModificacion = new Date();
+        
     }
 }
+
