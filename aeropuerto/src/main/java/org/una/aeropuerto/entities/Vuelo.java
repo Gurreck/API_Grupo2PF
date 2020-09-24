@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -59,11 +61,11 @@ public class Vuelo implements Serializable {
    
     @Column
     private boolean estado;
-/*
+
     @ManyToOne 
     @JoinColumn(name="aviones_id")
     private Avion avion;
-    */
+    
     private static final long serialVersionUID = 1L;
 
     @PrePersist

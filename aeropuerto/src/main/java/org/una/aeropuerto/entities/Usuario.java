@@ -84,7 +84,7 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
     private List<Horario> horarios= new ArrayList<>();
     
-    //@ManyToMany
+    
     
     
     private static final long serialVersionUID = 1L;
