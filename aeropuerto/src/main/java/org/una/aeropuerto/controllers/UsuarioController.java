@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -86,7 +85,7 @@ public class UsuarioController {
 
     }
 
-    @GetMapping("/cedula/") 
+    @GetMapping("/cedulaAproximada/") 
     @ApiOperation(value = "Obtiene una lista con el Usuario por medio de la cédula", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     public ResponseEntity<?> findByCedulaAproximate(@PathVariable(value = "term") String term) {
         try {
@@ -101,7 +100,21 @@ public class UsuarioController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/cedula/") 
+    @ApiOperation(value = "Obtiene el Usuario por medio de la cédula", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
+    public ResponseEntity<?> findByCedula(@PathVariable(value = "term") String term) {
+        try {
+            Optional<Usuario> usuarioFound = usuarioService.findByCedula(term);
+            if (usuarioFound.isPresent()) {
+                UsuarioDTO usuariosDTO = MapperUtils.DtoFromEntity(usuarioFound.get(), UsuarioDTO.class);
+                return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/nombre/")
     @ApiOperation(value = "Obtiene una lista con el Usuario por medio del nombre", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     public ResponseEntity<?> findByNombreCompletoAproximateIgnoreCase(@PathVariable(value = "term") String term) {

@@ -124,7 +124,7 @@ public class AerolineaController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Permite modificar una aerolinea a partir de su Id", response = AerolineaDTO.class, tags = "Aerolinea")
+    @ApiOperation(value = "Permite modificar una aerolinea a partir de su Id", response = AerolineaDTO.class, tags = "Aerolineas")
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Aerolinea AerolineaModified) {
         try {
