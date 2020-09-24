@@ -40,8 +40,8 @@ public class TipoServicio implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoServicio") 
     private List<Servicio> servicio = new ArrayList<>();
     
-   /* @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoServicio") 
-    private List<Precio> precio = new ArrayList<>();*/
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoServicio") 
+    private List<Precio> precio = new ArrayList<>();
     
     private static final long serialVersionUID = 1L;
     

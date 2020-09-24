@@ -31,7 +31,7 @@ public class RolController {
     
     
     @GetMapping() 
-    @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    @ApiOperation(value = "Obtiene una lista de todos los Roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {

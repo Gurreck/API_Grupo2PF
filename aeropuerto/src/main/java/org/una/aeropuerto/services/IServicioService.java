@@ -22,7 +22,7 @@ public interface IServicioService {
     
     public Optional<List<Servicio>> findByFechaRegistroBetween(Date startDate, Date endDate);
     
-   // public Optional<List<Servicio>>  findByAvionId(Long id);
+    public Optional<List<Servicio>>  findByAvionId(Long id);
     
     public Optional<List<Servicio>>  findByTipoServicioId(Long id);
 

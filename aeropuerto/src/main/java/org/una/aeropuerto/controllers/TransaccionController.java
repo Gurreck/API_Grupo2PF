@@ -38,7 +38,7 @@ public class TransaccionController {
     private ITransaccionService transaccionService;
     
     @GetMapping() 
-    @ApiOperation(value = "Obtiene una lista de todas las transacciones", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+    @ApiOperation(value = "Obtiene una lista de todas las Transacciones", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -55,7 +55,7 @@ public class TransaccionController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene un rol por medio del Id", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+    @ApiOperation(value = "Obtiene una Transaccion por medio del Id", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -72,7 +72,7 @@ public class TransaccionController {
     }
     
     @GetMapping("/{Estado}") 
-    @ApiOperation(value = "Obtiene una lista con las transacciones por medio del estado", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+    @ApiOperation(value = "Obtiene una lista con las Transacciones por medio del estado", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Transaccion>> transaccionFound = transaccionService.findByEstado(estado);
@@ -90,7 +90,7 @@ public class TransaccionController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
-    @ApiOperation(value = "Permite crear una transaccion", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+    @ApiOperation(value = "Permite crear una Transaccion", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> create(@RequestBody Transaccion transaccion) {
         try {
             Transaccion transaccionCreated = transaccionService.create(transaccion);
@@ -103,7 +103,7 @@ public class TransaccionController {
 
     @PutMapping("/{id}") 
     @ResponseBody
-    @ApiOperation(value = "Permite modificar una transaccion", response = UsuarioDTO.class, responseContainer = "List", tags = "Transacciones")
+    @ApiOperation(value = "Permite modificar una Transaccion", response = UsuarioDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Transaccion transaccionModified) {
         try {
             Optional<Transaccion> transaccionUpdated = transaccionService.update(transaccionModified, id);

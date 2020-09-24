@@ -48,7 +48,7 @@ public class VueloController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene una lista con el Vuelo por medio del Id", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
+    @ApiOperation(value = "Obtiene el Vuelo por medio del Id", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -65,7 +65,7 @@ public class VueloController {
     }
 
     @GetMapping("/Aeropuerto/")
-    @ApiOperation(value = "Obtiene una lista con el Vuelo por medio del nombre del aeropuerto", response = VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de Vuelos por medio del nombre del aeropuerto", response = VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findByAeropuerto(@PathVariable(value = "term") String term) {
         try {
             Optional<List<Vuelo>> result = vueloService.findByAeropuerto(term);
@@ -81,7 +81,7 @@ public class VueloController {
     }
     
     @GetMapping("/{Estado}") 
-    @ApiOperation(value = "Obtiene una lista con la aerolinea por medio del estado", response =  VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de Vuelos por medio del estado", response =  VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Vuelo>> vueloFound = vueloService.findByEstado(estado);
@@ -97,7 +97,7 @@ public class VueloController {
     }
     
     @GetMapping("/FechaSalida/")
-    @ApiOperation(value = "Obtiene una lista con el Vuelo por medio de la fecha de salida", response = VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de Vuelos por medio de la fecha de salida", response = VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findByFechaSalida(@PathVariable(value = "term") Date term) {
         try {
             Optional<List<Vuelo>> result = vueloService.findByFechaSalida(term);
@@ -113,7 +113,7 @@ public class VueloController {
     }
     
     @GetMapping("/FechaLlegada/")
-    @ApiOperation(value = "Obtiene una lista con el Vuelo por medio de la fecha de salida", response = VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de Vuelos por medio de la fecha de salida", response = VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findByFechaLlegada(@PathVariable(value = "term") Date term) {
         try {
             Optional<List<Vuelo>> result = vueloService.findByFechaLlegada(term);
@@ -131,7 +131,7 @@ public class VueloController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
-    @ApiOperation(value = "Permite crear un Usuario", response = VueloDTO.class, tags = "Usuarios")
+    @ApiOperation(value = "Permite crear un Vuelo", response = VueloDTO.class, tags = "Usuarios")
     public ResponseEntity<?> create(@RequestBody Vuelo vuelo) {
         try {
             Vuelo vueloCreated = vueloService.create(vuelo);
@@ -143,7 +143,7 @@ public class VueloController {
     }
 
     @PutMapping("/{id}") 
-    @ApiOperation(value = "Permite modificar un Usuario a partir de su Id", response = VueloDTO.class, tags = "Usuarios")
+    @ApiOperation(value = "Permite modificar un Vuelo a partir de su Id", response = VueloDTO.class, tags = "Usuarios")
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Vuelo vueloModified) {
         try {
