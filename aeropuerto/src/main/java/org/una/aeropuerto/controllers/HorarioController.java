@@ -35,7 +35,7 @@ public class HorarioController {
     private IHorarioService horarioService;
    
     @GetMapping()
-    @ApiOperation(value = "Obtiene una lista de todos los horarios", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    @ApiOperation(value = "Obtiene una lista de todos los Horarios", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -52,7 +52,7 @@ public class HorarioController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene el horario por medio del Id", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    @ApiOperation(value = "Obtiene el Horario por medio del Id", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -69,7 +69,7 @@ public class HorarioController {
     }
     
      @GetMapping("/{Estado}") 
-    @ApiOperation(value = "Obtiene una lista con los horarios por medio del estado", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    @ApiOperation(value = "Obtiene una lista de Horarios por medio del estado", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Horario>> horarioFound = horarioService.findByEstado(estado);
@@ -85,7 +85,7 @@ public class HorarioController {
     }
     
     @GetMapping("/{Dia_Entrada}") 
-    @ApiOperation(value = "Obtiene una lista con los horarios por medio del dia de entrada", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    @ApiOperation(value = "Obtiene una lista de Horarios por medio del dia de entrada", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public ResponseEntity<?> findByDiaEntrada(@PathVariable(value = "dia_entrada") Time diaEntrada) {
         try {
             Optional<List<Horario>> horarioFound = horarioService.findByDiaEntrada(diaEntrada);
@@ -101,7 +101,7 @@ public class HorarioController {
     }
    
     @GetMapping("/{Dia_Salida}") 
-    @ApiOperation(value = "Obtiene una lista con los horarios por medio del dia de salida", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    @ApiOperation(value = "Obtiene una lista de Horarios por medio del dia de salida", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public ResponseEntity<?> findByDiaSalida(@PathVariable(value = "dia_salida") Time diaSalida) {
         try {
             Optional<List<Horario>> horarioFound = horarioService.findByDiaSalida(diaSalida);
@@ -119,7 +119,7 @@ public class HorarioController {
      @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
-   @ApiOperation(value = "Permite crear un horario", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+   @ApiOperation(value = "Permite crear un Horario", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public ResponseEntity<?> create(@RequestBody Horario horario) {
         try {
             Horario horarioCreated = horarioService.create(horario);
@@ -132,7 +132,7 @@ public class HorarioController {
 
     @PutMapping("/{id}") 
     @ResponseBody
-    @ApiOperation(value = "Permite actualizar un horario", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    @ApiOperation(value = "Permite actualizar un Horario", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Horario horarioModified) {
         try {
             Optional<Horario> horarioUpdated = horarioService.update(horarioModified, id);

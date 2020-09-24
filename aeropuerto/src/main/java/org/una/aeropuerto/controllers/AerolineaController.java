@@ -29,7 +29,7 @@ public class AerolineaController {
     private IAerolineaService aerolineaService;
     
     @GetMapping() 
-    @ApiOperation(value = "Obtiene una lista de todos las aerolineas", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de todas las Aerolineas", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -46,7 +46,7 @@ public class AerolineaController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene una lista con la aerolinea por medio del Id", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene la Aerolinea por medio del Id", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             Optional<Aerolinea> AerolineaFound = aerolineaService.findById(id);
@@ -62,7 +62,7 @@ public class AerolineaController {
     }
     
     @GetMapping("/nombreAerolinea/")
-    @ApiOperation(value = "Obtiene una lista con la aerolinea por medio del nombre", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del nombre", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findByNombreAerolinea(@PathVariable(value = "term") String term) {
         try {
             Optional<Aerolinea> result = aerolineaService.findByNombreAerolinea(term);
@@ -78,7 +78,7 @@ public class AerolineaController {
     }
     
     @GetMapping("/nombreResponsable/")
-    @ApiOperation(value = "Obtiene una lista con la aerolinea por medio del nombre del responsable", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del nombre del responsable", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "term") String term) {
         try {
             Optional<List<Aerolinea>> result = aerolineaService.findByNombreResponsable(term);
@@ -94,7 +94,7 @@ public class AerolineaController {
     }
     
     @GetMapping("/{Estado}") 
-    @ApiOperation(value = "Obtiene una lista con la aerolinea por medio del estado", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del estado", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Aerolinea>> AerolineaFound = aerolineaService.findByEstado(estado);
@@ -112,7 +112,7 @@ public class AerolineaController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
-    @ApiOperation(value = "Permite crear una aerolinea", response = AerolineaDTO.class, tags = "Aerolineas")
+    @ApiOperation(value = "Permite crear una Aerolinea", response = AerolineaDTO.class, tags = "Aerolineas")
     public ResponseEntity<?> create(@RequestBody Aerolinea Aerolinea) {
         try {
             Aerolinea AerolineaCreated = aerolineaService.create(Aerolinea);
@@ -124,7 +124,7 @@ public class AerolineaController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Permite modificar una aerolinea a partir de su Id", response = AerolineaDTO.class, tags = "Aerolineas")
+    @ApiOperation(value = "Permite modificar una Aerolinea a partir de su Id", response = AerolineaDTO.class, tags = "Aerolineas")
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Aerolinea AerolineaModified) {
         try {

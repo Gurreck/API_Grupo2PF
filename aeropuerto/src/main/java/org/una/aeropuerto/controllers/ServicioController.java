@@ -52,7 +52,7 @@ public class ServicioController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene una lista con el Servicio por medio del Id", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    @ApiOperation(value = "Obtiene el Servicio por medio del Id", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -69,7 +69,7 @@ public class ServicioController {
     }
    
     @GetMapping("/{Estado}") 
-    @ApiOperation(value = "Obtiene una lista con el Servicio por medio del estado", response =  ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    @ApiOperation(value = "Obtiene una lista de Servicios por medio del estado", response =  ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Servicio>> servicioFound = servicioService.findByEstado(estado);
@@ -85,7 +85,7 @@ public class ServicioController {
     }
     
     @GetMapping("/{EstadoCobro}") 
-    @ApiOperation(value = "Obtiene una lista con el Servicio por medio del estado del cobro", response =  ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    @ApiOperation(value = "Obtiene una lista de Servicios por medio del estado del cobro", response =  ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public ResponseEntity<?> findByEstadoCobro(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Servicio>> servicioFound = servicioService.findByEstadoCobro(estado);
@@ -101,7 +101,7 @@ public class ServicioController {
     }
     
     @GetMapping("/{fecha}") 
-    @ApiOperation(value = "Obtiene una lista del Servicio entre la fecha especificada", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    @ApiOperation(value = "Obtiene una lista de Servicios entre la fecha especificada", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public @ResponseBody
     ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "Fecha inicial") Date startDate, @PathVariable(value = "Fecha final") Date endDate) {
         try {
@@ -117,8 +117,8 @@ public class ServicioController {
         }
     }
     
- /*   @GetMapping("/avion/{id}")
-    @ApiOperation(value = "Obtiene una lista con los Servicios por Avion", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    @GetMapping("/avion/{id}")
+    @ApiOperation(value = "Obtiene una lista de Servicios por Avion", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public ResponseEntity<?> findByAvionId(@PathVariable(value = "term") long term) {
         try {
             Optional<List<Servicio>> result = servicioService.findByAvionId(term);
@@ -131,10 +131,10 @@ public class ServicioController {
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+    }
     
     @GetMapping("/tiposervicio/{id}")
-    @ApiOperation(value = "Obtiene una lista con los Servicios por tipo de Servicio", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    @ApiOperation(value = "Obtiene una lista de Servicios por tipo de Servicio", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public ResponseEntity<?> findByTipoServicioId(@PathVariable(value = "term") long term) {
         try {
             Optional<List<Servicio>> result = servicioService.findByTipoServicioId(term);

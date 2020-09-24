@@ -49,11 +49,11 @@ public class ServicioServiceImplementation implements IServicioService {
         return servicioRepository.findByFechaRegistroBetween(startDate, endDate);
     }
 
-/*    @Override
+    @Override
     @Transactional(readOnly = true)
     public Optional<List<Servicio>> findByAvionId(Long id) {
         return Optional.ofNullable(servicioRepository.findByAvionId(id));
-    }*/
+    }
 
     @Override
     @Transactional(readOnly = true)

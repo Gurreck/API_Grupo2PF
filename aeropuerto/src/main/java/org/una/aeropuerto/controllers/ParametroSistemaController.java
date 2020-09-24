@@ -44,7 +44,7 @@ public class ParametroSistemaController {
     
     
    @GetMapping()
-    @ApiOperation(value = "Obtiene una lista de todos los parametros del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    @ApiOperation(value = "Obtiene una lista de todos los Parametros del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -61,7 +61,7 @@ public class ParametroSistemaController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene un parametro del sistema por medio del Id", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    @ApiOperation(value = "Obtiene un Parametro del sistema por medio del Id", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             Optional<ParametroSistema> parametroSistemaFound = parametroSistemaService.findById(id);
@@ -77,7 +77,7 @@ public class ParametroSistemaController {
     }
     
     @GetMapping("/{Estado}") 
-    @ApiOperation(value = "Obtiene una lista con los parametros del sistema por medio del estado", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    @ApiOperation(value = "Obtiene una lista de Parametros del sistema por medio del estado", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<ParametroSistema>> parametroSistemaFound = parametroSistemaService.findByEstado(estado);
@@ -93,7 +93,7 @@ public class ParametroSistemaController {
     }
     
     @GetMapping("/{Nombre}") 
-    @ApiOperation(value = "Obtiene una lista con los parametros del sistema por medio del nombre", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    @ApiOperation(value = "Obtiene una lista de Parametros del sistema por medio del nombre", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "nombre") String nombre) {
         try {
             Optional<List<ParametroSistema>> parametroSistemaFound = parametroSistemaService.findByNombre(nombre);
@@ -109,7 +109,7 @@ public class ParametroSistemaController {
     }
     
     @GetMapping("/{FechaRegistro}")
-    @ApiOperation(value = "Obtiene parametros del sistema por medio de la fecha de registro", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    @ApiOperation(value = "Obtiene una lista de Parametros del sistema por medio de la fecha de registro", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
     public ResponseEntity<?> findByFechaRegistro(@PathVariable(value = "fecha_Registro") Date fecha_Registro) {
         try {
              Optional<List<ParametroSistema>> parametroSistemaFound = parametroSistemaService.findByFechaRegistro(fecha_Registro);
@@ -127,7 +127,7 @@ public class ParametroSistemaController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
-    @ApiOperation(value = "Permite crear un parametro del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    @ApiOperation(value = "Permite crear un Parametro del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
     public ResponseEntity<?> create(@RequestBody ParametroSistema parametroSistema) {
         try {
             ParametroSistema parametroSistemaCreated = parametroSistemaService.create(parametroSistema);
@@ -140,7 +140,7 @@ public class ParametroSistemaController {
 
     @PutMapping("/{id}") 
     @ResponseBody
-    @ApiOperation(value = "Permite modificar un parametro del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    @ApiOperation(value = "Permite modificar un Parametro del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ParametroSistema parametroSistemaModified) {
         try {
             Optional<ParametroSistema> parametroSistemaUpdated = parametroSistemaService.update(parametroSistemaModified, id);

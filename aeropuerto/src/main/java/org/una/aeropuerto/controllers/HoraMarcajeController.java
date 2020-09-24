@@ -40,7 +40,7 @@ public class HoraMarcajeController {
     private IHoraMarcajeService horaMarcajeService;
    
     @GetMapping()
-    @ApiOperation(value = "Obtiene una lista de todas las horas de marcaje", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    @ApiOperation(value = "Obtiene una lista de todas las Horas de marcaje", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -57,7 +57,7 @@ public class HoraMarcajeController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene la hora de marcaje por medio del Id", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    @ApiOperation(value = "Obtiene la Hora de marcaje por medio del Id", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -74,7 +74,7 @@ public class HoraMarcajeController {
     }
     
     @GetMapping("/{HoraEntrada}")
-    @ApiOperation(value = "Obtiene la hora de marcaje por medio de la hora de entrada", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    @ApiOperation(value = "Obtiene la Hora de marcaje por medio de la Hora de entrada", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
     public ResponseEntity<?> findByHoraEntrada(@PathVariable(value = "hora_Entrada") Date horaEntrada) {
         try {
             Optional<List<HoraMarcaje>> horaMarcajeFound = horaMarcajeService.findByHoraEntrada(horaEntrada);
@@ -90,7 +90,7 @@ public class HoraMarcajeController {
     }
     
     @GetMapping("/{HoraSalida}")
-    @ApiOperation(value = "Obtiene la hora de marcaje por medio de la hora de salida", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    @ApiOperation(value = "Obtiene la Hora de marcaje por medio de la Hora de salida", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
     public ResponseEntity<?> findByHoraSalida(@PathVariable(value = "hora_Salida") Date horaSalida) {
         try {
             Optional<List<HoraMarcaje>> horaMarcajeFound = horaMarcajeService.findByHoraSalida(horaSalida);
@@ -106,7 +106,7 @@ public class HoraMarcajeController {
     }
     
     @GetMapping("/{FechaRegistro}")
-    @ApiOperation(value = "Obtiene la hora de marcaje por medio de la fecha de registro", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    @ApiOperation(value = "Obtiene la Hora de marcaje por medio de la fecha de registro", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
     public ResponseEntity<?> findByFechaRegistro(@PathVariable(value = "fecha_Registro") Date fecha_Registro) {
         try {
              Optional<List<HoraMarcaje>> horaMarcajeFound = horaMarcajeService.findByFechaRegistro(fecha_Registro);
@@ -124,7 +124,7 @@ public class HoraMarcajeController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
-    @ApiOperation(value = "Permite crear una hora de marcaje", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
+    @ApiOperation(value = "Permite crear una Hora de marcaje", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
     public ResponseEntity<?> create(@RequestBody HoraMarcaje horaMarcaje) {
         try {
             HoraMarcaje horaMarcajeCreated = horaMarcajeService.create(horaMarcaje);
@@ -136,7 +136,7 @@ public class HoraMarcajeController {
     }
 
     @PutMapping("/{id}") 
-    @ApiOperation(value = "Permite modificar una hora de marcaje a partir de su Id", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
+    @ApiOperation(value = "Permite modificar una Hora de marcaje a partir de su Id", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody HoraMarcaje horaMarcajeModified) {
         try {

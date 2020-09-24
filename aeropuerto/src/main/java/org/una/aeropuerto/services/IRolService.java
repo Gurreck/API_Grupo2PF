@@ -14,9 +14,11 @@ public interface IRolService {
 
     public Optional<Rol> findById(Long id);
 
-    public Optional<List<Rol>> findByTipo(String tipo);
+    public Optional<Rol> findByTipo(String tipo);
     
     public Optional<List<Rol>> findByEstado(boolean estado);
+    
+    public Long countByEstado(boolean estado);
 
     public Rol create(Rol Rol);
 

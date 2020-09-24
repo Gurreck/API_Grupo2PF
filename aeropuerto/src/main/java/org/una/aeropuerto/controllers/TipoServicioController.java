@@ -40,8 +40,8 @@ public class TipoServicioController {
         try {
             Optional<List<TipoServicio>> result = tipoServicioService.findAll();
             if (result.isPresent()) {
-                List<TipoServicioDTO> serviciosDTO = MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDTO.class);
-                return new ResponseEntity<>(serviciosDTO, HttpStatus.OK);
+                List<TipoServicioDTO> tiposervicioDTO = MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDTO.class);
+                return new ResponseEntity<>(tiposervicioDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -51,13 +51,13 @@ public class TipoServicioController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene una lista con el tipo de Servicio por medio del Id", response = TipoServicioDTO.class, responseContainer = "List", tags = "tipos Servicios")
+    @ApiOperation(value = "Obtiene  el tipo de Servicio por medio del Id", response = TipoServicioDTO.class, responseContainer = "List", tags = "tipos Servicios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
-            Optional<TipoServicio> servicioFound = tipoServicioService.findById(id);
-            if (servicioFound.isPresent()) {
-                TipoServicioDTO tipoServicioDto = MapperUtils.DtoFromEntity(servicioFound.get(), TipoServicioDTO.class);
+            Optional<TipoServicio> tiposervicioFound = tipoServicioService.findById(id);
+            if (tiposervicioFound.isPresent()) {
+                TipoServicioDTO tipoServicioDto = MapperUtils.DtoFromEntity(tiposervicioFound.get(), TipoServicioDTO.class);
                 return new ResponseEntity<>(tipoServicioDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -73,8 +73,8 @@ public class TipoServicioController {
         try {
             Optional<List<TipoServicio>> result = tipoServicioService.findByNombre(term);
             if (result.isPresent()) {
-                List<TipoServicioDTO> vueloDTO = MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDTO.class);
-                return new ResponseEntity<>(vueloDTO, HttpStatus.OK);
+                List<TipoServicioDTO> tipoServicioDTO = MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDTO.class);
+                return new ResponseEntity<>(tipoServicioDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -89,8 +89,8 @@ public class TipoServicioController {
     @ApiOperation(value = "Permite crear un tipo de Servicio", response = TipoServicioDTO.class, tags = "tipos Servicios")
     public ResponseEntity<?> create(@RequestBody TipoServicio tipoServicio) {
         try {
-            TipoServicio servicioCreated = tipoServicioService.create(tipoServicio);
-            TipoServicioDTO tipoServicioDto = MapperUtils.DtoFromEntity(servicioCreated, TipoServicioDTO.class);
+            TipoServicio tipoServicioCreated = tipoServicioService.create(tipoServicio);
+            TipoServicioDTO tipoServicioDto = MapperUtils.DtoFromEntity(tipoServicioCreated, TipoServicioDTO.class);
             return new ResponseEntity<>(tipoServicioDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -102,9 +102,9 @@ public class TipoServicioController {
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TipoServicio tipoServicioModified) {
         try {
-            Optional<TipoServicio> servicioUpdated = tipoServicioService.update(tipoServicioModified, id);
-            if (servicioUpdated.isPresent()) {
-                TipoServicioDTO tipoServicioDto = MapperUtils.DtoFromEntity(servicioUpdated.get(), TipoServicioDTO.class);
+            Optional<TipoServicio> tipoServicioUpdated = tipoServicioService.update(tipoServicioModified, id);
+            if (tipoServicioUpdated.isPresent()) {
+                TipoServicioDTO tipoServicioDto = MapperUtils.DtoFromEntity(tipoServicioUpdated.get(), TipoServicioDTO.class);
                 return new ResponseEntity<>(tipoServicioDto, HttpStatus.OK);
 
             } else {
