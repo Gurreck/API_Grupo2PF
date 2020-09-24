@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -76,15 +78,21 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
     private List<Transaccion> transacciones = new ArrayList<>();
     
-    /*
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
     private List<HoraMarcaje> horaMarcaje= new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
     private List<Horario> horarios= new ArrayList<>();
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<UsuarioHasAreaTrabajo> usuarioHasAreasTrabajos = new ArrayList<>();*/
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "usuarios_areasTrabajo", 
+      joinColumns = @JoinColumn(name = "areas_trabajo_id", referencedColumnName = "id"), 
+      inverseJoinColumns = @JoinColumn(name = "usuarios_id", 
+      referencedColumnName = "id"))
+    private List<AreaTrabajo> areaTrabajo;
+    
+    
     
     private static final long serialVersionUID = 1L;
 
