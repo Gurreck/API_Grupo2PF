@@ -34,7 +34,7 @@ public class AvionController {
     private IAvionService avionService;
     
     @GetMapping()
-    @ApiOperation(value = "Obtiene una lista de todos los aviones", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
+    @ApiOperation(value = "Obtiene una lista de todos los Aviones", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -51,7 +51,7 @@ public class AvionController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene un avion por medio del Id", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
+    @ApiOperation(value = "Obtiene un Avion por medio del Id", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -68,7 +68,7 @@ public class AvionController {
     }
     
     @GetMapping("/matricula/") 
-    @ApiOperation(value = "Obtiene un avion por medio de la matricula", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
+    @ApiOperation(value = "Obtiene un Avion por medio de la matricula", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
     public ResponseEntity<?> findByMatricula(@PathVariable(value = "term") String term) {
         try {
             Optional<List<Avion>> result = avionService.findByMatricula(term);
@@ -84,7 +84,7 @@ public class AvionController {
     }
     
     @GetMapping("/TipoAvion/") 
-    @ApiOperation(value = "Obtiene una lista de los aviones por medio del tipo de avion", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
+    @ApiOperation(value = "Obtiene una lista de Aviones por medio del tipo de avion", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
     public ResponseEntity<?> findByTipoAvion(@PathVariable(value = "term") String term) {
         try {
             Optional<List<Avion>> result = avionService.findByTipoAvion(term);
@@ -100,7 +100,7 @@ public class AvionController {
     }
     
     @GetMapping("/FechaRegistro/") 
-    @ApiOperation(value = "Obtiene una lista de los aviones por medio de la fecha de registro", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
+    @ApiOperation(value = "Obtiene una lista de Aviones por medio de la fecha de registro", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
     public ResponseEntity<?> findByFechaRegistro(@PathVariable(value = "fechaRegistro") Date fechaRegistro) {
         try {
             Optional<List<Avion>> result = avionService.findByFechaRegistro(fechaRegistro);
@@ -116,7 +116,7 @@ public class AvionController {
     }
     
     @GetMapping("/Estado/") 
-    @ApiOperation(value = "Obtiene una lista de los aviones por medio del estado", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
+    @ApiOperation(value = "Obtiene una lista de Aviones por medio del estado", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Avion>> result = avionService.findByEstado(estado);
@@ -134,7 +134,7 @@ public class AvionController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
-    @ApiOperation(value = "Permite crear un avion", response = AvionDTO.class, tags = "Aviones")
+    @ApiOperation(value = "Permite crear un Avion", response = AvionDTO.class, tags = "Aviones")
     public ResponseEntity<?> create(@RequestBody Avion avion) {
         try {
             Avion avionCreated = avionService.create(avion);
@@ -146,7 +146,7 @@ public class AvionController {
     }
 
     @PutMapping("/{id}") 
-    @ApiOperation(value = "Permite modificar un avion a partir de su Id", response = AvionDTO.class, tags = "Aviones")
+    @ApiOperation(value = "Permite modificar un Avion a partir de su Id", response = AvionDTO.class, tags = "Aviones")
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Avion avionModified) {
         try {

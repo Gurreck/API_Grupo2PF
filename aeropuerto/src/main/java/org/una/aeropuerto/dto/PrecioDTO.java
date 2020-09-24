@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.una.aeropuerto.entities.Avion;
 import org.una.aeropuerto.entities.TipoServicio;
 
 /**
@@ -16,15 +15,10 @@ import org.una.aeropuerto.entities.TipoServicio;
 @AllArgsConstructor
 @NoArgsConstructor 
 @ToString
-public class ServicioDTO {
+public class PrecioDTO {
     
-    private Long id;  
-    private boolean estadoCobro; 
-    private boolean estado; 
-    private Date fechaRegistro;
-    private String factura;
-    private String responsable; 
-    private String observacion;  
+    private Long id; 
+    private Float monto;   
+    private Date fechaRegistro; 
     private TipoServicio tipoServicio;
-    private Avion avion;
 }

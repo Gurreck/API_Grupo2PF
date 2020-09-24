@@ -31,7 +31,7 @@ public class RolController {
     
     
     @GetMapping() 
-    @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    @ApiOperation(value = "Obtiene una lista de todos los Roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -48,7 +48,7 @@ public class RolController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene una lista con el rol por medio del Id", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
+    @ApiOperation(value = "Obtiene el Rol por medio del Id", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -65,7 +65,7 @@ public class RolController {
     }
     
     @GetMapping("/{Tipo}") 
-    @ApiOperation(value = "Obtiene una lista con el rol por medio del tipo", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
+    @ApiOperation(value = "Obtiene una lista de Roles por medio del tipo", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findByTipo(@PathVariable(value = "tipo") String tipo) {
         try {
             Optional<List<Rol>> rolFound = rolService.findByTipo(tipo);
@@ -81,7 +81,7 @@ public class RolController {
     }
     
     @GetMapping("/{Estado}") 
-    @ApiOperation(value = "Obtiene una lista con el rol por medio del estado", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
+    @ApiOperation(value = "Obtiene una lista de Roles por medio del estado", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             Optional<List<Rol>> rolFound = rolService.findByEstado(estado);
@@ -98,7 +98,7 @@ public class RolController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
-   @ApiOperation(value = "Permite crear un rol", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
+   @ApiOperation(value = "Permite crear un Rol", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> create(@RequestBody Rol rol) {
         try {
             Rol rolCreated = rolService.create(rol);
@@ -111,7 +111,7 @@ public class RolController {
 
     @PutMapping("/{id}") 
     @ResponseBody
-    @ApiOperation(value = "Permite actualizar un rol", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
+    @ApiOperation(value = "Permite actualizar un Rol", response = UsuarioDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Rol rolModified) {
         try {
             Optional<Rol> rolUpdated = rolService.update(rolModified, id);
