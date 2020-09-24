@@ -7,6 +7,7 @@ package org.una.aeropuerto.services;
 
 import java.util.List;
 import java.util.Optional;
+import org.una.aeropuerto.dto.AuthenticationRequest;
 import org.una.aeropuerto.entities.Usuario;
 
 /**
@@ -29,7 +30,7 @@ public interface IUsuarioService {
 
     public Optional<Usuario> update(Usuario usuario, Long id);
 
-    public Optional<Usuario> login(Usuario usuario); 
+    public String login(AuthenticationRequest authenticationRequest); 
 }
 
 
