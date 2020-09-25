@@ -25,7 +25,9 @@ public interface IUsuarioService {
     public Optional<List<Usuario>> findByCedulaAproximate(String cedula);
 
     public Optional<List<Usuario>> findByNombreCompletoAproximateIgnoreCase(String nombreCompleto);
-
+    
+    public Optional<List<Usuario>> findByEsJefe(boolean esJefe);
+    
     public Usuario create(Usuario usuario);
 
     public Optional<Usuario> update(Usuario usuario, Long id);

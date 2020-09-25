@@ -137,7 +137,22 @@ public class UsuarioController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
+    @GetMapping("/jefe/")
+    @ApiOperation(value = "Obtiene una lista con los usuarios que sean jefes", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
+    public ResponseEntity<?> findByEsJefe(@PathVariable(value = "term") boolean term) {
+        try {
+            Optional<List<Usuario>> result = usuarioService.findByEsJefe(term);
+            if (result.isPresent()) {
+                List<UsuarioDTO> usuariosDTO = MapperUtils.DtoListFromEntityList(result.get(), UsuarioDTO.class);
+                return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }    
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody

@@ -31,9 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
    
     @Autowired
     private JwtAuthenticationEntryPoint entryPoint;
-     
-    @Autowired
-    private JwtAuthenticationEntryPoint entryPoint;
     
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

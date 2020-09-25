@@ -71,6 +71,9 @@ public class Usuario implements Serializable {
     @Column(length = 100, name = "correo")
     private String correo;
 
+    @Column
+    private boolean esJefe;
+       
     @ManyToOne 
     @JoinColumn(name="roles_id")
     private Rol rol;

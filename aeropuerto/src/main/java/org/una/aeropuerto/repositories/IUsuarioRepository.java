@@ -13,6 +13,7 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
     public Optional<Usuario> findByCedula(String cedula);
 
     public List<Usuario> findByNombreCompletoContainingIgnoreCase(String nombreCompleto);
- 
+    
+    public Optional<List<Usuario>> findByEsJefe(boolean esJefe);
 }
 

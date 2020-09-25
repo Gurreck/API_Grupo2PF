@@ -29,7 +29,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     @Autowired
     private IUsuarioRepository usuarioRepository;
     
-   @Autowired
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -74,6 +74,11 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
        return usuarioRepository.findByCedula(cedula);
     }
 
+    @Override
+    public Optional<List<Usuario>> findByEsJefe(boolean esJefe) {
+       return usuarioRepository.findByEsJefe(esJefe);
+    }
+    
     @Override
     @Transactional
     public Usuario create(Usuario usuario) {
