@@ -4,10 +4,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.una.aeropuerto.dto.AuthenticationRequest;
+import org.una.aeropuerto.dto.AuthenticationResponse;
 import org.una.aeropuerto.dto.UsuarioDTO;
 import org.una.aeropuerto.entities.Usuario;
 import org.una.aeropuerto.services.IUsuarioService;
@@ -64,29 +67,32 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/login")
+    @PostMapping("/login")
     @ResponseBody
     @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = UsuarioDTO.class, tags = "Seguridad")
-    public ResponseEntity<?> login(@PathVariable(value = "cedula") String cedula, @PathVariable(value = "password") String password) {
-        try {
-            Usuario usuario = new Usuario();
-            usuario.setCedula(cedula);
-            usuario.setPasswordEncriptado(password);
-            Optional<Usuario> usuarioFound = usuarioService.login(usuario);
-            if (usuarioFound.isPresent()) {
-                UsuarioDTO usuarioDto = MapperUtils.DtoFromEntity(usuarioFound.get(), UsuarioDTO.class);
-                return new ResponseEntity<>(usuarioDto, HttpStatus.OK);
+    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequest authenticationRequest, BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity("La información no esta bien formada o no coincide con el formato esperado", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+            String token = usuarioService.login(authenticationRequest);
+            if (!token.isBlank()) {
+                authenticationResponse.setJwt(token);
+                //TODO: Complete this   authenticationResponse.setUsuario(usuario);
+                //TODO: Complete this    authenticationResponse.setPermisos(permisosOtorgados);
+                return new ResponseEntity(authenticationResponse, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("Credenciales invalidos", HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
-    @GetMapping("/cedula/") 
+
+    @GetMapping("/cedulaAproximada/") 
     @ApiOperation(value = "Obtiene una lista con el Usuario por medio de la cédula", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     public ResponseEntity<?> findByCedulaAproximate(@PathVariable(value = "term") String term) {
         try {
@@ -101,7 +107,21 @@ public class UsuarioController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/cedula/") 
+    @ApiOperation(value = "Obtiene el Usuario por medio de la cédula", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
+    public ResponseEntity<?> findByCedula(@PathVariable(value = "term") String term) {
+        try {
+            Optional<Usuario> usuarioFound = usuarioService.findByCedula(term);
+            if (usuarioFound.isPresent()) {
+                UsuarioDTO usuariosDTO = MapperUtils.DtoFromEntity(usuarioFound.get(), UsuarioDTO.class);
+                return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/nombre/")
     @ApiOperation(value = "Obtiene una lista con el Usuario por medio del nombre", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     public ResponseEntity<?> findByNombreCompletoAproximateIgnoreCase(@PathVariable(value = "term") String term) {
@@ -117,7 +137,22 @@ public class UsuarioController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
+    @GetMapping("/jefe/")
+    @ApiOperation(value = "Obtiene una lista con los usuarios que sean jefes", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
+    public ResponseEntity<?> findByEsJefe(@PathVariable(value = "term") boolean term) {
+        try {
+            Optional<List<Usuario>> result = usuarioService.findByEsJefe(term);
+            if (result.isPresent()) {
+                List<UsuarioDTO> usuariosDTO = MapperUtils.DtoListFromEntityList(result.get(), UsuarioDTO.class);
+                return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }    
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody

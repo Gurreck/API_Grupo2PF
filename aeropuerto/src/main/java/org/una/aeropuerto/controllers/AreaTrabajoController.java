@@ -30,7 +30,7 @@ public class AreaTrabajoController {
     private IAreaTrabajoService areaTrabajoService;
 
     @GetMapping()
-    @ApiOperation(value = "Obtiene una lista de todas las areas de trabajo", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
+    @ApiOperation(value = "Obtiene una lista de todas las Areas de trabajo", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -47,7 +47,7 @@ public class AreaTrabajoController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene una lista con el AreaTrabajo por medio del Id", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
+    @ApiOperation(value = "Obtiene el Area de trabajo por medio del Id", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
@@ -64,7 +64,7 @@ public class AreaTrabajoController {
     }
 
      @GetMapping("/{area}")
-    @ApiOperation(value = "Obtiene el Area Trabajo por medio del nombre", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
+    @ApiOperation(value = "Obtiene el Area de trabajo por medio del nombre del area", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
     public ResponseEntity<?> findByNombreArea(@PathVariable(value = "id") String id) {
         try {
 
@@ -82,7 +82,7 @@ public class AreaTrabajoController {
     
 
     @GetMapping("/nombre/")
-    @ApiOperation(value = "Obtiene una lista con el AreaTrabajo por medio del nombre", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
+    @ApiOperation(value = "Obtiene una lista con el Area de trabajo por medio del nombre del responsable", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
     public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "term") String term) {
         try {
             Optional<List<AreaTrabajo>> result = areaTrabajoService.findByNombreResponsable(term);
@@ -100,7 +100,7 @@ public class AreaTrabajoController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/") 
     @ResponseBody
-    @ApiOperation(value = "Permite crear un Area de Trabajo", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
+    @ApiOperation(value = "Permite crear un Area de trabajo", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
     public ResponseEntity<?> create(@RequestBody AreaTrabajo usuario) {
         try {
             AreaTrabajo usuarioCreated = areaTrabajoService.create(usuario);
@@ -112,7 +112,7 @@ public class AreaTrabajoController {
     }
 
     @PutMapping("/{id}") 
-    @ApiOperation(value = "Permite modificar un Area de Trabajo a partir de su Id", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
+    @ApiOperation(value = "Permite modificar un Area de trabajo a partir de su Id", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody AreaTrabajo areaTrabajoModified) {
         try {

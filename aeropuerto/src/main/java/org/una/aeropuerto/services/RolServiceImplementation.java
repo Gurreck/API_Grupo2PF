@@ -28,13 +28,18 @@ public class RolServiceImplementation implements IRolService {
     }
     
     @Override
-    public Optional<List<Rol>> findByTipo(String cedula) {
-        return Optional.ofNullable(rolRepository.findByTipo(cedula));
+    public Optional<Rol> findByTipo(String cedula) {
+        return rolRepository.findByTipo(cedula);
     }
     
      @Override
     public Optional<List<Rol>> findByEstado(boolean estado) {
         return  Optional.ofNullable(rolRepository.findByEstado(estado));
+    }
+    
+    @Override
+    public Long countByEstado(boolean estado) {
+        return rolRepository.countByEstado(estado);
     }
     
     @Override

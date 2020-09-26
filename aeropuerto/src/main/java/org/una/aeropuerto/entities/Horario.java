@@ -47,7 +47,7 @@ public class Horario implements Serializable {
     @Column(name = "dia_entrada", length = 50)
     private String diaEntrada;
     
-    @Column(name = "dia_salida", length = 45)
+    @Column(name = "dia_salida", length = 50)
     private String diaSalida;
     
     @Column(name = "hora_entrada")

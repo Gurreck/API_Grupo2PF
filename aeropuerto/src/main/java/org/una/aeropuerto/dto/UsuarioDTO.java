@@ -20,7 +20,8 @@ public class UsuarioDTO {
     private String passwordEncriptado;
     private Date fechaRegistro; 
     private Date fechaModificacion; 
-    private String correo; 
+    private String correo;
+    private boolean esJefe;
     private Rol rol;
      
 }

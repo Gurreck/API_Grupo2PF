@@ -57,9 +57,9 @@ public class Servicio implements Serializable{
     @Column(name = "observaciones")
     private String observacion;
     
- /*   @ManyToOne 
+    @ManyToOne 
     @JoinColumn(name="aviones_id")
-    private Avion avion;*/
+    private Avion avion;
     
     @ManyToOne 
     @JoinColumn(name="tiposServicios_id")
