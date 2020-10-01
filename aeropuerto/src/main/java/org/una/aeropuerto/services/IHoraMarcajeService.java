@@ -1,11 +1,10 @@
 package org.una.aeropuerto.services;
 
-import java.sql.Time;
+import org.una.aeropuerto.dto.HoraMarcajeDTO;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import org.una.aeropuerto.entities.HoraMarcaje;
-import org.una.aeropuerto.entities.Rol;
 
 /**
  *
@@ -13,17 +12,17 @@ import org.una.aeropuerto.entities.Rol;
  */
 public interface IHoraMarcajeService {
     
-    public Optional<List<HoraMarcaje>> findAll();
+    public Optional<List<HoraMarcajeDTO>> findAll();
 
-    public Optional<HoraMarcaje> findById(Long id);
+    public Optional<HoraMarcajeDTO> findById(Long id);
     
-    public Optional<List<HoraMarcaje>> findByHoraEntrada(Date horaEntrada);
+    public Optional<List<HoraMarcajeDTO>> findByHoraEntrada(Date horaEntrada);
 
-    public Optional<List<HoraMarcaje>> findByHoraSalida(Date horaSalida);
+    public Optional<List<HoraMarcajeDTO>> findByHoraSalida(Date horaSalida);
 
-    public Optional<List<HoraMarcaje>> findByFechaRegistro(Date fechaRegistro);
+    public Optional<List<HoraMarcajeDTO>> findByFechaRegistro(Date fechaRegistro);
     
-    public HoraMarcaje create(HoraMarcaje horaMarcaje);
+    public HoraMarcajeDTO create(HoraMarcajeDTO horaMarcajeDTO);
 
-    public Optional<HoraMarcaje> update(HoraMarcaje horaMarcaje, Long id);
+    public Optional<HoraMarcajeDTO> update(HoraMarcajeDTO horaMarcajeDTO, Long id);
 }

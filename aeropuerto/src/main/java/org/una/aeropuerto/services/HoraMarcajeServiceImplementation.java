@@ -1,12 +1,17 @@
 package org.una.aeropuerto.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.una.aeropuerto.dto.AerolineaDTO;
+import org.una.aeropuerto.dto.HoraMarcajeDTO;
+import org.una.aeropuerto.entities.Aerolinea;
+import org.una.aeropuerto.entities.HoraMarcaje;
+import org.una.aeropuerto.repositories.IHoraMarcajeRepository;
+import org.una.aeropuerto.utils.MapperUtils;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.una.aeropuerto.entities.HoraMarcaje;
-import org.una.aeropuerto.repositories.IHoraMarcajeRepository;
 
 
 @Service
@@ -14,41 +19,71 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
 
     @Autowired
     private IHoraMarcajeRepository horaMarcajeRepository;
-    
-    @Override
-    public Optional<List<HoraMarcaje>> findAll() {
-       return Optional.ofNullable(horaMarcajeRepository.findAll());
+
+    private Optional<List<HoraMarcajeDTO>> findList(List<HoraMarcaje> list) {
+        if (list != null) {
+            List<HoraMarcajeDTO> HoraMarcajesDTO = MapperUtils.DtoListFromEntityList(list, HoraMarcajeDTO.class);
+            return Optional.ofNullable(HoraMarcajesDTO);
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<List<HoraMarcajeDTO>> findList(Optional<List<HoraMarcaje>> list) {
+        if (list.isPresent()) {
+            return findList(list.get());
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<HoraMarcajeDTO> oneToDto(Optional<HoraMarcaje> one) {
+        if (one.isPresent()) {
+            HoraMarcajeDTO HoraMarcajeDTO = MapperUtils.DtoFromEntity(one.get(), HoraMarcajeDTO.class);
+            return Optional.ofNullable(HoraMarcajeDTO);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public Optional<HoraMarcaje> findById(Long id) {
-        return horaMarcajeRepository.findById(id);
+    public Optional<List<HoraMarcajeDTO>> findAll() {
+       return findList(horaMarcajeRepository.findAll());
     }
 
     @Override
-    public Optional<List<HoraMarcaje>> findByHoraEntrada(Date horaEntrada) {
-        return  Optional.ofNullable(horaMarcajeRepository.findByHoraEntrada(horaEntrada));
+    public Optional<HoraMarcajeDTO> findById(Long id) {
+        return oneToDto(horaMarcajeRepository.findById(id));
     }
 
     @Override
-    public Optional<List<HoraMarcaje>> findByHoraSalida(Date horaSalida) {
-        return  Optional.ofNullable(horaMarcajeRepository.findByHoraSalida(horaSalida));
+    public Optional<List<HoraMarcajeDTO>> findByHoraEntrada(Date horaEntrada) {
+        return  findList(horaMarcajeRepository.findByHoraEntrada(horaEntrada));
     }
 
     @Override
-    public Optional<List<HoraMarcaje>> findByFechaRegistro(Date fechaRegistro) {
-        return  Optional.ofNullable(horaMarcajeRepository.findByFechaRegistro(fechaRegistro));
+    public Optional<List<HoraMarcajeDTO>> findByHoraSalida(Date horaSalida) {
+        return  findList(horaMarcajeRepository.findByHoraSalida(horaSalida));
     }
 
     @Override
-    public HoraMarcaje create(HoraMarcaje horaMarcaje) {
-         return horaMarcajeRepository.save(horaMarcaje);
+    public Optional<List<HoraMarcajeDTO>> findByFechaRegistro(Date fechaRegistro) {
+        return  findList(horaMarcajeRepository.findByFechaRegistro(fechaRegistro));
     }
 
     @Override
-    public Optional<HoraMarcaje> update(HoraMarcaje horaMarcaje, Long id) {
-       if (horaMarcajeRepository.findById(id).isPresent()) {
-            return Optional.ofNullable(horaMarcajeRepository.save(horaMarcaje));
+    public HoraMarcajeDTO create(HoraMarcajeDTO horaMarcajeDTO) {
+        HoraMarcaje horaMarcaje = MapperUtils.EntityFromDto(horaMarcajeDTO, HoraMarcaje.class);
+        horaMarcaje = horaMarcajeRepository.save(horaMarcaje);
+        return MapperUtils.DtoFromEntity(horaMarcaje, HoraMarcajeDTO.class);
+    }
+
+    @Override
+    public Optional<HoraMarcajeDTO> update(HoraMarcajeDTO horaMarcajeDTO, Long id) {
+        if (horaMarcajeRepository.findById(id).isPresent()) {
+            HoraMarcaje horaMarcaje = MapperUtils.EntityFromDto(horaMarcajeDTO, HoraMarcaje.class);
+            horaMarcaje = horaMarcajeRepository.save(horaMarcaje);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(horaMarcaje, HoraMarcajeDTO.class));
         } else {
             return null;
         }

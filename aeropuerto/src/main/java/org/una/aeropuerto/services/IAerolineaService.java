@@ -2,7 +2,8 @@ package org.una.aeropuerto.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aeropuerto.entities.Aerolinea;
+
+import org.una.aeropuerto.dto.AerolineaDTO;
 
 /**
  *
@@ -10,18 +11,18 @@ import org.una.aeropuerto.entities.Aerolinea;
  */
 public interface IAerolineaService {
     
-    public Optional<List<Aerolinea>> findAll();
+    public Optional<List<AerolineaDTO>> findAll();
 
-    public Optional<Aerolinea> findById(Long id);
+    public Optional<AerolineaDTO> findById(Long id);
 
-    public Optional<Aerolinea> findByNombreAerolinea(String nombreAerolinea);
+    public Optional<List<AerolineaDTO>> findByNombreAerolinea(String nombreAerolinea);
 
-    public Optional<List<Aerolinea>> findByNombreResponsable(String nombreResponsable);
+    public Optional<List<AerolineaDTO>> findByNombreResponsable(String nombreResponsable);
     
-     public Optional<List<Aerolinea>> findByEstado(boolean estado);
+    public Optional<List<AerolineaDTO>> findByEstado(boolean estado);
 
-    public Aerolinea create(Aerolinea Aerolinea);
+    public AerolineaDTO create(AerolineaDTO AerolineaDTO);
 
-    public Optional<Aerolinea> update(Aerolinea Aerolinea, Long id);
+    public Optional<AerolineaDTO> update(AerolineaDTO AerolineaDTO, Long id);
     
 }

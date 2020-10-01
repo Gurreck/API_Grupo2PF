@@ -1,15 +1,15 @@
 package org.una.aeropuerto.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.una.aeropuerto.dto.AvionDTO;
+import org.una.aeropuerto.entities.Avion;
+import org.una.aeropuerto.repositories.IAvionRepository;
+import org.una.aeropuerto.utils.MapperUtils;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.una.aeropuerto.entities.Avion;
-import org.una.aeropuerto.entities.Usuario;
-import org.una.aeropuerto.repositories.IAvionRepository;
-import org.una.aeropuerto.repositories.IUsuarioRepository;
 
 
 @Service
@@ -17,46 +17,76 @@ public class AvionServiceImplementation implements IAvionService {
 
     @Autowired
     private IAvionRepository avionRepository;
-    
-    @Override
-    public Optional<List<Avion>> findAll() {
-        return Optional.ofNullable(avionRepository.findAll());
+
+    private Optional<List<AvionDTO>> findList(List<Avion> list) {
+        if (list != null) {
+            List<AvionDTO> AvionsDTO = MapperUtils.DtoListFromEntityList(list, AvionDTO.class);
+            return Optional.ofNullable(AvionsDTO);
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<List<AvionDTO>> findList(Optional<List<Avion>> list) {
+        if (list.isPresent()) {
+            return findList(list.get());
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<AvionDTO> oneToDto(Optional<Avion> one) {
+        if (one.isPresent()) {
+            AvionDTO AvionDTO = MapperUtils.DtoFromEntity(one.get(), AvionDTO.class);
+            return Optional.ofNullable(AvionDTO);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public Optional<Avion> findById(Long id) {
-        return avionRepository.findById(id);
+    public Optional<List<AvionDTO>> findAll() {
+        return findList(avionRepository.findAll());
     }
 
     @Override
-    public Optional<List<Avion>> findByMatricula(String matricula) {
-        return Optional.ofNullable(avionRepository.findByMatricula(matricula));
+    public Optional<AvionDTO> findById(Long id) {
+        return oneToDto(avionRepository.findById(id));
     }
 
     @Override
-    public Optional<List<Avion>> findByTipoAvion(String tipoAvion) {
-        return Optional.ofNullable(avionRepository.findByTipoAvion(tipoAvion));
+    public Optional<List<AvionDTO>> findByMatricula(String matricula) {
+        return findList(avionRepository.findByMatricula(matricula));
     }
 
     @Override
-    public Optional<List<Avion>> findByFechaRegistro(Date fechaRegistro) {
-        return Optional.ofNullable(avionRepository.findByFechaRegistro(fechaRegistro));
+    public Optional<List<AvionDTO>> findByTipoAvion(String tipoAvion) {
+        return findList(avionRepository.findByTipoAvion(tipoAvion));
     }
 
     @Override
-    public Optional<List<Avion>> findByEstado(boolean estado) {
-        return Optional.ofNullable(avionRepository.findByEstado(estado));
+    public Optional<List<AvionDTO>> findByFechaRegistro(Date fechaRegistro) {
+        return findList(avionRepository.findByFechaRegistro(fechaRegistro));
     }
 
     @Override
-    public Avion create(Avion avion) {
-         return avionRepository.save(avion);
+    public Optional<List<AvionDTO>> findByEstado(boolean estado) {
+        return findList(avionRepository.findByEstado(estado));
     }
 
     @Override
-    public Optional<Avion> update(Avion avion, Long id) {
+    public AvionDTO create(AvionDTO avionDTO) {
+        Avion avion = MapperUtils.EntityFromDto(avionDTO, Avion.class);
+        avion = avionRepository.save(avion);
+        return MapperUtils.DtoFromEntity(avion, AvionDTO.class);
+    }
+
+    @Override
+    public Optional<AvionDTO> update(AvionDTO avionDTO, Long id) {
         if (avionRepository.findById(id).isPresent()) {
-            return Optional.ofNullable(avionRepository.save(avion));
+            Avion avion = MapperUtils.EntityFromDto(avionDTO, Avion.class);
+            avion = avionRepository.save(avion);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(avion, AvionDTO.class));
         } else {
             return null;
         }

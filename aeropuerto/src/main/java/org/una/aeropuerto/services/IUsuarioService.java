@@ -7,8 +7,8 @@ package org.una.aeropuerto.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aeropuerto.dto.AuthenticationRequest;
-import org.una.aeropuerto.entities.Usuario;
+import org.una.aeropuerto.dto.RolDTO;
+import org.una.aeropuerto.dto.UsuarioDTO;
 
 /**
  *
@@ -16,23 +16,24 @@ import org.una.aeropuerto.entities.Usuario;
  */
 public interface IUsuarioService {
     
-    public Optional<List<Usuario>> findAll();
+    public Optional<List<UsuarioDTO>> findAll();
 
-    public Optional<Usuario> findById(Long id);
+    public Optional<UsuarioDTO> findById(Long id);
     
-    public Optional <Usuario> findByCedula(String cedula);
+    public Optional <UsuarioDTO> findByCedula(String cedula);
 
-    public Optional<List<Usuario>> findByCedulaAproximate(String cedula);
+    public Optional<List<UsuarioDTO>> findByCedulaAproximate(String cedula);
 
-    public Optional<List<Usuario>> findByNombreCompletoAproximateIgnoreCase(String nombreCompleto);
+    public Optional<List<UsuarioDTO>> findByNombreCompletoAproximateIgnoreCase(String nombreCompleto);
     
-    public Optional<List<Usuario>> findByEsJefe(boolean esJefe);
+    //public Optional<List<UsuarioDTO>> findByEsJefe(boolean esJefe);
     
-    public Usuario create(Usuario usuario);
+    public RolDTO findRolByCedula(String cedula);
+    
+    public UsuarioDTO create(UsuarioDTO usuario);
 
-    public Optional<Usuario> update(Usuario usuario, Long id);
+    public Optional<UsuarioDTO> update(UsuarioDTO usuario, Long id);
 
-    public String login(AuthenticationRequest authenticationRequest); 
 }
 
 
