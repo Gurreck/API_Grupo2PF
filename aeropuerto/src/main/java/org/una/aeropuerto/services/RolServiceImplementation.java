@@ -5,10 +5,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.una.aeropuerto.dto.RolDTO;
 import org.una.aeropuerto.entities.Rol;
 import org.una.aeropuerto.entities.Usuario;
 import org.una.aeropuerto.repositories.IRolRepository;
 import org.una.aeropuerto.repositories.IUsuarioRepository;
+import org.una.aeropuerto.utils.MapperUtils;
 
 
 @Service
@@ -17,47 +19,81 @@ public class RolServiceImplementation implements IRolService {
     @Autowired
     private IRolRepository rolRepository;
 
+    private Optional<List<RolDTO>> findList(List<Rol> list) {
+        if (list != null) {
+            List<RolDTO> rolDTO = MapperUtils.DtoListFromEntityList(list, RolDTO.class);
+            return Optional.ofNullable(rolDTO);
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<List<RolDTO>> findList(Optional<List<Rol>> list) {
+        if (list.isPresent()) {
+            return findList(list.get());
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<RolDTO> oneToDto(Optional<Rol> one) {
+        if (one.isPresent()) {
+            RolDTO rolDTO = MapperUtils.DtoFromEntity(one.get(), RolDTO.class);
+            return Optional.ofNullable(rolDTO);
+        } else {
+            return null;
+        }
+    }
+
+
     @Override
-    public Optional<List<Rol>> findAll() {
-         return Optional.ofNullable(rolRepository.findAll());
+    public Optional<List<RolDTO>> findAll() {
+         return findList(rolRepository.findAll());
     }
 
     @Override
-    public Optional<Rol> findById(Long id) {
-        return rolRepository.findById(id);
+    public Optional<RolDTO> findById(Long id) {
+        return oneToDto(rolRepository.findById(id));
     }
     
     @Override
-    public Optional<Rol> findByTipo(String cedula) {
-        return rolRepository.findByTipo(cedula);
+    public Optional<RolDTO> findByTipo(String cedula) {
+
+        return oneToDto(rolRepository.findByTipo(cedula));
     }
     
      @Override
-    public Optional<List<Rol>> findByEstado(boolean estado) {
-        return  Optional.ofNullable(rolRepository.findByEstado(estado));
+    public Optional<List<RolDTO>> findByEstado(boolean estado) {
+        return  findList(rolRepository.findByEstado(estado));
     }
     
     @Override
     public Long countByEstado(boolean estado) {
         return rolRepository.countByEstado(estado);
     }
-    
+
     @Override
-    public Rol create(Rol Rol) {
-       return rolRepository.save(Rol);
+    @Transactional
+    public RolDTO create(RolDTO rolDTO) {
+        Rol rol = MapperUtils.EntityFromDto(rolDTO, Rol.class);
+        rol = rolRepository.save(rol);
+        return MapperUtils.DtoFromEntity(rol, RolDTO.class);
     }
 
     @Override
-    public Optional<Rol> update(Rol Rol, Long id) {
-        
+    @Transactional
+    public Optional<RolDTO> update(RolDTO rolDTO, Long id) {
         if (rolRepository.findById(id).isPresent()) {
-            return Optional.ofNullable(rolRepository.save(Rol));
+            Rol rol = MapperUtils.EntityFromDto(rolDTO, Rol.class);
+            rol = rolRepository.save(rol);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(rol, RolDTO.class));
         } else {
             return null;
         }
-    }  
+    }
 
-   
 
-    
+
+
+
 }

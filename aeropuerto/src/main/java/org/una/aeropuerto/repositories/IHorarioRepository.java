@@ -12,9 +12,9 @@ public interface IHorarioRepository extends JpaRepository<Horario, Long> {
 
     public List<Horario> findByEstado(boolean estado);
 
-    public List<Horario> findByDiaEntrada(Time diaEntrada);
+    public List<Horario> findByDiaEntrada(String diaEntrada);
 
-    public List<Horario> findByDiaSalida(Time diaSalida);
+    public List<Horario> findByDiaSalida(String diaSalida);
     
  
 }

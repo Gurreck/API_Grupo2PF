@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.una.aeropuerto.dto.HorarioDTO;
 import org.una.aeropuerto.entities.Horario;
-import org.una.aeropuerto.entities.Rol;
 import org.una.aeropuerto.repositories.IHorarioRepository;
-
-
+import org.una.aeropuerto.utils.MapperUtils;
 
 
 @Service
@@ -17,45 +17,71 @@ public class HorarioServiceImplementation implements IHorarioService {
 
     @Autowired
     private IHorarioRepository horarioRepository;
-
-    @Override
-    public Optional<List<Horario>> findAll() {
-        return Optional.ofNullable(horarioRepository.findAll());
-    }
-
-    @Override
-    public Optional<Horario> findById(Long id) {
-        return horarioRepository.findById(id);
-    }
-
-    @Override
-    public Optional<List<Horario>> findByEstado(boolean estado) {
-        return Optional.ofNullable(horarioRepository.findByEstado(estado));
-    }
-
-    @Override
-    public Optional<List<Horario>> findByDiaEntrada(Time diaEntrada) {
-        return Optional.ofNullable(horarioRepository.findByDiaEntrada(diaEntrada));
-    }
-
-    @Override
-    public Optional<List<Horario>> findByDiaSalida(Time diaSalida) {
-        return Optional.ofNullable(horarioRepository.findByDiaSalida(diaSalida));
-    }
-
-    @Override
-    public Horario create(Horario horario) {
- return horarioRepository.save(horario);
-    }
-
-    @Override
-    public Optional<Horario> update(Horario horario, Long id) {
-       
-        if (horarioRepository.findById(id).isPresent()) {
-            return Optional.ofNullable(horarioRepository.save(horario));
+    private Optional<List<HorarioDTO>> findList(List<Horario> list) {
+        if (list != null) {
+            List<HorarioDTO> horariosDTO = MapperUtils.DtoListFromEntityList(list, HorarioDTO.class);
+            return Optional.ofNullable(horariosDTO);
         } else {
             return null;
         }
     }
-    
+
+    private Optional<List<HorarioDTO>> findList(Optional<List<Horario>> list) {
+        if (list.isPresent()) {
+            return findList(list.get());
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<HorarioDTO> oneToDto(Optional<Horario> one) {
+        if (one.isPresent()) {
+            HorarioDTO horarioDTO = MapperUtils.DtoFromEntity(one.get(), HorarioDTO.class);
+            return Optional.ofNullable(horarioDTO);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Optional<HorarioDTO> findById(Long id) {
+        return oneToDto(horarioRepository.findById(id));
+    }
+
+    @Override
+    public Optional<List<HorarioDTO>> findByEstado(boolean estado) {
+        return findList(horarioRepository.findByEstado(estado));
+    }
+
+    @Override
+    public Optional<List<HorarioDTO>> findByDiaEntrada(String diaEntrada) {
+        return findList(horarioRepository.findByDiaEntrada(diaEntrada));
+    }
+
+    @Override
+    public Optional<List<HorarioDTO>> findByDiaSalida(String diaSalida) {
+        return findList(horarioRepository.findByDiaSalida(diaSalida));
+    }
+
+    @Override
+    @Transactional
+    public HorarioDTO create(HorarioDTO horarioDTO) {
+        Horario horario = MapperUtils.EntityFromDto(horarioDTO, Horario.class);
+        horario = horarioRepository.save(horario);
+        return MapperUtils.DtoFromEntity(horario, HorarioDTO.class);
+    }
+
+
+    @Override
+    @Transactional
+    public Optional<HorarioDTO> update(HorarioDTO horarioDTO, Long id) {
+        if (horarioRepository.findById(id).isPresent()) {
+            Horario horario = MapperUtils.EntityFromDto(horarioDTO, Horario.class);
+            horario = horarioRepository.save(horario);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(horario, HorarioDTO.class));
+        } else {
+            return null;
+        }
+    }
+
 }
