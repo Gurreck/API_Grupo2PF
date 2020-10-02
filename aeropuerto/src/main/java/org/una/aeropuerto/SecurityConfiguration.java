@@ -26,12 +26,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsuarioServiceImplementation userService;
 
-    @Autowired
+   @Autowired
     private BCryptPasswordEncoder bCrypt;
    
-    @Autowired
+   @Autowired
     private JwtAuthenticationEntryPoint entryPoint;
-    
+     
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -44,20 +44,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {     
-         http.cors().and().csrf().disable()
-                .authorizeRequests().antMatchers("/usuarios/**", "/v2/api-docs",
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable()
+                .authorizeRequests().antMatchers("/login/**", "/v2/api-docs",
                         "/swagger-resources/**",
                         "/swagger-ui.html**",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated().and()
+                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()).and()
                 .exceptionHandling().authenticationEntryPoint(entryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    
+
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
@@ -75,4 +77,3 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
 }
-
