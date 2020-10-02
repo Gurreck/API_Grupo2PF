@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.una.aeropuerto.dto.VueloDTO;
 import org.una.aeropuerto.entities.Vuelo;
 import org.una.aeropuerto.repositories.IVueloRepository;
+import org.una.aeropuerto.utils.MapperUtils;
 
 
 @Service
@@ -16,52 +18,83 @@ public class VueloServiceImplementation implements IVueloService {
     @Autowired
     private IVueloRepository vueloRepository;
 
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<List<Vuelo>> findAll() {
-        return Optional.ofNullable(vueloRepository.findAll());
+    private Optional<List<VueloDTO>> findList(List<Vuelo> list) {
+        if (list != null) {
+            List<VueloDTO> vueloDTO = MapperUtils.DtoListFromEntityList(list, VueloDTO.class);
+            return Optional.ofNullable(vueloDTO);
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<List<VueloDTO>> findList(Optional<List<Vuelo>> list) {
+        if (list.isPresent()) {
+            return findList(list.get());
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<VueloDTO> oneToDto(Optional<Vuelo> one) {
+        if (one.isPresent()) {
+            VueloDTO usuarioDTO = MapperUtils.DtoFromEntity(one.get(), VueloDTO.class);
+            return Optional.ofNullable(usuarioDTO);
+        } else {
+            return null;
+        }
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Vuelo> findById(Long id) {
-        return vueloRepository.findById(id);
+    public Optional<List<VueloDTO>> findAll() {
+        return findList(vueloRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Vuelo>> findByAeropuerto(String cedula) {
-        return Optional.ofNullable(vueloRepository.findByAeropuerto(cedula));
+    public Optional<VueloDTO> findById(Long id) {
+        return oneToDto(vueloRepository.findById(id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<VueloDTO>> findByAeropuerto(String cedula) {
+        return findList(vueloRepository.findByAeropuerto(cedula));
     }
     
     @Override
-    public Optional<List<Vuelo>> findByEstado(boolean estado) {
-        return  Optional.ofNullable(vueloRepository.findByEstado(estado));
+    public Optional<List<VueloDTO>> findByEstado(boolean estado) {
+        return findList(vueloRepository.findByEstado(estado));
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Vuelo>> findByFechaLlegada(Date startDate) {
-       return Optional.ofNullable(vueloRepository.findByFechaLlegada(startDate));
+    public Optional<List<VueloDTO>> findByFechaLlegada(Date startDate) {
+        return findList(vueloRepository.findByFechaLlegada(startDate));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Vuelo>> findByFechaSalida(Date startDate) {
-       return Optional.ofNullable(vueloRepository.findByFechaSalida(startDate));
+    public Optional<List<VueloDTO>> findByFechaSalida(Date startDate) {
+        return findList(vueloRepository.findByFechaSalida(startDate));
     }
 
     @Override
     @Transactional
-    public Vuelo create(Vuelo vuelo) {
-        return vueloRepository.save(vuelo);
-    }
+    public VueloDTO create(VueloDTO vueloDTO) {
+        Vuelo vuelo = MapperUtils.EntityFromDto(vueloDTO, Vuelo.class);
+        vuelo = vueloRepository.save(vuelo);
+        return MapperUtils.DtoFromEntity(vuelo, VueloDTO.class);
 
+    }
     @Override
     @Transactional
-    public Optional<Vuelo> update(Vuelo vuelo, Long id) {
+    public Optional<VueloDTO> update(VueloDTO vueloDTO, Long id) {
         if (vueloRepository.findById(id).isPresent()) {
-            return Optional.ofNullable(vueloRepository.save(vuelo));
+            Vuelo vuelo = MapperUtils.EntityFromDto(vueloDTO, Vuelo.class);
+            vuelo= vueloRepository.save(vuelo);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(vuelo, VueloDTO.class));
+
         } else {
             return null;
         }

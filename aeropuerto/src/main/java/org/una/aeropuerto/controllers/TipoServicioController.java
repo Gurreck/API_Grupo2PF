@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,99 +22,83 @@ import org.una.aeropuerto.entities.TipoServicio;
 import org.una.aeropuerto.services.ITipoServicioService;
 import org.una.aeropuerto.utils.MapperUtils;
 
+import javax.validation.Valid;
+
 /**
  *
  * @author Esteban Vargas
  */
 @RestController
 @RequestMapping("/tiposServicios") 
-@Api(tags = {"tipos Servicios"})
+@Api(tags = {"Tipos Servicios"})
 public class TipoServicioController {
     
      @Autowired
     private ITipoServicioService tipoServicioService;
 
-    @GetMapping()
-    @ApiOperation(value = "Obtiene una lista de todos los tipos de Servicios", response = TipoServicioDTO.class, responseContainer = "List", tags = "tipos Servicios")
-    public @ResponseBody
-    ResponseEntity<?> findAll() {
+    final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
+
+    @GetMapping("/")
+    @ApiOperation(value = "Obtiene una lista de todos los tipos de Servicios", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
+    public ResponseEntity<?> findAll() {
         try {
-            Optional<List<TipoServicio>> result = tipoServicioService.findAll();
-            if (result.isPresent()) {
-                List<TipoServicioDTO> tiposervicioDTO = MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDTO.class);
-                return new ResponseEntity<>(tiposervicioDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+                return new ResponseEntity(tipoServicioService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene  el tipo de Servicio por medio del Id", response = TipoServicioDTO.class, responseContainer = "List", tags = "tipos Servicios")
+    @ApiOperation(value = "Obtiene  el tipo de Servicio por medio del Id", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
+            return new ResponseEntity(tipoServicioService.findById(id), HttpStatus.OK);
 
-            Optional<TipoServicio> tiposervicioFound = tipoServicioService.findById(id);
-            if (tiposervicioFound.isPresent()) {
-                TipoServicioDTO tipoServicioDto = MapperUtils.DtoFromEntity(tiposervicioFound.get(), TipoServicioDTO.class);
-                return new ResponseEntity<>(tipoServicioDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
-    @GetMapping("/nombre/")
-    @ApiOperation(value = "Obtiene una lista con el tipo de Servicio por medio del nombre", response = TipoServicioDTO.class, responseContainer = "List", tags = "tipos Servicios")
+    @GetMapping("/nombre/{term}")
+    @ApiOperation(value = "Obtiene una lista con el tipo de Servicio por medio del nombre", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<TipoServicio>> result = tipoServicioService.findByNombre(term);
-            if (result.isPresent()) {
-                List<TipoServicioDTO> tipoServicioDTO = MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDTO.class);
-                return new ResponseEntity<>(tipoServicioDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+                return new ResponseEntity(tipoServicioService.findByNombre(term), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/") 
-    @ResponseBody
-    @ApiOperation(value = "Permite crear un tipo de Servicio", response = TipoServicioDTO.class, tags = "tipos Servicios")
-    public ResponseEntity<?> create(@RequestBody TipoServicio tipoServicio) {
-        try {
-            TipoServicio tipoServicioCreated = tipoServicioService.create(tipoServicio);
-            TipoServicioDTO tipoServicioDto = MapperUtils.DtoFromEntity(tipoServicioCreated, TipoServicioDTO.class);
-            return new ResponseEntity<>(tipoServicioDto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @PostMapping("/")
+    @ApiOperation(value = "Permite crear un tipo de Servicio", response = TipoServicioDTO.class, tags = "Tipos Servicios")
+    public ResponseEntity<?> create(@Valid @RequestBody  TipoServicioDTO tipoServicioDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                return new ResponseEntity(tipoServicioService.create(tipoServicioDTO), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
+        }
+    }
     @PutMapping("/{id}") 
-    @ApiOperation(value = "Permite modificar un tipo de Servicio a partir de su Id", response = TipoServicioDTO.class, tags = "tipos Servicios")
+    @ApiOperation(value = "Permite modificar un tipo de Servicio a partir de su Id", response = TipoServicioDTO.class, tags = "Tipos Servicios")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TipoServicio tipoServicioModified) {
-        try {
-            Optional<TipoServicio> tipoServicioUpdated = tipoServicioService.update(tipoServicioModified, id);
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody TipoServicioDTO tipoServicioDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+            Optional<TipoServicioDTO> tipoServicioUpdated = tipoServicioService.update(tipoServicioDTO, id);
             if (tipoServicioUpdated.isPresent()) {
-                TipoServicioDTO tipoServicioDto = MapperUtils.DtoFromEntity(tipoServicioUpdated.get(), TipoServicioDTO.class);
-                return new ResponseEntity<>(tipoServicioDto, HttpStatus.OK);
-
+                return new ResponseEntity(tipoServicioUpdated, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
             }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }else{
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
-    
 }

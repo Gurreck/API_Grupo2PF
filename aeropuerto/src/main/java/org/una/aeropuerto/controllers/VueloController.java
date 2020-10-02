@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,8 @@ import org.una.aeropuerto.entities.Vuelo;
 import org.una.aeropuerto.services.IVueloService;
 import org.una.aeropuerto.utils.MapperUtils;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/vuelos") 
 @Api(tags = {"Vuelos"})
@@ -30,136 +33,91 @@ public class VueloController {
     @Autowired
     private IVueloService vueloService;
 
-    @GetMapping()
-    @ApiOperation(value = "Obtiene una lista de todos los Vuelos", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    public @ResponseBody
-    ResponseEntity<?> findAll() {
-        try {
-            Optional<List<Vuelo>> result = vueloService.findAll();
-            if (result.isPresent()) {
-                List<VueloDTO> vuelosDTO = MapperUtils.DtoListFromEntityList(result.get(), VueloDTO.class);
-                return new ResponseEntity<>(vuelosDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Obtiene el Vuelo por medio del Id", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
-
-            Optional<Vuelo> vueloFound = vueloService.findById(id);
-            if (vueloFound.isPresent()) {
-                VueloDTO vueloDto = MapperUtils.DtoFromEntity(vueloFound.get(), VueloDTO.class);
-                return new ResponseEntity<>(vueloDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(vueloService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/Aeropuerto/")
-    @ApiOperation(value = "Obtiene una lista de Vuelos por medio del nombre del aeropuerto", response = VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
+    @GetMapping("/Aeropuerto/{term}")
+    @ApiOperation(value = "Obtiene una lista de Vuelos por medio del nombre del aeropuerto", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public ResponseEntity<?> findByAeropuerto(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<Vuelo>> result = vueloService.findByAeropuerto(term);
-            if (result.isPresent()) {
-                List<VueloDTO> vueloDTO = MapperUtils.DtoListFromEntityList(result.get(), VueloDTO.class);
-                return new ResponseEntity<>(vueloDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(vueloService.findByAeropuerto(term), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    @GetMapping("/{Estado}") 
-    @ApiOperation(value = "Obtiene una lista de Vuelos por medio del estado", response =  VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
+
+    @GetMapping("/{estado}")
+    @ApiOperation(value = "Obtiene una lista de Vuelos por medio del estado", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
-            Optional<List<Vuelo>> vueloFound = vueloService.findByEstado(estado);
-            if (vueloFound.isPresent()) {
-                VueloDTO VueloDTO = MapperUtils.DtoFromEntity(vueloFound.get(), VueloDTO.class);
-                return new ResponseEntity<>(VueloDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(vueloService.findByEstado(estado), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    @GetMapping("/FechaSalida/")
-    @ApiOperation(value = "Obtiene una lista de Vuelos por medio de la fecha de salida", response = VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
+
+    @GetMapping("/FechaSalida/{term}")
+    @ApiOperation(value = "Obtiene una lista de Vuelos por medio de la fecha de salida", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public ResponseEntity<?> findByFechaSalida(@PathVariable(value = "term") Date term) {
         try {
-            Optional<List<Vuelo>> result = vueloService.findByFechaSalida(term);
-            if (result.isPresent()) {
-                List<VueloDTO> vueloDTO = MapperUtils.DtoListFromEntityList(result.get(), VueloDTO.class);
-                return new ResponseEntity<>(vueloDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(vueloService.findByFechaSalida(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    @GetMapping("/FechaLlegada/")
-    @ApiOperation(value = "Obtiene una lista de Vuelos por medio de la fecha de salida", response = VueloDTO.class, responseContainer = "List", tags = "Aerolineas")
+
+    @GetMapping("/FechaLlegada/{term}")
+    @ApiOperation(value = "Obtiene una lista de Vuelos por medio de la fecha de salida", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public ResponseEntity<?> findByFechaLlegada(@PathVariable(value = "term") Date term) {
         try {
-            Optional<List<Vuelo>> result = vueloService.findByFechaLlegada(term);
-            if (result.isPresent()) {
-                List<VueloDTO> vueloDTO = MapperUtils.DtoListFromEntityList(result.get(), VueloDTO.class);
-                return new ResponseEntity<>(vueloDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity(vueloService.findByFechaLlegada(term), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/")
+    @ApiOperation(value = "Permite crear un Vuelo", response = VueloDTO.class, tags = "Vuelos")
+    public ResponseEntity<?> create(@Valid @RequestBody VueloDTO vueloDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                return new ResponseEntity<>(vueloService.create(vueloDTO), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/") 
-    @ResponseBody
-    @ApiOperation(value = "Permite crear un Vuelo", response = VueloDTO.class, tags = "Usuarios")
-    public ResponseEntity<?> create(@RequestBody Vuelo vuelo) {
-        try {
-            Vuelo vueloCreated = vueloService.create(vuelo);
-            VueloDTO vueloDto = MapperUtils.DtoFromEntity(vueloCreated, VueloDTO.class);
-            return new ResponseEntity<>(vueloDto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    @PutMapping("/{id}")
+    @ApiOperation(value = "Permite modificar un Vuelo a partir de su Id", response = VueloDTO.class, tags = "Vuelos")
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody VueloDTO vueloDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                Optional<VueloDTO> vueloUpdated = vueloService.update(vueloDTO, id);
+                if (vueloUpdated.isPresent()) {
+                    return new ResponseEntity<>(vueloUpdated, HttpStatus.OK);
 
-    @PutMapping("/{id}") 
-    @ApiOperation(value = "Permite modificar un Vuelo a partir de su Id", response = VueloDTO.class, tags = "Usuarios")
-    @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Vuelo vueloModified) {
-        try {
-            Optional<Vuelo> vueloUpdated = vueloService.update(vueloModified, id);
-            if (vueloUpdated.isPresent()) {
-                VueloDTO vueloDto = MapperUtils.DtoFromEntity(vueloUpdated.get(), VueloDTO.class);
-                return new ResponseEntity<>(vueloDto, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+                }
+            } catch (Exception e) {
+                return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
-
 }
 

@@ -47,8 +47,21 @@ public class SwaggerConfiguration {
                 .build()
                 .apiInfo(apiInfo())
                 .tags(new Tag("Seguridad", "Metodos de Seguridad"),
-                        new Tag("Usuarios", "Entidad de Usuarios")
-                       
+                        new Tag("Usuarios", "Entidad de Usuarios"),
+                            new Tag("Servicios", "Entidad de Servicios"),
+                                new Tag("Vuelos", "Entidad de Vuelos"),
+                                    new Tag("Tipos Servicios", "Entidad de Tipos de Servicio"),
+                                        new Tag("Transacciones", "Entidad de Transacciones"),
+                                            new Tag("Aerolineas", "Entidad de Aerolineas"),
+                                                new Tag("Areas Trabajo", "Entidad de Areas de Trabajo"),
+                                                    new Tag("Precios", "Entidad de Precios"),
+                                                        new Tag("Aviones", "Entidad de Aviones"),
+                                                            new Tag("Horarios", "Entidad de Horarios"),
+                                                                new Tag("Hora Marcaje", "Entidad de Horario de Marcaje"),
+                                                                    new Tag("Roles", "Entidad de Roles"),
+                                                                            new Tag("Parametros sistema", "Entidad de Parametros Sistemas")
+
+
                 );
 
     }
