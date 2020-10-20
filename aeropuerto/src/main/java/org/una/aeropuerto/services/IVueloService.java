@@ -3,7 +3,7 @@ package org.una.aeropuerto.services;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import org.una.aeropuerto.entities.Vuelo;
+import org.una.aeropuerto.dto.VueloDTO;
 
 /**
  *
@@ -11,21 +11,21 @@ import org.una.aeropuerto.entities.Vuelo;
  */
 public interface IVueloService {
     
-    public Optional<List<Vuelo>> findAll();
+    public Optional<List<VueloDTO>> findAll();
 
-    public Optional<Vuelo> findById(Long id);
+    public Optional<VueloDTO> findById(Long id);
 
-    public Optional<List<Vuelo>> findByAeropuerto(String aeropueto);
+    public Optional<List<VueloDTO>> findByAeropuerto(String aeropueto);
 
-    public Optional<List<Vuelo>> findByEstado(boolean nombreCompleto);
+    public Optional<List<VueloDTO>> findByEstado(boolean nombreCompleto);
     
-    public Optional<List<Vuelo>>findByFechaLlegada(Date startDate);
+    public Optional<List<VueloDTO>>findByFechaLlegada(Date startDate);
     
-    public Optional<List<Vuelo>>findByFechaSalida(Date startDate);
+    public Optional<List<VueloDTO>>findByFechaSalida(Date startDate);
 
-    public Vuelo create(Vuelo Vuelo);
+    public VueloDTO create(VueloDTO VueloDTO);
 
-    public Optional<Vuelo> update(Vuelo Vuelo, Long id);
+    public Optional<VueloDTO> update(VueloDTO VueloDTO, Long id);
 
 }
 

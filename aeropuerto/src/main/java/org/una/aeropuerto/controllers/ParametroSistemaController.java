@@ -1,38 +1,18 @@
 package org.una.aeropuerto.controllers;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.sql.Time;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.una.aeropuerto.dto.HoraMarcajeDTO;
-import org.una.aeropuerto.dto.HorarioDTO;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.una.aeropuerto.dto.ParametroSistemaDTO;
-import org.una.aeropuerto.dto.RolDTO;
-import org.una.aeropuerto.dto.TransaccionDTO;
-import org.una.aeropuerto.dto.UsuarioDTO;
-import org.una.aeropuerto.entities.HoraMarcaje;
-import org.una.aeropuerto.entities.Horario;
-import org.una.aeropuerto.entities.ParametroSistema;
-import org.una.aeropuerto.entities.Rol;
-import org.una.aeropuerto.entities.Transaccion;
-import org.una.aeropuerto.entities.Usuario;
-import org.una.aeropuerto.services.IHoraMarcajeService;
-import org.una.aeropuerto.services.IHorarioService;
 import org.una.aeropuerto.services.IParametroSistemaService;
-import org.una.aeropuerto.utils.MapperUtils;
+
+import javax.validation.Valid;
+import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/parametroSistema")
@@ -41,119 +21,92 @@ public class ParametroSistemaController {
 
     @Autowired
     private IParametroSistemaService parametroSistemaService;
-    
-    
-   @GetMapping()
-    @ApiOperation(value = "Obtiene una lista de todos los Parametros del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public @ResponseBody
-    ResponseEntity<?> findAll() {
+
+
+    final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
+
+    @GetMapping("/")
+    @ApiOperation(value = "Obtiene una lista de todos los parametros del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    public ResponseEntity<?> findAll() {
         try {
-            Optional<List<ParametroSistema>> result = parametroSistemaService.findAll();
-            if (result.isPresent()) {
-                List<ParametroSistemaDTO> parametroSistemaDTO = MapperUtils.DtoListFromEntityList(result.get(), ParametroSistemaDTO.class);
-                return new ResponseEntity<>(parametroSistemaDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(parametroSistemaService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene un Parametro del sistema por medio del Id", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    @ApiOperation(value = "Obtiene un parametro del sistema por su Id", response = ParametroSistemaDTO.class, tags = "Parametros sistema")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
-            Optional<ParametroSistema> parametroSistemaFound = parametroSistemaService.findById(id);
-            if (parametroSistemaFound.isPresent()) {
-                ParametroSistemaDTO parametroSistemaDto = MapperUtils.DtoFromEntity(parametroSistemaFound.get(), ParametroSistemaDTO.class);
-                return new ResponseEntity<>(parametroSistemaDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(parametroSistemaService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @GetMapping("/{Estado}") 
-    @ApiOperation(value = "Obtiene una lista de Parametros del sistema por medio del estado", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
-        try {
-            Optional<List<ParametroSistema>> parametroSistemaFound = parametroSistemaService.findByEstado(estado);
-            if (parametroSistemaFound.isPresent()) {
-                ParametroSistemaDTO parametroSistemaDTO = MapperUtils.DtoFromEntity(parametroSistemaFound.get(), ParametroSistemaDTO.class);
-                return new ResponseEntity<>(parametroSistemaDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @GetMapping("/{Nombre}") 
-    @ApiOperation(value = "Obtiene una lista de Parametros del sistema por medio del nombre", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "nombre") String nombre) {
-        try {
-            Optional<List<ParametroSistema>> parametroSistemaFound = parametroSistemaService.findByNombre(nombre);
-            if (parametroSistemaFound.isPresent()) {
-                ParametroSistemaDTO parametroSistemaDTO = MapperUtils.DtoFromEntity(parametroSistemaFound.get(), ParametroSistemaDTO.class);
-                return new ResponseEntity<>(parametroSistemaDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @GetMapping("/{FechaRegistro}")
-    @ApiOperation(value = "Obtiene una lista de Parametros del sistema por medio de la fecha de registro", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public ResponseEntity<?> findByFechaRegistro(@PathVariable(value = "fecha_Registro") Date fecha_Registro) {
-        try {
-             Optional<List<ParametroSistema>> parametroSistemaFound = parametroSistemaService.findByFechaRegistro(fecha_Registro);
-            if (parametroSistemaFound.isPresent()) {
-                ParametroSistemaDTO parametroSistemaDto = MapperUtils.DtoFromEntity(parametroSistemaFound.get(), ParametroSistemaDTO.class);
-                return new ResponseEntity<>(parametroSistemaDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/") 
-    @ResponseBody
-    @ApiOperation(value = "Permite crear un Parametro del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public ResponseEntity<?> create(@RequestBody ParametroSistema parametroSistema) {
-        try {
-            ParametroSistema parametroSistemaCreated = parametroSistemaService.create(parametroSistema);
-            ParametroSistemaDTO parametroSistemaDto = MapperUtils.DtoFromEntity(parametroSistemaCreated, ParametroSistemaDTO.class);
-            return new ResponseEntity<>(parametroSistemaDto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PutMapping("/{id}") 
-    @ResponseBody
-    @ApiOperation(value = "Permite modificar un Parametro del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ParametroSistema parametroSistemaModified) {
+    @GetMapping("/nombre/{termino}")
+    @ApiOperation(value = "Obtiene una lista de parametros del sistema por medio del nombre", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    public ResponseEntity<?> findByNombre(@PathVariable(value = "termino") String nombre) {
         try {
-            Optional<ParametroSistema> parametroSistemaUpdated = parametroSistemaService.update(parametroSistemaModified, id);
-            if (parametroSistemaUpdated.isPresent()) {
-                ParametroSistemaDTO parametroSistemaDto = MapperUtils.DtoFromEntity(parametroSistemaUpdated.get(), ParametroSistemaDTO.class);
-                return new ResponseEntity<>(parametroSistemaDto, HttpStatus.OK);
-
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-            }
+            return new ResponseEntity(parametroSistemaService.findByNombre(nombre), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-};
+
+    @GetMapping("/estado/{termino}")
+    @ApiOperation(value = "Obtiene una lista de parametros del sistema por su estado", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "termino") boolean estado) {
+        try {
+            return new ResponseEntity(parametroSistemaService.findByEstado(estado), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/fecha/{termino}")
+    @ApiOperation(value = "Obtiene una lista de parametros del sistema según la fecha de registro", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    public ResponseEntity<?> findByFechaRegistro(@PathVariable(value = "termino") Date fecha) {
+        try {
+            return new ResponseEntity(parametroSistemaService.findByFechaRegistro(fecha), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/")
+    @ApiOperation(value = "Permite crear un parametro del sistema", response = ParametroSistemaDTO.class, tags = "Parametros sistema")
+    public ResponseEntity<?> create(@Valid @RequestBody ParametroSistemaDTO parametroSistemaDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                return new ResponseEntity(parametroSistemaService.create(parametroSistemaDTO), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @PutMapping("/{id}")
+    @ApiOperation(value = "Permite modificar un parametro del sistema a partir de su Id", response = ParametroSistemaDTO.class, tags = "Parametros sistema")
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody ParametroSistemaDTO parametroSistemaDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                Optional<ParametroSistemaDTO> parametroSistemaUpdated = parametroSistemaService.update(parametroSistemaDTO, id);
+                if (parametroSistemaUpdated.isPresent()) {
+                    return new ResponseEntity(parametroSistemaUpdated, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+                }
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
+        }
+    }
+}

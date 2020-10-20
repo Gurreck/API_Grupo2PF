@@ -11,7 +11,7 @@ public interface IAerolineaRepository extends JpaRepository<Aerolinea, Long> {
 
     public List<Aerolinea> findByNombreResponsable(String nombreResponsable);
 
-    public Aerolinea findByNombreAerolinea(String nombreAerolinea);
+    public List<Aerolinea> findByNombreAerolinea(String nombreAerolinea);
     
-     public List<Aerolinea> findByEstado(boolean estado);
+    public List<Aerolinea> findByEstado(boolean estado);
 }

@@ -2,7 +2,7 @@ package org.una.aeropuerto.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aeropuerto.entities.TipoServicio;
+import org.una.aeropuerto.dto.TipoServicioDTO;
 
 /**
  *
@@ -10,13 +10,13 @@ import org.una.aeropuerto.entities.TipoServicio;
  */
 public interface ITipoServicioService {
     
-    public Optional<List<TipoServicio>> findAll();
+    public Optional<List<TipoServicioDTO>> findAll();
 
-    public Optional<TipoServicio> findById(Long id);
+    public Optional<TipoServicioDTO> findById(Long id);
 
-    public Optional<List<TipoServicio>> findByNombre(String nombre);
+    public Optional<List<TipoServicioDTO>> findByNombre(String nombre);
     
-    public TipoServicio create(TipoServicio tipoServicio);
+    public TipoServicioDTO create(TipoServicioDTO tipoServicio);
 
-    public Optional<TipoServicio> update(TipoServicio tipoServicio, Long id);
+    public Optional<TipoServicioDTO> update(TipoServicioDTO tipoServicio, Long id);
 }

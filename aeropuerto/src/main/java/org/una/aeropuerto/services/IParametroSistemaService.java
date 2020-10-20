@@ -4,25 +4,27 @@ package org.una.aeropuerto.services;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import org.una.aeropuerto.dto.ParametroSistemaDTO;
 import org.una.aeropuerto.entities.ParametroSistema;
 
 /**
  *
- * @author adria
+ * @author adrian
  */
 public interface IParametroSistemaService {
     
-    public Optional<List<ParametroSistema>> findAll();
+    public Optional<List<ParametroSistemaDTO>> findAll();
 
-    public Optional<ParametroSistema> findById(Long id);
+    public Optional<ParametroSistemaDTO> findById(Long id);
     
-    public Optional<List<ParametroSistema>> findByEstado(boolean estado);
+    public Optional<List<ParametroSistemaDTO>> findByEstado(boolean estado);
     
-    public Optional<List<ParametroSistema>> findByNombre(String nombre);
+    public Optional<List<ParametroSistemaDTO>> findByNombre(String nombre);
 
-    public Optional<List<ParametroSistema>> findByFechaRegistro(Date fechaRegistro);
+    public Optional<List<ParametroSistemaDTO>> findByFechaRegistro(Date fechaRegistro);
     
-    public ParametroSistema create(ParametroSistema parametroSistema);
+    public ParametroSistemaDTO create(ParametroSistemaDTO parametroSistema);
 
-    public Optional<ParametroSistema> update(ParametroSistema parametroSistema, Long id);
+    public Optional<ParametroSistemaDTO> update(ParametroSistemaDTO parametroSistema, Long id);
 }

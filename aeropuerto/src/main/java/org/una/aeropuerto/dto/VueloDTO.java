@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.una.aeropuerto.entities.Avion;
 
 @Data
 @AllArgsConstructor
@@ -20,6 +19,6 @@ public class VueloDTO {
     private Date fechaLlegada; 
     private Long distancia; 
     private boolean estado; 
-    private Avion avion;
+    private AvionDTO avion;
      
 }

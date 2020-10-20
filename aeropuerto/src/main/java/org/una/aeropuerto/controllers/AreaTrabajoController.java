@@ -2,24 +2,22 @@ package org.una.aeropuerto.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.una.aeropuerto.dto.AreaTrabajoDTO;
-import org.una.aeropuerto.entities.AreaTrabajo;
 import org.una.aeropuerto.services.IAreaTrabajoService;
-import org.una.aeropuerto.utils.MapperUtils;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/areasTrabajo") 
@@ -28,105 +26,80 @@ public class AreaTrabajoController {
 
     @Autowired
     private IAreaTrabajoService areaTrabajoService;
+    
+    final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping()
+    @GetMapping("/")
     @ApiOperation(value = "Obtiene una lista de todas las Areas de trabajo", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
-    public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<AreaTrabajo>> result = areaTrabajoService.findAll();
-            if (result.isPresent()) {
-                List<AreaTrabajoDTO> usuariosDTO = MapperUtils.DtoListFromEntityList(result.get(), AreaTrabajoDTO.class);
-                return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(areaTrabajoService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene el Area de trabajo por medio del Id", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
+    @ApiOperation(value = "Obtiene el Area de trabajo por medio del Id", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
-
-            Optional<AreaTrabajo> areaTrabajoFound = areaTrabajoService.findById(id);
-            if (areaTrabajoFound.isPresent()) {
-                AreaTrabajoDTO areaTrabjoDTo = MapperUtils.DtoFromEntity(areaTrabajoFound.get(), AreaTrabajoDTO.class);
-                return new ResponseEntity<>(areaTrabjoDTo, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(areaTrabajoService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-     @GetMapping("/{area}")
+    @GetMapping("/area/{termino}")
     @ApiOperation(value = "Obtiene el Area de trabajo por medio del nombre del area", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
-    public ResponseEntity<?> findByNombreArea(@PathVariable(value = "id") String id) {
-        try {
-
-            Optional<AreaTrabajo> areaTrabajoFound = areaTrabajoService.findByNombreArea(id);
-            if (areaTrabajoFound.isPresent()) {
-                AreaTrabajoDTO areaTrabjoDTo = MapperUtils.DtoFromEntity(areaTrabajoFound.get(), AreaTrabajoDTO.class);
-                return new ResponseEntity<>(areaTrabjoDTo, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<?> findByNombreArea(@PathVariable(value = "termino") String term) {
+         try {
+             return new ResponseEntity(areaTrabajoService.findByNombreArea(term), HttpStatus.OK);
+         } catch (Exception e) {
+             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+         }
     }
     
 
-    @GetMapping("/nombre/")
+    @GetMapping("/nombre/{termino}")
     @ApiOperation(value = "Obtiene una lista con el Area de trabajo por medio del nombre del responsable", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
-    public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "term") String term) {
+    public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "termino") String term) {
         try {
-            Optional<List<AreaTrabajo>> result = areaTrabajoService.findByNombreResponsable(term);
-            if (result.isPresent()) {
-                List<AreaTrabajoDTO> usuariosDTO = MapperUtils.DtoListFromEntityList(result.get(), AreaTrabajoDTO.class);
-                return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(areaTrabajoService.findByNombreResponsable(term), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/") 
-    @ResponseBody
+    @PostMapping("/")
     @ApiOperation(value = "Permite crear un Area de trabajo", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
-    public ResponseEntity<?> create(@RequestBody AreaTrabajo usuario) {
-        try {
-            AreaTrabajo usuarioCreated = areaTrabajoService.create(usuario);
-            AreaTrabajoDTO areaTrabjoDTo = MapperUtils.DtoFromEntity(usuarioCreated, AreaTrabajoDTO.class);
-            return new ResponseEntity<>(areaTrabjoDTo, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<?> create(@Valid @RequestBody AreaTrabajoDTO areaTrabajoDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                return new ResponseEntity(areaTrabajoService.create(areaTrabajoDTO), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/{id}") 
     @ApiOperation(value = "Permite modificar un Area de trabajo a partir de su Id", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
-    @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody AreaTrabajo areaTrabajoModified) {
-        try {
-            Optional<AreaTrabajo> usuarioUpdated = areaTrabajoService.update(areaTrabajoModified, id);
-            if (usuarioUpdated.isPresent()) {
-                AreaTrabajoDTO areaTrabjoDTo = MapperUtils.DtoFromEntity(usuarioUpdated.get(), AreaTrabajoDTO.class);
-                return new ResponseEntity<>(areaTrabjoDTo, HttpStatus.OK);
-
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody AreaTrabajoDTO areaTrabajoDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                Optional<AreaTrabajoDTO> areaTrabajoUpdated = areaTrabajoService.update(areaTrabajoDTO, id);
+                if (areaTrabajoUpdated.isPresent()) {
+                    return new ResponseEntity(areaTrabajoUpdated, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+                }
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
 }

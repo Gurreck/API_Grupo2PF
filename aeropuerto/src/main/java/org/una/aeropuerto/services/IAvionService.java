@@ -3,7 +3,8 @@ package org.una.aeropuerto.services;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import org.una.aeropuerto.entities.Avion;
+
+import org.una.aeropuerto.dto.AvionDTO;
 import org.una.aeropuerto.entities.Usuario;
 
 /**
@@ -12,20 +13,20 @@ import org.una.aeropuerto.entities.Usuario;
  */
 public interface IAvionService {
     
-    public Optional<List<Avion>> findAll();
+    public Optional<List<AvionDTO>> findAll();
 
-    public Optional<Avion> findById(Long id);
+    public Optional<AvionDTO> findById(Long id);
 
-    public Optional<List<Avion>> findByMatricula(String matricula);
+    public Optional<List<AvionDTO>> findByMatricula(String matricula);
 
-    public Optional<List<Avion>> findByTipoAvion(String tipoAvion);
+    public Optional<List<AvionDTO>> findByTipoAvion(String tipoAvion);
     
-    public Optional<List<Avion>> findByFechaRegistro(Date fechaRegistro);
+    public Optional<List<AvionDTO>> findByFechaRegistro(Date fechaRegistro);
     
-    public Optional<List<Avion>> findByEstado(boolean estado);
+    public Optional<List<AvionDTO>> findByEstado(boolean estado);
 
-    public Avion create(Avion avion);
+    public AvionDTO create(AvionDTO avionDTO);
 
-    public Optional<Avion> update(Avion avion, Long id);
+    public Optional<AvionDTO> update(AvionDTO avionDTO, Long id);
 }
 

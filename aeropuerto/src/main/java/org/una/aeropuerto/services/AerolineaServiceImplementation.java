@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.una.aeropuerto.dto.AerolineaDTO;
 import org.una.aeropuerto.entities.Aerolinea;
 import org.una.aeropuerto.repositories.IAerolineaRepository;
+import org.una.aeropuerto.utils.MapperUtils;
 
 
 @Service
@@ -14,41 +17,76 @@ public class AerolineaServiceImplementation implements IAerolineaService {
     @Autowired
     private IAerolineaRepository AerolineaRepository;
 
-    @Override
-    public Optional<List<Aerolinea>> findAll() {
-         return Optional.ofNullable(AerolineaRepository.findAll());
+    private Optional<List<AerolineaDTO>> findList(List<Aerolinea> list) {
+        if (list != null) {
+            List<AerolineaDTO> AerolineasDTO = MapperUtils.DtoListFromEntityList(list, AerolineaDTO.class);
+            return Optional.ofNullable(AerolineasDTO);
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<List<AerolineaDTO>> findList(Optional<List<Aerolinea>> list) {
+        if (list.isPresent()) {
+            return findList(list.get());
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<AerolineaDTO> oneToDto(Optional<Aerolinea> one) {
+        if (one.isPresent()) {
+            AerolineaDTO AerolineaDTO = MapperUtils.DtoFromEntity(one.get(), AerolineaDTO.class);
+            return Optional.ofNullable(AerolineaDTO);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public Optional<Aerolinea> findById(Long id) {
-        return AerolineaRepository.findById(id);
-    }
-    
-    @Override
-    public Optional<List<Aerolinea>> findByNombreResponsable(String nombreResponsable) {
-        return Optional.ofNullable(AerolineaRepository.findByNombreResponsable(nombreResponsable));
-    }
-    
-    @Override
-    public Optional<Aerolinea>findByNombreAerolinea(String nombreAerolinea) {
-        return Optional.ofNullable(AerolineaRepository.findByNombreAerolinea(nombreAerolinea));
-    }
-    
-    @Override
-    public Optional<List<Aerolinea>> findByEstado(boolean estado) {
-        return  Optional.ofNullable(AerolineaRepository.findByEstado(estado));
-    }
-    
-    @Override
-    public Aerolinea create(Aerolinea Aerolinea) {
-       return AerolineaRepository.save(Aerolinea);
+    @Transactional(readOnly = true)
+    public Optional<List<AerolineaDTO>> findAll() {
+         return findList(AerolineaRepository.findAll());
     }
 
     @Override
-    public Optional<Aerolinea> update(Aerolinea Aerolinea, Long id) {
-        
+    @Transactional(readOnly = true)
+    public Optional<AerolineaDTO> findById(Long id) {
+        return oneToDto(AerolineaRepository.findById(id));
+    }
+    
+    @Override
+    public Optional<List<AerolineaDTO>> findByNombreResponsable(String nombreResponsable) {
+        return findList(AerolineaRepository.findByNombreResponsable(nombreResponsable));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<AerolineaDTO>> findByNombreAerolinea(String nombreAerolinea) {
+        return findList(AerolineaRepository.findByNombreAerolinea(nombreAerolinea));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<AerolineaDTO>> findByEstado(boolean estado) {
+        return  findList(AerolineaRepository.findByEstado(estado));
+    }
+    
+    @Override
+    @Transactional
+    public AerolineaDTO create(AerolineaDTO aerolineaDTO) {
+        Aerolinea aerolinea = MapperUtils.EntityFromDto(aerolineaDTO, Aerolinea.class);
+        aerolinea = AerolineaRepository.save(aerolinea);
+        return MapperUtils.DtoFromEntity(aerolinea, AerolineaDTO.class);
+    }
+
+    @Override
+    @Transactional
+    public Optional<AerolineaDTO> update(AerolineaDTO aerolineaDTO, Long id) {
         if (AerolineaRepository.findById(id).isPresent()) {
-            return Optional.ofNullable(AerolineaRepository.save(Aerolinea));
+            Aerolinea aerolinea = MapperUtils.EntityFromDto(aerolineaDTO, Aerolinea.class);
+            aerolinea = AerolineaRepository.save(aerolinea);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(aerolinea, AerolineaDTO.class));
         } else {
             return null;
         }

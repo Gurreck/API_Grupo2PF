@@ -1,16 +1,15 @@
 package org.una.aeropuerto.services;
 
-import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.una.aeropuerto.entities.Rol;
+import org.una.aeropuerto.dto.TransaccionDTO;
 import org.una.aeropuerto.entities.Transaccion;
-import org.una.aeropuerto.entities.Usuario;
-import org.una.aeropuerto.repositories.IRolRepository;
 import org.una.aeropuerto.repositories.ITransaccionRepository;
-import org.una.aeropuerto.repositories.IUsuarioRepository;
+import org.una.aeropuerto.utils.MapperUtils;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -19,30 +18,64 @@ public class TransaccionServiceImplementation implements ITransaccionService {
     @Autowired
     private ITransaccionRepository transaccionRepository;
 
-    @Override
-    public Optional<List<Transaccion>> findAll() {
-         return Optional.ofNullable(transaccionRepository.findAll());
+    private Optional<List<TransaccionDTO>> findList(List<Transaccion> list) {
+        if (list != null) {
+            List<TransaccionDTO> transaccionDTO = MapperUtils.DtoListFromEntityList(list, TransaccionDTO.class);
+            return Optional.ofNullable(transaccionDTO);
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<List<TransaccionDTO>> findList(Optional<List<Transaccion>> list) {
+        if (list.isPresent()) {
+            return findList(list.get());
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<TransaccionDTO> oneToDto(Optional<Transaccion> one) {
+        if (one.isPresent()) {
+            TransaccionDTO transaccionDTO = MapperUtils.DtoFromEntity(one.get(), TransaccionDTO.class);
+            return Optional.ofNullable(transaccionDTO);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public Optional<Transaccion> findById(Long id) {
-        return transaccionRepository.findById(id);
+    @Transactional
+    public Optional<List<TransaccionDTO>> findAll() {
+        return findList(transaccionRepository.findAll());
+    }
+    @Override
+    @Transactional
+    public Optional<TransaccionDTO> findById(Long id) {
+        return oneToDto(transaccionRepository.findById(id));
     }
 
     @Override
-    public Optional<List<Transaccion>> findByEstado(boolean estado) {
-       return Optional.ofNullable(transaccionRepository.findByEstado(estado));
+    @Transactional
+    public Optional<List<TransaccionDTO>> findByEstado(boolean estado) {
+        return findList(transaccionRepository.findByEstado(estado));
     }
 
     @Override
-    public Transaccion create(Transaccion transaccion) {
-        return transaccionRepository.save(transaccion);
-    }
+    @Transactional
+    public TransaccionDTO create(TransaccionDTO transaccionDTO) {
+        Transaccion transaccion = MapperUtils.EntityFromDto(transaccionDTO, Transaccion.class);
+        transaccion = transaccionRepository.save(transaccion);
+        return MapperUtils.DtoFromEntity(transaccion, TransaccionDTO.class);
 
+    }
     @Override
-    public Optional<Transaccion> update(Transaccion transaccion, Long id) {
+    @Transactional
+    public Optional<TransaccionDTO> update(TransaccionDTO transaccionDTO, Long id) {
         if (transaccionRepository.findById(id).isPresent()) {
-            return Optional.ofNullable(transaccionRepository.save(transaccion));
+            Transaccion transaccion = MapperUtils.EntityFromDto(transaccionDTO, Transaccion.class);
+            transaccion = transaccionRepository.save(transaccion);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(transaccion, TransaccionDTO.class));
         } else {
             return null;
         }

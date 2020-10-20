@@ -2,9 +2,8 @@ package org.una.aeropuerto.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aeropuerto.entities.Rol;
-import org.una.aeropuerto.entities.Transaccion;
-import org.una.aeropuerto.entities.Usuario;
+import org.una.aeropuerto.dto.TransaccionDTO;
+
 
 /**
  *
@@ -12,15 +11,15 @@ import org.una.aeropuerto.entities.Usuario;
  */
 public interface ITransaccionService {
     
-    public Optional<List<Transaccion>> findAll();
+    public Optional<List<TransaccionDTO>> findAll();
 
-    public Optional<Transaccion> findById(Long id);
+    public Optional<TransaccionDTO> findById(Long id);
     
-    public Optional<List<Transaccion>> findByEstado(boolean estado);
+    public Optional<List<TransaccionDTO>> findByEstado(boolean estado);
 
-    public Transaccion create(Transaccion transaccion);
+    public TransaccionDTO create(TransaccionDTO transaccion);
 
-    public Optional<Transaccion> update(Transaccion transaccion, Long id);
+    public Optional<TransaccionDTO> update(TransaccionDTO transaccion, Long id);
 
 }
 

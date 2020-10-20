@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.una.aeropuerto.entities.TipoServicio;
 
 /**
  *
@@ -20,5 +19,5 @@ public class PrecioDTO {
     private Long id; 
     private Float monto;   
     private Date fechaRegistro; 
-    private TipoServicio tipoServicio;
+    private TipoServicioDTO tipoServicio;
 }
