@@ -29,7 +29,7 @@ public class AreaTrabajoController {
     
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/")
+    @GetMapping("/findAll/")
     @ApiOperation(value = "Obtiene una lista de todas las Areas de trabajo", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
     ResponseEntity<?> findAll() {
         try {
@@ -39,7 +39,7 @@ public class AreaTrabajoController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     @ApiOperation(value = "Obtiene el Area de trabajo por medio del Id", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -49,9 +49,9 @@ public class AreaTrabajoController {
         }
     }
 
-    @GetMapping("/area/{termino}")
+    @GetMapping("/findByNombreArea/{nombre}")
     @ApiOperation(value = "Obtiene el Area de trabajo por medio del nombre del area", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
-    public ResponseEntity<?> findByNombreArea(@PathVariable(value = "termino") String term) {
+    public ResponseEntity<?> findByNombreArea(@PathVariable(value = "nombre") String term) {
          try {
              return new ResponseEntity(areaTrabajoService.findByNombreArea(term), HttpStatus.OK);
          } catch (Exception e) {
@@ -60,9 +60,9 @@ public class AreaTrabajoController {
     }
     
 
-    @GetMapping("/nombre/{termino}")
+    @GetMapping("/findByNombreResponsable/{nombre}")
     @ApiOperation(value = "Obtiene una lista con el Area de trabajo por medio del nombre del responsable", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
-    public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "termino") String term) {
+    public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "nombre") String term) {
         try {
             return new ResponseEntity(areaTrabajoService.findByNombreResponsable(term), HttpStatus.OK);
         } catch (Exception e) {

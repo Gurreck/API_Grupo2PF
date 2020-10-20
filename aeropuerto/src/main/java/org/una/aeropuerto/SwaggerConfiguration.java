@@ -59,7 +59,8 @@ public class SwaggerConfiguration {
                                                             new Tag("Horarios", "Entidad de Horarios"),
                                                                 new Tag("Hora Marcaje", "Entidad de Horario de Marcaje"),
                                                                     new Tag("Roles", "Entidad de Roles"),
-                                                                            new Tag("Parametros sistema", "Entidad de Parametros Sistemas")
+                                                                            new Tag("Parametros sistema", "Entidad de Parametros Sistemas"),
+                                                                                new Tag("Areas Trabajo Aviones", "Entidad de intermedia de Area de Trabajo y Aviones")
 
 
                 );

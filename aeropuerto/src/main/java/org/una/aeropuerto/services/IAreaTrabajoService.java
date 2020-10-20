@@ -21,7 +21,7 @@ public interface IAreaTrabajoService {
 
     public Optional<List<AreaTrabajoDTO>> findByNombreResponsable(String responsable);
 
-    public Optional<List<AreaTrabajoDTO>> findByNombreArea(String area);
+    public Optional<AreaTrabajoDTO> findByNombreArea(String area);
 
     public AreaTrabajoDTO create(AreaTrabajoDTO AreaTrabajoDTO);
 

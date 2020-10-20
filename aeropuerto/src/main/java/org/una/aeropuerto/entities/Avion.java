@@ -75,15 +75,14 @@ public class Avion implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion") 
     private List<Vuelo> vuelos = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion")
+    private List<AreaTrabajoAvion> AreasTrabajoAviones = new ArrayList<>();
     
     @ManyToOne 
     @JoinColumn(name="aerolineas_id")
     private Aerolinea aerolinea;
-    
-    @ManyToMany(mappedBy = "avion")
-    private List<AreaTrabajo> areasTrabajo;
 
-    
     private static final long serialVersionUID = 1L;
 
     @PrePersist

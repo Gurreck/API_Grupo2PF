@@ -31,11 +31,11 @@ public class TipoServicio implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column
-    private Long duracion;
-    
     @Column(name = "nombre", length = 50)
     private String nombre;
+
+    @Column
+    private Long duracion;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoServicio") 
     private List<Servicio> servicio = new ArrayList<>();

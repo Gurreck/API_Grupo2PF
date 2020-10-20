@@ -28,7 +28,7 @@ public class PrecioController {
 
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     @ApiOperation(value = "Obtiene un precio por su Id", response = PrecioDTO.class, tags = "Precios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -38,9 +38,9 @@ public class PrecioController {
         }
     }
 
-    @GetMapping("/fecha/{termino1}{termino2}/")
+    @GetMapping("/findByFechaRegistroBetween/{fecha1}{fecha2}/")
     @ApiOperation(value = "Obtiene una lista de precios entre fechas", response = PrecioDTO.class, responseContainer = "List", tags = "Precios")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "termino1") Date fechaInicio, @PathVariable(value = "termino2") Date fechaFinal) {
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fecha1") Date fechaInicio, @PathVariable(value = "fecha2") Date fechaFinal) {
         try {
             return new ResponseEntity(precioService.findByFechaRegistroBetween(fechaInicio, fechaFinal), HttpStatus.OK);
         } catch (Exception e) {
@@ -50,7 +50,7 @@ public class PrecioController {
 
 
 
-    @GetMapping("/tipoServicioId/{id}")
+    @GetMapping("/findByTipoServicioId/{id}")
     @ApiOperation(value = "Obtiene una lista de precios por medio del Id del tipo de servicio", response = PrecioDTO.class, responseContainer = "List", tags = "Precios")
     public ResponseEntity<?> findByTipoServicioId(@PathVariable(value = "id") Long id) {
         try {

@@ -58,8 +58,8 @@ public class AreaTrabajoServiceImplementation implements IAreaTrabajoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AreaTrabajoDTO>> findByNombreArea(String area) {
-        return findList(areaTrabajoRepository.findByNombreArea(area));
+    public Optional<AreaTrabajoDTO> findByNombreArea(String area) {
+        return oneToDto(Optional.ofNullable(areaTrabajoRepository.findByNombreArea(area)));
     }
 
     @Override

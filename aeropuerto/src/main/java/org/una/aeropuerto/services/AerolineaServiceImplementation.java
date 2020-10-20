@@ -10,7 +10,6 @@ import org.una.aeropuerto.entities.Aerolinea;
 import org.una.aeropuerto.repositories.IAerolineaRepository;
 import org.una.aeropuerto.utils.MapperUtils;
 
-
 @Service
 public class AerolineaServiceImplementation implements IAerolineaService {
 
@@ -62,8 +61,8 @@ public class AerolineaServiceImplementation implements IAerolineaService {
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AerolineaDTO>> findByNombreAerolinea(String nombreAerolinea) {
-        return findList(AerolineaRepository.findByNombreAerolinea(nombreAerolinea));
+    public Optional<AerolineaDTO> findByNombreAerolinea(String nombreAerolinea) {
+        return oneToDto(Optional.ofNullable(AerolineaRepository.findByNombreAerolinea(nombreAerolinea)));
     }
     
     @Override

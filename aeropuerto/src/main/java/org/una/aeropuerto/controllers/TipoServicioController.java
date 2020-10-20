@@ -48,7 +48,7 @@ public class TipoServicioController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     @ApiOperation(value = "Obtiene  el tipo de Servicio por medio del Id", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -59,9 +59,9 @@ public class TipoServicioController {
         }
     }
     
-    @GetMapping("/nombre/{term}")
+    @GetMapping("/findByNombre/{nombre}")
     @ApiOperation(value = "Obtiene una lista con el tipo de Servicio por medio del nombre", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
-    public ResponseEntity<?> findByNombre(@PathVariable(value = "term") String term) {
+    public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String term) {
         try {
                 return new ResponseEntity(tipoServicioService.findByNombre(term), HttpStatus.OK);
         } catch (Exception e) {

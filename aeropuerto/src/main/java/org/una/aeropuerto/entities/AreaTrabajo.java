@@ -1,30 +1,17 @@
 package org.una.aeropuerto.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 
 /**
  *
@@ -57,17 +44,14 @@ public class AreaTrabajo implements Serializable {
     
     @Column(name = "nombre_responsable", length = 50)
     private String nombreResponsable;
-    
-    /*@ManyToMany(mappedBy = "areaTrabajo")
-    private List<Usuario> usuarios;*/
-    
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "areasTrabajo_aviones", 
-      joinColumns = @JoinColumn(name = "aviones_id", referencedColumnName = "id"), 
-      inverseJoinColumns = @JoinColumn(name = "areas_trabajo_id", 
-      referencedColumnName = "id"))
-    private List<Avion> avion;
-    
+
+/*
+     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo")
+    private List<UsuarioAreaTrabajo> UsuariosAreasTrabajo = new ArrayList<>();
+*/
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo")
+    private List<AreaTrabajoAvion> AreasTrabajoAviones = new ArrayList<>();
+
     private static final long serialVersionUID = 1L;
 
     @PrePersist

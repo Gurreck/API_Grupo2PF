@@ -6,7 +6,7 @@ import org.una.aeropuerto.entities.Usuario;
 
 public interface IAreaTrabajoRepository extends JpaRepository<AreaTrabajo, Long> {
 
-    public List<AreaTrabajo> findByNombreArea(String area);
+    public AreaTrabajo findByNombreArea(String area);
 
     public List<AreaTrabajo> findByNombreResponsable(String responsable);
  

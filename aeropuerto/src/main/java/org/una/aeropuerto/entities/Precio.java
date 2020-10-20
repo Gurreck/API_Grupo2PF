@@ -44,6 +44,9 @@ public class Precio {
     @Setter(AccessLevel.NONE)
     private Date fechaRegistro;
 
+    @Column
+    private boolean estado;
+
     @ManyToOne 
     @JoinColumn(name="tiposServicio_id")
     private TipoServicio tipoServicio;

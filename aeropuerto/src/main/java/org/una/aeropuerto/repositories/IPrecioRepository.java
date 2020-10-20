@@ -14,5 +14,5 @@ public interface IPrecioRepository extends JpaRepository<Precio, Long>{
     
     public Optional<List<Precio>> findByFechaRegistroBetween(Date startDate, Date endDate);
     
-    public List<Precio> findByTipoServicioId(long tipoServicio);
+    public List<Precio> findByTipoServicioId(Long tipoServicio);
 }
