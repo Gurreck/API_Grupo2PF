@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.una.aeropuerto.entities.Avion;
-import org.una.aeropuerto.entities.TipoServicio;
 
 /**
  *
@@ -25,6 +23,6 @@ public class ServicioDTO {
     private String factura;
     private String responsable; 
     private String observacion;  
-    private TipoServicio tipoServicio;
-    private Avion avion;
+    private TipoServicioDTO tipoServicio;
+    private AvionDTO avion;
 }

@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.una.aeropuerto.entities.Usuario;
 
 @Data
 @AllArgsConstructor
@@ -22,5 +21,5 @@ public class HorarioDTO {
     private Date fechaRegistro; 
     private Date fechaModificacion; 
     private boolean estado; 
-    private Usuario usuario; 
+    private UsuarioDTO usuario; 
 }

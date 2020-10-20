@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.una.aeropuerto.entities.Rol;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +21,7 @@ public class UsuarioDTO {
     private Date fechaModificacion; 
     private String correo;
     private boolean esJefe;
-    private Rol rol;
+    private RolDTO rol;
      
 }
 

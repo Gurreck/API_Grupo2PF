@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.una.aeropuerto.entities.Rol;
-import org.una.aeropuerto.entities.Usuario;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +17,6 @@ public class HoraMarcajeDTO {
     private Date horaSalida;
     private Date fechaRegistro; 
     private Date fechaModificacion; 
-    private Usuario usuario;
+    private UsuarioDTO usuario;
      
 }
