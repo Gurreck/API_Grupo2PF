@@ -1,5 +1,6 @@
 package org.una.aeropuerto.services;
 
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,11 +47,6 @@ public class TransaccionServiceImplementation implements ITransaccionService {
 
     @Override
     @Transactional
-    public Optional<List<TransaccionDTO>> findAll() {
-        return findList(transaccionRepository.findAll());
-    }
-    @Override
-    @Transactional
     public Optional<TransaccionDTO> findById(Long id) {
         return oneToDto(transaccionRepository.findById(id));
     }
@@ -60,7 +56,17 @@ public class TransaccionServiceImplementation implements ITransaccionService {
     public Optional<List<TransaccionDTO>> findByEstado(boolean estado) {
         return findList(transaccionRepository.findByEstado(estado));
     }
+    
+    @Override
+    public Optional<List<TransaccionDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
+       return findList(transaccionRepository.findByFechaRegistroBetween(startDate, endDate));
+    }
 
+    @Override
+    public Optional<List<TransaccionDTO>> findByUsuarioId(Long id) {
+       return findList(transaccionRepository.findByUsuarioId(id));
+    }
+    
     @Override
     @Transactional
     public TransaccionDTO create(TransaccionDTO transaccionDTO) {
@@ -79,6 +85,7 @@ public class TransaccionServiceImplementation implements ITransaccionService {
         } else {
             return null;
         }
-    }
+    }   
 
+    
 }

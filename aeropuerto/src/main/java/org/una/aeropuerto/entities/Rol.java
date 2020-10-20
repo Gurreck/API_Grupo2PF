@@ -41,8 +41,8 @@ public class Rol implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipo", length = 100)
-    private String tipo;
+    @Column(name = "nombre", length = 50)
+    private String nombre;
 
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.DATE)

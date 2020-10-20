@@ -25,7 +25,7 @@ public class HoraMarcajeController {
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     @ApiOperation(value = "Obtiene la Hora de marcaje por medio del Id", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -34,37 +34,27 @@ public class HoraMarcajeController {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    @GetMapping("/HoraEntrada/{termino}")
-    @ApiOperation(value = "Obtiene la Hora de marcaje por medio de la Hora de entrada", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
-    public ResponseEntity<?> findByHoraEntrada(@PathVariable(value = "termino") Date term) {
+      
+    @GetMapping("/findByFechaRegistro/{fechaInicial}/{fechaFinal}")
+    @ApiOperation(value = "Obtiene la hora de marcaje entre las fechas de registro especificadas", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {
-            return new ResponseEntity(horaMarcajeService.findByHoraEntrada(term), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @GetMapping("/HoraSalida/{termino}")
-    @ApiOperation(value = "Obtiene la Hora de marcaje por medio de la Hora de salida", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
-    public ResponseEntity<?> findByHoraSalida(@PathVariable(value = "termino") Date term) {
-        try {
-            return new ResponseEntity(horaMarcajeService.findByHoraSalida(term), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @GetMapping("/FechaRegistro/{termino}")
-    @ApiOperation(value = "Obtiene la Hora de marcaje por medio de la fecha de registro", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
-    public ResponseEntity<?> findByFechaRegistro(@PathVariable(value = "termino") Date term) {
-        try {
-            return new ResponseEntity(horaMarcajeService.findByFechaRegistro(term), HttpStatus.OK);
+            return new ResponseEntity(horaMarcajeService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @GetMapping("/findByUsuarioId/{usuarioId}")
+    @ApiOperation(value = "Obtiene una lista de horarios por medio del id del usuario", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "usuarioId") Long id) {
+        try {
+            return new ResponseEntity(horaMarcajeService.findByUsuarioId(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @PostMapping("/")
     @ApiOperation(value = "Permite crear una Hora de marcaje", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
     public ResponseEntity<?> create(@Valid @RequestBody HoraMarcajeDTO horaMarcajeDTO, BindingResult bindingResult) {

@@ -47,30 +47,20 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
     }
 
     @Override
-    public Optional<List<HoraMarcajeDTO>> findAll() {
-       return findList(horaMarcajeRepository.findAll());
-    }
-
-    @Override
     public Optional<HoraMarcajeDTO> findById(Long id) {
         return oneToDto(horaMarcajeRepository.findById(id));
     }
-
+    
     @Override
-    public Optional<List<HoraMarcajeDTO>> findByHoraEntrada(Date horaEntrada) {
-        return  findList(horaMarcajeRepository.findByHoraEntrada(horaEntrada));
+    public Optional<List<HoraMarcajeDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
+        return  findList(horaMarcajeRepository.findByFechaRegistroBetween(startDate, endDate));
     }
-
+    
     @Override
-    public Optional<List<HoraMarcajeDTO>> findByHoraSalida(Date horaSalida) {
-        return  findList(horaMarcajeRepository.findByHoraSalida(horaSalida));
+    public Optional<List<HoraMarcajeDTO>> findByUsuarioId(Long id) {
+        return  findList(horaMarcajeRepository.findByUsuarioId(id));
     }
-
-    @Override
-    public Optional<List<HoraMarcajeDTO>> findByFechaRegistro(Date fechaRegistro) {
-        return  findList(horaMarcajeRepository.findByFechaRegistro(fechaRegistro));
-    }
-
+    
     @Override
     public HoraMarcajeDTO create(HoraMarcajeDTO horaMarcajeDTO) {
         HoraMarcaje horaMarcaje = MapperUtils.EntityFromDto(horaMarcajeDTO, HoraMarcaje.class);
@@ -87,7 +77,7 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
         } else {
             return null;
         }
-    }
+    }     
 
     
 }

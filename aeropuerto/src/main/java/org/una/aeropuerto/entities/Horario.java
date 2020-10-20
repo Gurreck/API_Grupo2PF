@@ -44,11 +44,11 @@ public class Horario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "dia_entrada", length = 50)
-    private String diaEntrada;
+    @Column(name = "dia_entrada")
+    private Short diaEntrada;
     
-    @Column(name = "dia_salida", length = 50)
-    private String diaSalida;
+    @Column(name = "dia_salida")
+    private Short diaSalida;
     
     @Column(name = "hora_entrada")
     private Time horaEntrada;
@@ -72,7 +72,6 @@ public class Horario implements Serializable {
     @ManyToOne 
     @JoinColumn(name="usuarios_id")
     private Usuario usuario;
-    
     
     private static final long serialVersionUID = 1L;
 

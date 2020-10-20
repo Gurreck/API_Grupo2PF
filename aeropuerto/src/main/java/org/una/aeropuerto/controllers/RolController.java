@@ -2,6 +2,7 @@
 
  import io.swagger.annotations.Api;
  import io.swagger.annotations.ApiOperation;
+import java.util.Date;
  import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class RolController {
 
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/")
+    @GetMapping("/findAll/")
     @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findAll() {
         try {
@@ -34,7 +35,7 @@ public class RolController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     @ApiOperation(value = "Obtiene un rol por su Id", response = RolDTO.class, tags = "Roles")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -44,35 +45,45 @@ public class RolController {
         }
     }
 
-    @GetMapping("/tipo/{termino}")
-    @ApiOperation(value = "Obtiene una lista de roles por tipo", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-    public ResponseEntity<?> findByTipo(@PathVariable(value = "termino") String term) {
+    @GetMapping("/findByNombre/{nombre}")
+    @ApiOperation(value = "Obtiene una lista de roles por su nombre", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
-            return new ResponseEntity(rolService.findByTipo(term), HttpStatus.OK);
+            return new ResponseEntity(rolService.findByNombre(nombre), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/estado/{termino}")
+    @GetMapping("/findByEstado/{estado}")
     @ApiOperation(value = "Obtiene una lista de roles por estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "termino") boolean term) {
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
-            return new ResponseEntity(rolService.findByEstado(term), HttpStatus.OK);
+            return new ResponseEntity(rolService.findByEstado(estado), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-     @GetMapping("/contar/estado/{termino}")
-     @ApiOperation(value = "Realiza un conteo de roles por medio del estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-     public ResponseEntity<?> countByEstado(@PathVariable(value = "termino") boolean term) {
-         try {
-             return new ResponseEntity(rolService.countByEstado(term), HttpStatus.OK);
-         } catch (Exception e) {
-             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
-         }
-     }
+    
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
+    @ApiOperation(value = "Obtiene una lista de roles entre las fechas de registro especificadas", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+        try {
+            return new ResponseEntity(rolService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/countByEstado/{estado}")
+    @ApiOperation(value = "Realiza un conteo de roles por medio del estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    public ResponseEntity<?> countByEstado(@PathVariable(value = "estado") boolean estado) {
+        try {
+            return new ResponseEntity(rolService.countByEstado(estado), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/")
     @ApiOperation(value = "Permite crear un rol", response = RolDTO.class, tags = "Roles")

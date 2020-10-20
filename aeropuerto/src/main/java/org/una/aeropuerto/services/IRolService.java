@@ -1,10 +1,10 @@
 package org.una.aeropuerto.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.una.aeropuerto.dto.RolDTO;
-import org.una.aeropuerto.entities.Rol;
 
 /**
  *
@@ -16,9 +16,11 @@ public interface IRolService {
 
     public Optional<RolDTO> findById(Long id);
 
-    public Optional<RolDTO> findByTipo(String tipo);
+    public Optional<RolDTO> findByNombre(String nombre);
     
     public Optional<List<RolDTO>> findByEstado(boolean estado);
+    
+    public Optional<List<RolDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
     
     public Long countByEstado(boolean estado);
 

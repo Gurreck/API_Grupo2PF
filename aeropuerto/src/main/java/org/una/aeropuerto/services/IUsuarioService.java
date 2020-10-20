@@ -5,6 +5,7 @@
  */
 package org.una.aeropuerto.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.una.aeropuerto.dto.RolDTO;
@@ -26,9 +27,11 @@ public interface IUsuarioService {
 
     public Optional<List<UsuarioDTO>> findByNombreCompletoAproximateIgnoreCase(String nombreCompleto);
     
-    //public Optional<List<UsuarioDTO>> findByEsJefe(boolean esJefe);
+    public Optional<List<UsuarioDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
     
     public RolDTO findRolByCedula(String cedula);
+    
+    public Optional<List<UsuarioDTO>> findByUsuarioJefeId(Long id);
     
     public UsuarioDTO create(UsuarioDTO usuario);
 

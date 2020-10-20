@@ -1,7 +1,7 @@
 package org.una.aeropuerto.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.sql.Time;
+import java.util.Date;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class HorarioController {
    
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     @ApiOperation(value = "Obtiene un horario por su Id", response = HorarioDTO.class, tags = "Horarios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -38,36 +38,36 @@ public class HorarioController {
         }
     }
 
-    @GetMapping("/estado/{termino}")
+    @GetMapping("/findByEstado/{estado}")
     @ApiOperation(value = "Obtiene una lista de horarios por estado", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "termino") boolean term) {
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
-            return new ResponseEntity(horarioService.findByEstado(term), HttpStatus.OK);
+            return new ResponseEntity(horarioService.findByEstado(estado), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
-    @GetMapping("/diaEntrada/{termino}")
-    @ApiOperation(value = "Obtiene una lista de horarios por medio del dia de entrada", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
-    public ResponseEntity<?> findByDiaEntrada(@PathVariable(value = "termino") String term) {
+    @GetMapping("/findByFechaRegistro/{fechaInicial}/{fichaFinal}")
+    @ApiOperation(value = "Obtiene los horarios entre las fechas de registro especificadas", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {
-            return new ResponseEntity(horarioService.findByDiaEntrada(term), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-   
-    @GetMapping("/diaSalida/{termino}")
-    @ApiOperation(value = "Obtiene una lista de horarios por medio del dia de salida", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
-    public ResponseEntity<?> findByDiaSalida(@PathVariable(value = "termino") String term) {
-        try {
-            return new ResponseEntity(horarioService.findByDiaSalida(term), HttpStatus.OK);
+            return new ResponseEntity(horarioService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
      
+    @GetMapping("/findByUsuarioId/{usuarioId}")
+    @ApiOperation(value = "Obtiene una lista de horarios por medio del id del usuario", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "usuarioId") Long id) {
+        try {
+            return new ResponseEntity(horarioService.findByUsuarioId(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @PostMapping("/")
     @ApiOperation(value = "Permite crear un horario", response = HorarioDTO.class, tags = "Horarios")
     public ResponseEntity<?> create(@Valid @RequestBody HorarioDTO horarioDTO, BindingResult bindingResult) {

@@ -1,6 +1,7 @@
 package org.una.aeropuerto.services;
 
 import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,15 +55,15 @@ public class HorarioServiceImplementation implements IHorarioService {
     }
 
     @Override
-    public Optional<List<HorarioDTO>> findByDiaEntrada(String diaEntrada) {
-        return findList(horarioRepository.findByDiaEntrada(diaEntrada));
+    public Optional<List<HorarioDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
+        return findList(horarioRepository.findByFechaRegistroBetween(startDate, endDate));
     }
-
+    
     @Override
-    public Optional<List<HorarioDTO>> findByDiaSalida(String diaSalida) {
-        return findList(horarioRepository.findByDiaSalida(diaSalida));
+    public Optional<List<HorarioDTO>> findByUsuarioId(Long id) {
+        return findList(horarioRepository.findByUsuarioId(id));
     }
-
+    
     @Override
     @Transactional
     public HorarioDTO create(HorarioDTO horarioDTO) {
@@ -70,7 +71,6 @@ public class HorarioServiceImplementation implements IHorarioService {
         horario = horarioRepository.save(horario);
         return MapperUtils.DtoFromEntity(horario, HorarioDTO.class);
     }
-
 
     @Override
     @Transactional
@@ -84,4 +84,5 @@ public class HorarioServiceImplementation implements IHorarioService {
         }
     }
 
+    
 }

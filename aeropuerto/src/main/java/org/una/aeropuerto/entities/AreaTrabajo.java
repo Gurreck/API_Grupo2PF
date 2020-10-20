@@ -58,8 +58,8 @@ public class AreaTrabajo implements Serializable {
     @Column(name = "nombre_responsable", length = 50)
     private String nombreResponsable;
     
-    @ManyToMany(mappedBy = "areaTrabajo")
-    private List<Usuario> usuarios;
+    /*@ManyToMany(mappedBy = "areaTrabajo")
+    private List<Usuario> usuarios;*/
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "areasTrabajo_aviones", 

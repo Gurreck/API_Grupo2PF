@@ -1,5 +1,6 @@
 package org.una.aeropuerto.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aeropuerto.dto.RolDTO;
 import org.una.aeropuerto.entities.Rol;
-import org.una.aeropuerto.entities.Usuario;
 import org.una.aeropuerto.repositories.IRolRepository;
-import org.una.aeropuerto.repositories.IUsuarioRepository;
 import org.una.aeropuerto.utils.MapperUtils;
 
 
@@ -45,7 +44,6 @@ public class RolServiceImplementation implements IRolService {
         }
     }
 
-
     @Override
     public Optional<List<RolDTO>> findAll() {
          return findList(rolRepository.findAll());
@@ -57,15 +55,19 @@ public class RolServiceImplementation implements IRolService {
     }
     
     @Override
-    public Optional<RolDTO> findByTipo(String cedula) {
-
-        return oneToDto(rolRepository.findByTipo(cedula));
+    public Optional<RolDTO> findByNombre(String nombre) {
+        return oneToDto(rolRepository.findByNombre(nombre));
     }
     
      @Override
     public Optional<List<RolDTO>> findByEstado(boolean estado) {
         return  findList(rolRepository.findByEstado(estado));
     }
+    
+    @Override
+    public Optional<List<RolDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
+        return findList(rolRepository.findByFechaRegistroBetween(startDate, endDate));
+    }   
     
     @Override
     public Long countByEstado(boolean estado) {
@@ -90,10 +92,7 @@ public class RolServiceImplementation implements IRolService {
         } else {
             return null;
         }
-    }
+    }  
 
-
-
-
-
+    
 }

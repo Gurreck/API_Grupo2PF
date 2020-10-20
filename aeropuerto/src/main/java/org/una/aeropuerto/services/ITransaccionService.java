@@ -1,5 +1,6 @@
 package org.una.aeropuerto.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.una.aeropuerto.dto.TransaccionDTO;
@@ -11,11 +12,13 @@ import org.una.aeropuerto.dto.TransaccionDTO;
  */
 public interface ITransaccionService {
     
-    public Optional<List<TransaccionDTO>> findAll();
-
     public Optional<TransaccionDTO> findById(Long id);
     
     public Optional<List<TransaccionDTO>> findByEstado(boolean estado);
+    
+    public Optional<List<TransaccionDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
+    
+    public Optional<List<TransaccionDTO>> findByUsuarioId(Long id);
 
     public TransaccionDTO create(TransaccionDTO transaccion);
 
