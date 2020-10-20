@@ -43,10 +43,10 @@ public class Vuelo implements Serializable {
     @Column
     private Float duracion;
     
-    @Column(name = "aeropuerto", length = 100)
+    @Column(name = "nombre_aeropuerto", length = 100)
     private String aeropuerto;
 
-    @Column(name = "fecha_salida", updatable = false)
+    @Column(name = "fecha_salida")
     @Temporal(TemporalType.TIMESTAMP) 
     @Setter(AccessLevel.NONE)
     private Date fechaSalida;
@@ -71,8 +71,6 @@ public class Vuelo implements Serializable {
     @PrePersist
     public void prePersist() {
         estado=true;
-        fechaSalida = new Date();
-        fechaLlegada = new Date();
     }
 
     @PreUpdate

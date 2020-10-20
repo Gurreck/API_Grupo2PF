@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.una.aeropuerto.dto.AvionDTO;
-import org.una.aeropuerto.entities.Usuario;
 
 /**
  *
@@ -17,13 +16,15 @@ public interface IAvionService {
 
     public Optional<AvionDTO> findById(Long id);
 
-    public Optional<List<AvionDTO>> findByMatricula(String matricula);
+    public Optional<AvionDTO> findByMatricula(String matricula);
 
     public Optional<List<AvionDTO>> findByTipoAvion(String tipoAvion);
     
-    public Optional<List<AvionDTO>> findByFechaRegistro(Date fechaRegistro);
+    public Optional<List<AvionDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
     
     public Optional<List<AvionDTO>> findByEstado(boolean estado);
+    
+    public Optional<List<AvionDTO>> findByAerolineaId(Long aerolinea);
 
     public AvionDTO create(AvionDTO avionDTO);
 

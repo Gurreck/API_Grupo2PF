@@ -46,12 +46,6 @@ public class VueloServiceImplementation implements IVueloService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<VueloDTO>> findAll() {
-        return findList(vueloRepository.findAll());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Optional<VueloDTO> findById(Long id) {
         return oneToDto(vueloRepository.findById(id));
     }
@@ -63,20 +57,26 @@ public class VueloServiceImplementation implements IVueloService {
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<VueloDTO>> findByEstado(boolean estado) {
         return findList(vueloRepository.findByEstado(estado));
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<VueloDTO>> findByFechaLlegada(Date startDate) {
-        return findList(vueloRepository.findByFechaLlegada(startDate));
+    public Optional<List<VueloDTO>> findByFechaLlegadaBetween(Date startDate, Date endDate) {
+        return findList(vueloRepository.findByFechaLlegadaBetween(startDate, endDate));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<VueloDTO>> findByFechaSalida(Date startDate) {
-        return findList(vueloRepository.findByFechaSalida(startDate));
+    public Optional<List<VueloDTO>> findByFechaSalidaBetween(Date startDate, Date endDate) {
+        return findList(vueloRepository.findByFechaSalidaBetween(startDate, endDate));
+    }
+    
+    @Override
+    public Optional<List<VueloDTO>> findByAvionId(Long avion) {
+        return findList(vueloRepository.findByAvionId(avion));
     }
 
     @Override
@@ -99,6 +99,6 @@ public class VueloServiceImplementation implements IVueloService {
             return null;
         }
 
-    }
+    }    
  
 }

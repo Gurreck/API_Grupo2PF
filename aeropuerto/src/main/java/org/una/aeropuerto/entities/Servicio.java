@@ -37,7 +37,7 @@ public class Servicio implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column
+    @Column(name = "estado_cobro")
     private boolean estadoCobro;
     
     @Column
@@ -48,11 +48,16 @@ public class Servicio implements Serializable{
     @Setter(AccessLevel.NONE)
     private Date fechaRegistro;
     
+    @Column(name = "fecha_modificacion")
+    @Setter(AccessLevel.NONE)
+    @Temporal(TemporalType.DATE)
+    private Date fechaModificacion;
+    
     @Column(name = "factura", length = 50)
     private String factura;
     
-    @Column(name = "responsable", length = 100)
-    private String responsable;
+    @Column(name = "nombre_responsable", length = 50)
+    private String nombreResponsable;
     
     @Column(name = "observaciones")
     private String observacion;
@@ -71,9 +76,11 @@ public class Servicio implements Serializable{
     public void prePersist() {
         estado=true;
         fechaRegistro = new Date();
+        fechaModificacion = new Date();
     }
 
     @PreUpdate
     public void preUpdate() {
+        fechaModificacion = new Date();
     }
 }

@@ -8,10 +8,12 @@ public interface IVueloRepository extends JpaRepository<Vuelo, Long> {
 
     public List<Vuelo> findByAeropuerto(String aeropueto);
 
-    public List<Vuelo> findByEstado(boolean nombreCompleto);
+    public List<Vuelo> findByEstado(boolean estado);
     
-    public List<Vuelo>findByFechaLlegada(Date startDate);
+    public List<Vuelo> findByFechaLlegadaBetween(Date startDate, Date endDate);
     
-    public List<Vuelo>findByFechaSalida(Date startDate);
+    public List<Vuelo> findByFechaSalidaBetween(Date startDate, Date endDate);
+    
+    public List<Vuelo> findByAvionId(Long avion);
  
 }

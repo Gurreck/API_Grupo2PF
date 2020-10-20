@@ -59,6 +59,17 @@ public class Avion implements Serializable {
     @Setter(AccessLevel.NONE)
     private Date fechaRegistro;
     
+    @Column(name = "fecha_modificacion")
+    @Setter(AccessLevel.NONE)
+    @Temporal(TemporalType.DATE)
+    private Date fechaModificacion;
+    
+    @Column
+    private Integer recorrido;
+    
+    @Column(name = "recorrido_max")
+    private Integer recorridoMaximo;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion") 
     private List<Servicio> servicios = new ArrayList<>();
     
@@ -79,12 +90,13 @@ public class Avion implements Serializable {
     public void prePersist() {
         estado=true;
         fechaRegistro = new Date();
+        fechaModificacion = new Date();
         
     }
 
     @PreUpdate
     public void preUpdate() {
-        
+        fechaModificacion = new Date();
     }
 }
 

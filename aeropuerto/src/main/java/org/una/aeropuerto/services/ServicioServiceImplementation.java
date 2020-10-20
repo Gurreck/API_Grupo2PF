@@ -49,12 +49,6 @@ public class ServicioServiceImplementation implements IServicioService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioDTO>> findAll() {
-        return findList(servicioRepository.findAll());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Optional<ServicioDTO> findById(Long id) {
         return oneToDto(servicioRepository.findById(id));
     }
@@ -87,6 +81,12 @@ public class ServicioServiceImplementation implements IServicioService {
     @Transactional(readOnly = true)
     public Optional<List<ServicioDTO>> findByTipoServicioId(Long id) {
         return findList(servicioRepository.findByTipoServicioId(id));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<ServicioDTO>> findByTipoServicioIdAndAvionId(Long tipoServicio, Long avion) {
+        return findList(servicioRepository.findByTipoServicioIdAndAvionId(tipoServicio, avion));
     }
 
     @Override

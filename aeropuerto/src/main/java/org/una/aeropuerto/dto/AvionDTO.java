@@ -17,6 +17,9 @@ public class AvionDTO {
     private String tipoAvion;   
     private boolean estado; 
     private Date fechaRegistro; 
+    private Date fechaModificacion;
+    private Integer recorrido;
+    private Integer recorridoMaximo;
     private AerolineaDTO aerolinea;
      
 }

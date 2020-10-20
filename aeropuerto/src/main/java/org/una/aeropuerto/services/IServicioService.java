@@ -11,11 +11,8 @@ import org.una.aeropuerto.dto.ServicioDTO;
  * @author Esteban Vargas
  */
 public interface IServicioService {
-    
-    public Optional<List<ServicioDTO>> findAll();
 
     public Optional<ServicioDTO> findById(Long id);
-
 
     public Optional<List<ServicioDTO>> findByEstado(boolean estado);
     
@@ -23,9 +20,11 @@ public interface IServicioService {
     
     public Optional<List<ServicioDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
     
-    public Optional<List<ServicioDTO>>  findByAvionId(Long id);
+    public Optional<List<ServicioDTO>>  findByAvionId(Long avion);
     
-    public Optional<List<ServicioDTO>>  findByTipoServicioId(Long id);
+    public Optional<List<ServicioDTO>>  findByTipoServicioId(Long tipoServicio);
+    
+    public Optional<List<ServicioDTO>> findByTipoServicioIdAndAvionId(Long tipoServicio, Long avion);
 
     public ServicioDTO create(ServicioDTO servicio);
 

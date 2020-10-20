@@ -10,6 +10,7 @@ import org.una.aeropuerto.utils.MapperUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -45,31 +46,43 @@ public class AvionServiceImplementation implements IAvionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<AvionDTO>> findAll() {
         return findList(avionRepository.findAll());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AvionDTO> findById(Long id) {
         return oneToDto(avionRepository.findById(id));
     }
 
     @Override
-    public Optional<List<AvionDTO>> findByMatricula(String matricula) {
-        return findList(avionRepository.findByMatricula(matricula));
+    @Transactional(readOnly = true)
+    public Optional<AvionDTO> findByMatricula(String matricula) {
+        return oneToDto(avionRepository.findByMatricula(matricula));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<AvionDTO>> findByTipoAvion(String tipoAvion) {
         return findList(avionRepository.findByTipoAvion(tipoAvion));
     }
-
+    
     @Override
-    public Optional<List<AvionDTO>> findByFechaRegistro(Date fechaRegistro) {
-        return findList(avionRepository.findByFechaRegistro(fechaRegistro));
+    @Transactional(readOnly = true)
+    public Optional<List<AvionDTO>> findByAerolineaId(Long aerolinea) {
+        return findList(avionRepository.findByAerolineaId(aerolinea));
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<List<AvionDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
+        return findList(avionRepository.findByFechaRegistroBetween(startDate, endDate));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<List<AvionDTO>> findByEstado(boolean estado) {
         return findList(avionRepository.findByEstado(estado));
     }

@@ -33,7 +33,7 @@ public class ServicioController {
 
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     @ApiOperation(value = "Obtiene el Servicio por medio del Id", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -44,8 +44,8 @@ public class ServicioController {
         }
     }
 
-    @GetMapping("/{Estado}")
-    @ApiOperation(value = "Obtiene una lista de Servicios por medio del estado", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    @GetMapping("/findByEstado/{estado}")
+    @ApiOperation(value = "Obtiene una lista de Servicios por medio del Estado", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             return new ResponseEntity(servicioService.findByEstado(estado), HttpStatus.OK);
@@ -54,9 +54,9 @@ public class ServicioController {
         }
     }
 
-    @GetMapping("/{estadoCobro}")
-    @ApiOperation(value = "Obtiene una lista de Servicios por medio del estado del cobro", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
-    public ResponseEntity<?> findByEstadoCobro(@PathVariable(value = "estado") boolean estadoCobro) {
+    @GetMapping("/findByestadoCobro/{estadoCobro}")
+    @ApiOperation(value = "Obtiene una lista de Servicios por medio del Estado del Cobro", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    public ResponseEntity<?> findByEstadoCobro(@PathVariable(value = "estadoCobro") boolean estadoCobro) {
         try {
             return new ResponseEntity(servicioService.findByEstadoCobro(estadoCobro), HttpStatus.OK);
 
@@ -65,9 +65,9 @@ public class ServicioController {
         }
     }
 
-    @GetMapping("/{fecha}")
-    @ApiOperation(value = "Obtiene una lista de Servicios entre la fecha especificada", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "Fecha inicial") Date startDate, @PathVariable(value = "Fecha final") Date endDate) {
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
+    @ApiOperation(value = "Obtiene una lista de Servicios entre la Fecha Especificada", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {
             return new ResponseEntity(servicioService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
 
@@ -76,9 +76,9 @@ public class ServicioController {
         }
     }
 
-    @GetMapping("/avion/{term}")
+    @GetMapping("/findByAvionId/{id}")
     @ApiOperation(value = "Obtiene una lista de Servicios por Avion", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
-    public ResponseEntity<?> findByAvionId(@PathVariable(value = "term") long term) {
+    public ResponseEntity<?> findByAvionId(@PathVariable(value = "id") Long term) {
         try {
             return new ResponseEntity(servicioService.findByAvionId(term), HttpStatus.OK);
         } catch (Exception e) {
@@ -86,11 +86,21 @@ public class ServicioController {
         }
     }
 
-    @GetMapping("/tiposervicio/{term}")
-    @ApiOperation(value = "Obtiene una lista de Servicios por tipo de Servicio", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
-    public ResponseEntity<?> findByTipoServicioId(@PathVariable(value = "term") long term) {
+    @GetMapping("/findByTipoServicioId/{id}")
+    @ApiOperation(value = "Obtiene una lista de Servicios por Tipo de Servicio", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    public ResponseEntity<?> findByTipoServicioId(@PathVariable(value = "id") Long term) {
         try {
             return new ResponseEntity(servicioService.findByTipoServicioId(term), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/findByTipoServicioIdAndAvionId/{TipoServicioId}/{AvionId}")
+    @ApiOperation(value = "Obtiene una lista de Servicios por Tipo de Servicio y Avion", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    public ResponseEntity<?> findByTipoServicioIdAndAvionId(@PathVariable(value = "TipoServicioId") Long term, @PathVariable(value = "AvionId") Long term2) {
+        try {
+            return new ResponseEntity(servicioService.findByTipoServicioIdAndAvionId(term, term2), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
