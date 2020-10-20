@@ -55,6 +55,7 @@ public class Precio {
     
     @PrePersist
     public void prePersist() {
+        estado = true;
         fechaRegistro = new Date();
     }
 

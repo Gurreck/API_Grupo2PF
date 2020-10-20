@@ -54,7 +54,7 @@ public class ServicioController {
         }
     }
 
-    @GetMapping("/findByestadoCobro/{estadoCobro}")
+    @GetMapping("/findByEstadoCobro/{estadoCobro}")
     @ApiOperation(value = "Obtiene una lista de Servicios por medio del Estado del Cobro", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public ResponseEntity<?> findByEstadoCobro(@PathVariable(value = "estadoCobro") boolean estadoCobro) {
         try {
@@ -66,7 +66,7 @@ public class ServicioController {
     }
 
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
-    @ApiOperation(value = "Obtiene una lista de Servicios entre la Fecha Especificada", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    @ApiOperation(value = "Obtiene una lista de Servicios entre la fecha de registro especificada", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {
             return new ResponseEntity(servicioService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);

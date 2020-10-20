@@ -29,7 +29,7 @@ public class HorarioController {
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
     @GetMapping("/findById/{id}")
-    @ApiOperation(value = "Obtiene un horario por su Id", response = HorarioDTO.class, tags = "Horarios")
+    @ApiOperation(value = "Obtiene un Horario por su Id", response = HorarioDTO.class, tags = "Horarios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity(horarioService.findById(id), HttpStatus.OK);
@@ -39,7 +39,7 @@ public class HorarioController {
     }
 
     @GetMapping("/findByEstado/{estado}")
-    @ApiOperation(value = "Obtiene una lista de horarios por estado", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    @ApiOperation(value = "Obtiene una lista de Horarios por estado", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             return new ResponseEntity(horarioService.findByEstado(estado), HttpStatus.OK);
@@ -49,7 +49,7 @@ public class HorarioController {
     }
     
     @GetMapping("/findByFechaRegistro/{fechaInicial}/{fichaFinal}")
-    @ApiOperation(value = "Obtiene los horarios entre las fechas de registro especificadas", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    @ApiOperation(value = "Obtiene los Horarios entre las fechas de registro especificadas", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {
             return new ResponseEntity(horarioService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
@@ -58,9 +58,9 @@ public class HorarioController {
         }
     }
      
-    @GetMapping("/findByUsuarioId/{usuarioId}")
-    @ApiOperation(value = "Obtiene una lista de horarios por medio del id del usuario", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
-    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "usuarioId") Long id) {
+    @GetMapping("/findByUsuarioId/{id}")
+    @ApiOperation(value = "Obtiene una lista de Horarios por medio del id del Usuario", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity(horarioService.findByUsuarioId(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class HorarioController {
     }
     
     @PostMapping("/")
-    @ApiOperation(value = "Permite crear un horario", response = HorarioDTO.class, tags = "Horarios")
+    @ApiOperation(value = "Permite crear un Horario", response = HorarioDTO.class, tags = "Horarios")
     public ResponseEntity<?> create(@Valid @RequestBody HorarioDTO horarioDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -84,7 +84,7 @@ public class HorarioController {
 
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Permite modificar un horario a partir de su Id", response = HorarioDTO.class, tags = "Horarios")
+    @ApiOperation(value = "Permite modificar un Horario a partir de su Id", response = HorarioDTO.class, tags = "Horarios")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody HorarioDTO horarioDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

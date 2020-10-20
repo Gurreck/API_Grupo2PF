@@ -44,7 +44,7 @@ public class AlertaController {
     }
     
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
-    @ApiOperation(value = "Obtiene una lista de Alertas entre la Fecha Especificada", response = AlertaDTO.class, responseContainer = "List", tags = "Alertas")
+    @ApiOperation(value = "Obtiene una lista de Alertas entre las fechas de registro especificadas", response = AlertaDTO.class, responseContainer = "List", tags = "Alertas")
     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {
             return new ResponseEntity(alertaService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);

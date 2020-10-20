@@ -36,9 +36,9 @@ public class AreaTrabajoAvionController {
         }
     }
 
-    @GetMapping("/findByFechaRegistroBetween/{fecha1}{fecha2}/")
-    @ApiOperation(value = "Obtiene una lista de Area de Trabajo con Avion entre fechas", response = AreaTrabajoAvionDTO.class, responseContainer = "List", tags = "Areas Trabajo Aviones")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fecha1") Date fechaInicio, @PathVariable(value = "fecha2") Date fechaFinal) {
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
+    @ApiOperation(value = "Obtiene una lista de Area de Trabajo con Avion entre las fechas de registro especificadas", response = AreaTrabajoAvionDTO.class, responseContainer = "List", tags = "Areas Trabajo Aviones")
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date fechaInicio, @PathVariable(value = "fechaFinal") Date fechaFinal) {
         try {
             return new ResponseEntity(areaTrabajoAvionService.findByFechaRegistroBetween(fechaInicio, fechaFinal), HttpStatus.OK);
         } catch (Exception e) {

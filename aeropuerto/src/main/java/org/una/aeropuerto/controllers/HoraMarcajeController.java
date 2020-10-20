@@ -35,8 +35,8 @@ public class HoraMarcajeController {
         }
     }
       
-    @GetMapping("/findByFechaRegistro/{fechaInicial}/{fechaFinal}")
-    @ApiOperation(value = "Obtiene la hora de marcaje entre las fechas de registro especificadas", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
+    @ApiOperation(value = "Obtiene la Hora de Marcaje entre las fechas de registro especificadas", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {
             return new ResponseEntity(horaMarcajeService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
@@ -45,9 +45,9 @@ public class HoraMarcajeController {
         }
     }
 
-    @GetMapping("/findByUsuarioId/{usuarioId}")
-    @ApiOperation(value = "Obtiene una lista de horarios por medio del id del usuario", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
-    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "usuarioId") Long id) {
+    @GetMapping("/findByUsuarioId/{id}")
+    @ApiOperation(value = "Obtiene una lista de Horas de Marcaje por medio del id del usuario", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity(horaMarcajeService.findByUsuarioId(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public class HoraMarcajeController {
     }
     
     @PostMapping("/")
-    @ApiOperation(value = "Permite crear una Hora de marcaje", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
+    @ApiOperation(value = "Permite crear una Hora de Marcaje", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
     public ResponseEntity<?> create(@Valid @RequestBody HoraMarcajeDTO horaMarcajeDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -70,7 +70,7 @@ public class HoraMarcajeController {
     }
 
     @PutMapping("/{id}") 
-    @ApiOperation(value = "Permite modificar una Hora de marcaje a partir de su Id", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
+    @ApiOperation(value = "Permite modificar una Hora de Marcaje a partir de su Id", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody HoraMarcajeDTO horaMarcajeDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

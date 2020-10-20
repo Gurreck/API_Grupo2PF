@@ -2,7 +2,6 @@ package org.una.aeropuerto.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.una.aeropuerto.dto.TipoServicioDTO;
-import org.una.aeropuerto.entities.TipoServicio;
 import org.una.aeropuerto.services.ITipoServicioService;
-import org.una.aeropuerto.utils.MapperUtils;
 
 import javax.validation.Valid;
 
@@ -38,8 +34,8 @@ public class TipoServicioController {
 
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/")
-    @ApiOperation(value = "Obtiene una lista de todos los tipos de Servicios", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
+    @GetMapping("/findAll")
+    @ApiOperation(value = "Obtiene una lista de todos los Tipos de Servicios", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
     public ResponseEntity<?> findAll() {
         try {
                 return new ResponseEntity(tipoServicioService.findAll(), HttpStatus.OK);
@@ -49,7 +45,7 @@ public class TipoServicioController {
     }
 
     @GetMapping("/findById/{id}")
-    @ApiOperation(value = "Obtiene  el tipo de Servicio por medio del Id", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
+    @ApiOperation(value = "Obtiene  el Tipo de Servicio por medio del Id", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity(tipoServicioService.findById(id), HttpStatus.OK);
@@ -60,7 +56,7 @@ public class TipoServicioController {
     }
     
     @GetMapping("/findByNombre/{nombre}")
-    @ApiOperation(value = "Obtiene una lista con el tipo de Servicio por medio del nombre", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
+    @ApiOperation(value = "Obtiene una lista con el Tipo de Servicio por medio del nombre", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String term) {
         try {
                 return new ResponseEntity(tipoServicioService.findByNombre(term), HttpStatus.OK);
@@ -70,7 +66,7 @@ public class TipoServicioController {
     }
 
     @PostMapping("/")
-    @ApiOperation(value = "Permite crear un tipo de Servicio", response = TipoServicioDTO.class, tags = "Tipos Servicios")
+    @ApiOperation(value = "Permite crear un Tipo de Servicio", response = TipoServicioDTO.class, tags = "Tipos Servicios")
     public ResponseEntity<?> create(@Valid @RequestBody  TipoServicioDTO tipoServicioDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -83,7 +79,7 @@ public class TipoServicioController {
         }
     }
     @PutMapping("/{id}") 
-    @ApiOperation(value = "Permite modificar un tipo de Servicio a partir de su Id", response = TipoServicioDTO.class, tags = "Tipos Servicios")
+    @ApiOperation(value = "Permite modificar un Tipo de Servicio a partir de su Id", response = TipoServicioDTO.class, tags = "Tipos Servicios")
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody TipoServicioDTO tipoServicioDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {

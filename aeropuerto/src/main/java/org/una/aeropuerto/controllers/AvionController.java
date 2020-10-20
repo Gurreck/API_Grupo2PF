@@ -24,7 +24,7 @@ public class AvionController {
 
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/findAll/")
+    @GetMapping("/findAll")
     @ApiOperation(value = "Obtiene una lista de todos los Aviones", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
     ResponseEntity<?> findAll() {
         try {

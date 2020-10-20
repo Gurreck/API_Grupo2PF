@@ -62,9 +62,9 @@ public class TransaccionController {
         }
     }
      
-     @GetMapping("/findByUsuarioId/{usuarioId}")
+     @GetMapping("/findByUsuarioId/{id}")
     @ApiOperation(value = "Obtiene una lista de transacciones por medio del id del usuario", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "usuarioId") Long id) {
+    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity(transaccionService.findByUsuarioId(id), HttpStatus.OK);
         } catch (Exception e) {

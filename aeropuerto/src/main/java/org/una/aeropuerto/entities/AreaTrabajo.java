@@ -24,7 +24,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
 public class AreaTrabajo implements Serializable {
     
     @Id
@@ -42,10 +41,15 @@ public class AreaTrabajo implements Serializable {
     @Setter(AccessLevel.NONE)
     private Date fechaRegistro;
     
+    @Column(name = "fecha_modificacion")
+    @Setter(AccessLevel.NONE)
+    @Temporal(TemporalType.DATE)
+    private Date fechaModificacion;
+    
     @Column(name = "nombre_responsable", length = 50)
     private String nombreResponsable;
 
-     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo")
     private List<UsuarioAreaTrabajo> UsuariosAreasTrabajo = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo")
@@ -57,12 +61,13 @@ public class AreaTrabajo implements Serializable {
     public void prePersist() {
         estado=true;
         fechaRegistro = new Date();
+        fechaModificacion = new Date();
         
     }
 
     @PreUpdate
     public void preUpdate() {
-        
+        fechaModificacion = new Date();
     }
 }
 

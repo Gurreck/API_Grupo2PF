@@ -24,8 +24,8 @@ public class RolController {
 
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/findAll/")
-    @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    @GetMapping("/findAll")
+    @ApiOperation(value = "Obtiene una lista de todos los Roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity(rolService.findAll(), HttpStatus.OK);
@@ -36,7 +36,7 @@ public class RolController {
 
 
     @GetMapping("/findById/{id}")
-    @ApiOperation(value = "Obtiene un rol por su Id", response = RolDTO.class, tags = "Roles")
+    @ApiOperation(value = "Obtiene un Rol por su Id", response = RolDTO.class, tags = "Roles")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity(rolService.findById(id), HttpStatus.OK);
@@ -46,7 +46,7 @@ public class RolController {
     }
 
     @GetMapping("/findByNombre/{nombre}")
-    @ApiOperation(value = "Obtiene una lista de roles por su nombre", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    @ApiOperation(value = "Obtiene una lista de Roles por su nombre", response = RolDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             return new ResponseEntity(rolService.findByNombre(nombre), HttpStatus.OK);
@@ -56,7 +56,7 @@ public class RolController {
     }
 
     @GetMapping("/findByEstado/{estado}")
-    @ApiOperation(value = "Obtiene una lista de roles por estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    @ApiOperation(value = "Obtiene una lista de Roles por estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             return new ResponseEntity(rolService.findByEstado(estado), HttpStatus.OK);
@@ -76,7 +76,7 @@ public class RolController {
     }
     
     @GetMapping("/countByEstado/{estado}")
-    @ApiOperation(value = "Realiza un conteo de roles por medio del estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    @ApiOperation(value = "Realiza un conteo de Roles por medio del estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
     public ResponseEntity<?> countByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             return new ResponseEntity(rolService.countByEstado(estado), HttpStatus.OK);
@@ -86,7 +86,7 @@ public class RolController {
     }
 
     @PostMapping("/")
-    @ApiOperation(value = "Permite crear un rol", response = RolDTO.class, tags = "Roles")
+    @ApiOperation(value = "Permite crear un Rol", response = RolDTO.class, tags = "Roles")
     public ResponseEntity<?> create(@Valid @RequestBody RolDTO rolDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -100,7 +100,7 @@ public class RolController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Permite modificar un rol a partir de su Id", response = RolDTO.class, tags = "Roles")
+    @ApiOperation(value = "Permite modificar un Rol a partir de su Id", response = RolDTO.class, tags = "Roles")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody RolDTO rolDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

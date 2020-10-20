@@ -10,7 +10,7 @@ public interface IParametroSistemaRepository extends JpaRepository<ParametroSist
     
     public List<ParametroSistema> findByEstado(boolean estado);
 
-    public List<ParametroSistema> findByFechaRegistro(Date fechaRegistro);
+    public List<ParametroSistema> findByFechaRegistroBetween(Date startDate, Date endDate);
  
 }
 

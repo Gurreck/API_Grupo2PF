@@ -28,7 +28,7 @@ import lombok.ToString;
  */
 
 @Entity
-@Table(name = "usuariosAreasTrabajo")
+@Table(name = "usuarios_Areas_Trabajo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

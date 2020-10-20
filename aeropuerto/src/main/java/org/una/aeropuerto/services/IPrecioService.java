@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.una.aeropuerto.dto.PrecioDTO;
-import org.una.aeropuerto.entities.Precio;
 
 /**
  *

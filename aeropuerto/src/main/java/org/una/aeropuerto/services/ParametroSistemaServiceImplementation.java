@@ -67,8 +67,8 @@ public class ParametroSistemaServiceImplementation implements IParametroSistemaS
     }
 
     @Override
-    public Optional<List<ParametroSistemaDTO>> findByFechaRegistro(Date fechaRegistro) {
-        return findList(parametroSistemaRepository.findByFechaRegistro(fechaRegistro));
+    public Optional<List<ParametroSistemaDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
+       return findList(parametroSistemaRepository.findByFechaRegistroBetween(startDate, endDate));
     }
 
     @Override
