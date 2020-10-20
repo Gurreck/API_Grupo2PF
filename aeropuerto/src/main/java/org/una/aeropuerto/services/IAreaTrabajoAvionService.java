@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.una.aeropuerto.dto.AreaTrabajoAvionDTO;
-import org.una.aeropuerto.dto.AreaTrabajoDTO;
-import org.una.aeropuerto.dto.PrecioDTO;
-import org.una.aeropuerto.entities.AreaTrabajoAvion;
 
 public interface IAreaTrabajoAvionService {
 

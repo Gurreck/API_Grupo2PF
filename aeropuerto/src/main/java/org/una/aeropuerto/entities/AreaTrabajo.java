@@ -45,10 +45,9 @@ public class AreaTrabajo implements Serializable {
     @Column(name = "nombre_responsable", length = 50)
     private String nombreResponsable;
 
-/*
      @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo")
     private List<UsuarioAreaTrabajo> UsuariosAreasTrabajo = new ArrayList<>();
-*/
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo")
     private List<AreaTrabajoAvion> AreasTrabajoAviones = new ArrayList<>();
 

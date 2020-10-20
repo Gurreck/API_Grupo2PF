@@ -77,9 +77,10 @@ public class Usuario implements Serializable {
     private List<HoraMarcaje> horaMarcaje= new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<Horario> horarios= new ArrayList<>();
+    private List<Horario> horarios= new ArrayList<>();  
     
-    //Many to Many con areaTrabajo (Falta)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<UsuarioAreaTrabajo> UsuariosAreasTrabajo = new ArrayList<>();
     
     //Relacion a la misma tabla
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioJefe") 
