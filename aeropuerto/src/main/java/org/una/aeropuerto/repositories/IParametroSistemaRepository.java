@@ -6,7 +6,7 @@ import org.una.aeropuerto.entities.ParametroSistema;
 
 public interface IParametroSistemaRepository extends JpaRepository<ParametroSistema, Long> {
 
-    public List<ParametroSistema> findByNombre(String nombre);
+    public List<ParametroSistema> findByNombreContainingIgnoreCase(String nombre);
     
     public List<ParametroSistema> findByEstado(boolean estado);
 

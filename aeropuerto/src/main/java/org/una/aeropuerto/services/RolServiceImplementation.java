@@ -45,31 +45,37 @@ public class RolServiceImplementation implements IRolService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<RolDTO>> findAll() {
          return findList(rolRepository.findAll());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<RolDTO> findById(Long id) {
         return oneToDto(rolRepository.findById(id));
     }
     
     @Override
-    public Optional<RolDTO> findByNombre(String nombre) {
-        return oneToDto(rolRepository.findByNombre(nombre));
+    @Transactional(readOnly = true)
+    public Optional<RolDTO> findByNombreAproximateIgnoreCase(String nombre) {
+        return oneToDto(rolRepository.findByNombreContainingIgnoreCase(nombre));
     }
     
      @Override
+     @Transactional(readOnly = true)
     public Optional<List<RolDTO>> findByEstado(boolean estado) {
         return  findList(rolRepository.findByEstado(estado));
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<RolDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
         return findList(rolRepository.findByFechaRegistroBetween(startDate, endDate));
     }   
     
     @Override
+    @Transactional(readOnly = true)
     public Long countByEstado(boolean estado) {
         return rolRepository.countByEstado(estado);
     }

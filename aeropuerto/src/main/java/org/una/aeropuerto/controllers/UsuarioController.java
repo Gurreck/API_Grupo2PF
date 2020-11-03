@@ -74,7 +74,7 @@ public class UsuarioController {
         }
     }
     
-    @GetMapping("/findByFechaRegistro/{fechaInicial}/{fechaFinal}")
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista con los usuarios entre las fechas de registro especificadas", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
      public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {

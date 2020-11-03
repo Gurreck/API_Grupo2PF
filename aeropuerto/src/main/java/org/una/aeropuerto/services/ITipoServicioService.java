@@ -14,7 +14,7 @@ public interface ITipoServicioService {
 
     public Optional<TipoServicioDTO> findById(Long id);
 
-    public Optional<TipoServicioDTO> findByNombre(String nombre);
+    public Optional<TipoServicioDTO> findByNombreAproximateIgnoreCase(String nombre);
     
     public TipoServicioDTO create(TipoServicioDTO tipoServicio);
 

@@ -112,11 +112,13 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<UsuarioDTO>> findByUsuarioJefeId(Long id) {
            return findList(usuarioRepository.findByUsuarioJefeId(id));
     }
     
    @Override
+   @Transactional(readOnly = true)
     public Optional<List<UsuarioDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
        return findList(usuarioRepository.findByFechaRegistroBetween(startDate, endDate));
     }
@@ -141,7 +143,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
             return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class));
         } else {
             return null;
-        }
+        } 
     }
 
     @Override

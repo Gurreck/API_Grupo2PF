@@ -52,7 +52,7 @@ public class TransaccionController {
         }
     }
     
-    @GetMapping("/findByFechaRegistro/{fechaInicial}/{fechaFinal}")
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista con las Transacciones entre las fechas de registro especificadas", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
      public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {

@@ -59,7 +59,7 @@ public class VueloController {
         }
     }
 
-    @GetMapping("/findbyFechaSalidaBetween/{fechaInicial}/{fechaFinal}")
+    @GetMapping("/findByFechaSalidaBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de Vuelos entre la Fecha de Salida Especificada", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public ResponseEntity<?> findByFechaSalidaBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {
@@ -69,7 +69,7 @@ public class VueloController {
         }
     }
 
-    @GetMapping("/findByFechaLlegada/{fechaInicial}/{fechaFinal}")
+    @GetMapping("/findByFechaLlegadaBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de Vuelos entre la Fecha de Llegada Especificada", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public ResponseEntity<?> findByFechaLlegadaBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {

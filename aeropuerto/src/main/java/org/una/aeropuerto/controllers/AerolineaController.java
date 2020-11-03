@@ -48,9 +48,9 @@ public class AerolineaController {
     
     @GetMapping("/findByNombreAerolinea/{nombre}")
     @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del nombre", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    public ResponseEntity<?> findByNombreAerolinea(@PathVariable(value = "nombre") String term) {
+    public ResponseEntity<?> findByNombreAerolineaAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
         try {
-            return new ResponseEntity(aerolineaService.findByNombreAerolinea(term), HttpStatus.OK);
+            return new ResponseEntity(aerolineaService.findByNombreAerolineaAproximateIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -58,9 +58,9 @@ public class AerolineaController {
     
     @GetMapping("/findByNombreResponsable/{nombre}")
     @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del nombre del responsable", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "nombre") String term) {
+    public ResponseEntity<?> findByNombreResponsableAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
         try {
-            return new ResponseEntity(aerolineaService.findByNombreResponsable(term), HttpStatus.OK);
+            return new ResponseEntity(aerolineaService.findByNombreResponsableAproximateIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -9,9 +9,9 @@ import org.una.aeropuerto.entities.Aerolinea;
  */
 public interface IAerolineaRepository extends JpaRepository<Aerolinea, Long> {
 
-    public List<Aerolinea> findByNombreResponsable(String nombreResponsable);
+    public List<Aerolinea> findByNombreResponsableContainingIgnoreCase(String nombreResponsable);
 
-    public Aerolinea findByNombreAerolinea(String nombreAerolinea);
+    public Aerolinea findByNombreAerolineaContainingIgnoreCase(String nombreAerolinea);
     
     public List<Aerolinea> findByEstado(boolean estado);
 }

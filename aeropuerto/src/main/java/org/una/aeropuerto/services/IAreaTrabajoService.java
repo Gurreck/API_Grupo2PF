@@ -14,9 +14,9 @@ public interface IAreaTrabajoService {
 
     public Optional<AreaTrabajoDTO> findById(Long id);
 
-    public Optional<List<AreaTrabajoDTO>> findByNombreResponsable(String responsable);
+    public Optional<List<AreaTrabajoDTO>> findByNombreResponsableAproximateIgnoreCase(String responsable);
 
-    public Optional<AreaTrabajoDTO> findByNombreArea(String area);
+    public Optional<AreaTrabajoDTO> findByNombreAreaAproximateIgnoreCase(String area);
 
     public AreaTrabajoDTO create(AreaTrabajoDTO AreaTrabajoDTO);
 

@@ -46,23 +46,25 @@ public class TransaccionServiceImplementation implements ITransaccionService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<TransaccionDTO> findById(Long id) {
         return oneToDto(transaccionRepository.findById(id));
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<List<TransaccionDTO>> findByEstado(boolean estado) {
         return findList(transaccionRepository.findByEstado(estado));
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<TransaccionDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
        return findList(transaccionRepository.findByFechaRegistroBetween(startDate, endDate));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<TransaccionDTO>> findByUsuarioId(Long id) {
        return findList(transaccionRepository.findByUsuarioId(id));
     }
@@ -85,7 +87,5 @@ public class TransaccionServiceImplementation implements ITransaccionService {
         } else {
             return null;
         }
-    }   
-
-    
+    }    
 }

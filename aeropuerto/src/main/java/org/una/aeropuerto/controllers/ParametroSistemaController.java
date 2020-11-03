@@ -48,9 +48,9 @@ public class ParametroSistemaController {
 
     @GetMapping("/findByNombre/{nombre}")
     @ApiOperation(value = "Obtiene una lista de Parametros del Sistema por medio del nombre", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String nombre) {
+    public ResponseEntity<?> findByNombreAproximateIgnoreCase(@PathVariable(value = "nombre") String nombre) {
         try {
-            return new ResponseEntity(parametroSistemaService.findByNombre(nombre), HttpStatus.OK);
+            return new ResponseEntity(parametroSistemaService.findByNombreAproximateIgnoreCase(nombre), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -66,7 +66,7 @@ public class ParametroSistemaController {
         }
     }
 
-    @GetMapping("/findByFechaRegistro/{fechaInicial}/{fechaFinal}")
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista con los Parametros del Sistema entre las fechas de registro especificadas", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
      public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {

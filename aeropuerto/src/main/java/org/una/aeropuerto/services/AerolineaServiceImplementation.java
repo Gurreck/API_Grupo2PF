@@ -55,14 +55,15 @@ public class AerolineaServiceImplementation implements IAerolineaService {
     }
     
     @Override
-    public Optional<List<AerolineaDTO>> findByNombreResponsable(String nombreResponsable) {
-        return findList(AerolineaRepository.findByNombreResponsable(nombreResponsable));
+    @Transactional(readOnly = true)
+    public Optional<List<AerolineaDTO>> findByNombreResponsableAproximateIgnoreCase(String nombreResponsable) {
+        return findList(AerolineaRepository.findByNombreResponsableContainingIgnoreCase(nombreResponsable));
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<AerolineaDTO> findByNombreAerolinea(String nombreAerolinea) {
-        return oneToDto(Optional.ofNullable(AerolineaRepository.findByNombreAerolinea(nombreAerolinea)));
+    public Optional<AerolineaDTO> findByNombreAerolineaAproximateIgnoreCase(String nombreAerolinea) {
+        return oneToDto(Optional.ofNullable(AerolineaRepository.findByNombreAerolineaContainingIgnoreCase(nombreAerolinea)));
     }
     
     @Override

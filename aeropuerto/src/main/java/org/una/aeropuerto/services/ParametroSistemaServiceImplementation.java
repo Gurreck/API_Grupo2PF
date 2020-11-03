@@ -47,26 +47,31 @@ public class ParametroSistemaServiceImplementation implements IParametroSistemaS
 
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<ParametroSistemaDTO>> findAll() {
         return findList(parametroSistemaRepository.findAll());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<ParametroSistemaDTO> findById(Long id) {
         return oneToDto(parametroSistemaRepository.findById(id));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<ParametroSistemaDTO>> findByEstado(boolean estado) {
         return findList(parametroSistemaRepository.findByEstado(estado));
     }
 
     @Override
-    public Optional<List<ParametroSistemaDTO>> findByNombre(String nombre) {
-        return findList(parametroSistemaRepository.findByNombre(nombre));
+    @Transactional(readOnly = true)
+    public Optional<List<ParametroSistemaDTO>> findByNombreAproximateIgnoreCase(String nombre) {
+        return findList(parametroSistemaRepository.findByNombreContainingIgnoreCase(nombre));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<ParametroSistemaDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
        return findList(parametroSistemaRepository.findByFechaRegistroBetween(startDate, endDate));
     }

@@ -12,6 +12,7 @@ import org.una.aeropuerto.utils.MapperUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -47,21 +48,25 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<HoraMarcajeDTO> findById(Long id) {
         return oneToDto(horaMarcajeRepository.findById(id));
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<HoraMarcajeDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
         return  findList(horaMarcajeRepository.findByFechaRegistroBetween(startDate, endDate));
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<HoraMarcajeDTO>> findByUsuarioId(Long id) {
         return  findList(horaMarcajeRepository.findByUsuarioId(id));
     }
     
     @Override
+    @Transactional
     public HoraMarcajeDTO create(HoraMarcajeDTO horaMarcajeDTO) {
         HoraMarcaje horaMarcaje = MapperUtils.EntityFromDto(horaMarcajeDTO, HoraMarcaje.class);
         horaMarcaje = horaMarcajeRepository.save(horaMarcaje);
@@ -69,6 +74,7 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
     }
 
     @Override
+    @Transactional
     public Optional<HoraMarcajeDTO> update(HoraMarcajeDTO horaMarcajeDTO, Long id) {
         if (horaMarcajeRepository.findById(id).isPresent()) {
             HoraMarcaje horaMarcaje = MapperUtils.EntityFromDto(horaMarcajeDTO, HoraMarcaje.class);

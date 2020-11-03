@@ -39,7 +39,7 @@ public class AutenticacionServiceImplementation implements IAutenticacionService
             authenticationResponse.setJwt(jwtProvider.generateToken(authenticationRequest));
             authenticationResponse.setUsuario(usuario.get());
             authenticationResponse.setRoles(usuarioService.findRolByCedula(authenticationRequest.getCedula()));
-
+       
             return authenticationResponse;
         } else {
             return null;

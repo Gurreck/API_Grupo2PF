@@ -18,6 +18,6 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
     public Optional<List<Usuario>> findByUsuarioJefeId(Long id);
     
      public List<Usuario> findByFechaRegistroBetween(Date startDate, Date endDate);
- 
+    
 }
 

@@ -45,21 +45,25 @@ public class HorarioServiceImplementation implements IHorarioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<HorarioDTO> findById(Long id) {
         return oneToDto(horarioRepository.findById(id));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<HorarioDTO>> findByEstado(boolean estado) {
         return findList(horarioRepository.findByEstado(estado));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<HorarioDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
         return findList(horarioRepository.findByFechaRegistroBetween(startDate, endDate));
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<HorarioDTO>> findByUsuarioId(Long id) {
         return findList(horarioRepository.findByUsuarioId(id));
     }

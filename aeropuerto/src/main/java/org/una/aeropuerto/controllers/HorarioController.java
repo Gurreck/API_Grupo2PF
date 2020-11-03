@@ -48,7 +48,7 @@ public class HorarioController {
         }
     }
     
-    @GetMapping("/findByFechaRegistro/{fechaInicial}/{fichaFinal}")
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fichaFinal}")
     @ApiOperation(value = "Obtiene los Horarios entre las fechas de registro especificadas", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
         try {

@@ -13,7 +13,7 @@ public interface IRolRepository extends JpaRepository<Rol, Long> {
 
      public List<Rol> findByFechaRegistroBetween(Date startDate, Date endDate);
      
-     public Optional<Rol> findByNombre(String nombre);
+     public Optional<Rol> findByNombreContainingIgnoreCase(String nombre);
  
      public Long countByEstado(boolean estado);
 }

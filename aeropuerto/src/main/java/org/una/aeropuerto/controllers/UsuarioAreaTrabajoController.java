@@ -33,7 +33,7 @@ public class UsuarioAreaTrabajoController {
         }
     }
 
-    @GetMapping("/findByFechaRegistro/{fechaInicial}/{fichaFinal}")
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fichaFinal}")
     @ApiOperation(value = "Obtiene Area de Trabajo con Usuario entre las fechas de registro especificadas", response = UsuarioAreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo Usuarios")
     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date fechaInicio, @PathVariable(value = "fechaFinal") Date fechaFinal) {
         try {

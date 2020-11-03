@@ -47,9 +47,9 @@ public class RolController {
 
     @GetMapping("/findByNombre/{nombre}")
     @ApiOperation(value = "Obtiene una lista de Roles por su nombre", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-    public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String nombre) {
+    public ResponseEntity<?> findByNombreAproximateIgnoreCase(@PathVariable(value = "nombre") String nombre) {
         try {
-            return new ResponseEntity(rolService.findByNombre(nombre), HttpStatus.OK);
+            return new ResponseEntity(rolService.findByNombreAproximateIgnoreCase(nombre), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

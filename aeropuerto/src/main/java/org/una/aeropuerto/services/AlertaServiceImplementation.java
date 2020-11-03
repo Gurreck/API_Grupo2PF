@@ -72,6 +72,7 @@ public class AlertaServiceImplementation implements IAlertaService{
     }
 
     @Override
+    @Transactional
     public AlertaDTO create(AlertaDTO alertaDTO) {
         Alerta alerta = MapperUtils.EntityFromDto(alertaDTO, Alerta.class);
         alerta = alertaRepository.save(alerta);
@@ -79,6 +80,7 @@ public class AlertaServiceImplementation implements IAlertaService{
     }
 
     @Override
+    @Transactional
     public Optional<AlertaDTO> update(AlertaDTO alertaDTO, Long id) {
         if (alertaRepository.findById(id).isPresent()) {
             Alerta alerta = MapperUtils.EntityFromDto(alertaDTO, Alerta.class);

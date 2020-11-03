@@ -15,9 +15,9 @@ public interface IAerolineaService {
 
     public Optional<AerolineaDTO> findById(Long id);
 
-    public Optional<AerolineaDTO> findByNombreAerolinea(String nombreAerolinea);
+    public Optional<AerolineaDTO> findByNombreAerolineaAproximateIgnoreCase(String nombreAerolinea);
 
-    public Optional<List<AerolineaDTO>> findByNombreResponsable(String nombreResponsable);
+    public Optional<List<AerolineaDTO>> findByNombreResponsableAproximateIgnoreCase(String nombreResponsable);
     
     public Optional<List<AerolineaDTO>> findByEstado(boolean estado);
 

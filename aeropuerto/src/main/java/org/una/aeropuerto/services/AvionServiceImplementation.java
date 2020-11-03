@@ -88,6 +88,7 @@ public class AvionServiceImplementation implements IAvionService {
     }
 
     @Override
+    @Transactional
     public AvionDTO create(AvionDTO avionDTO) {
         Avion avion = MapperUtils.EntityFromDto(avionDTO, Avion.class);
         avion = avionRepository.save(avion);
@@ -95,6 +96,7 @@ public class AvionServiceImplementation implements IAvionService {
     }
 
     @Override
+    @Transactional
     public Optional<AvionDTO> update(AvionDTO avionDTO, Long id) {
         if (avionRepository.findById(id).isPresent()) {
             Avion avion = MapperUtils.EntityFromDto(avionDTO, Avion.class);

@@ -51,9 +51,9 @@ public class AreaTrabajoController {
 
     @GetMapping("/findByNombreArea/{nombre}")
     @ApiOperation(value = "Obtiene el Area de Trabajo por medio del nombre del Area", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
-    public ResponseEntity<?> findByNombreArea(@PathVariable(value = "nombre") String term) {
+    public ResponseEntity<?> findByNombreAreaAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
          try {
-             return new ResponseEntity(areaTrabajoService.findByNombreArea(term), HttpStatus.OK);
+             return new ResponseEntity(areaTrabajoService.findByNombreAreaAproximateIgnoreCase(term), HttpStatus.OK);
          } catch (Exception e) {
              return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
          }
@@ -62,9 +62,9 @@ public class AreaTrabajoController {
 
     @GetMapping("/findByNombreResponsable/{nombre}")
     @ApiOperation(value = "Obtiene una lista con el Area de Trabajo por medio del nombre del Responsable", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
-    public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "nombre") String term) {
+    public ResponseEntity<?> findByNombreResponsableAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
         try {
-            return new ResponseEntity(areaTrabajoService.findByNombreResponsable(term), HttpStatus.OK);
+            return new ResponseEntity(areaTrabajoService.findByNombreResponsableAproximateIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

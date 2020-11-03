@@ -19,7 +19,7 @@ public interface IParametroSistemaService {
     
     public Optional<List<ParametroSistemaDTO>> findByEstado(boolean estado);
     
-    public Optional<List<ParametroSistemaDTO>> findByNombre(String nombre);
+    public Optional<List<ParametroSistemaDTO>> findByNombreAproximateIgnoreCase(String nombre);
 
     public Optional<List<ParametroSistemaDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
     

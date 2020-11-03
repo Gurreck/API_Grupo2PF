@@ -57,9 +57,9 @@ public class TipoServicioController {
     
     @GetMapping("/findByNombre/{nombre}")
     @ApiOperation(value = "Obtiene una lista con el Tipo de Servicio por medio del nombre", response = TipoServicioDTO.class, responseContainer = "List", tags = "Tipos Servicios")
-    public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String term) {
+    public ResponseEntity<?> findByNombreAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
         try {
-                return new ResponseEntity(tipoServicioService.findByNombre(term), HttpStatus.OK);
+                return new ResponseEntity(tipoServicioService.findByNombreAproximateIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

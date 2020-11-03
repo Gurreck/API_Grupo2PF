@@ -9,5 +9,5 @@ import org.una.aeropuerto.entities.TipoServicio;
  */
 public interface ITipoServicioRepository extends JpaRepository<TipoServicio, Long>{
     
-    public TipoServicio findByNombre(String nombre);
+    public TipoServicio findByNombreContainingIgnoreCase(String nombre);
 }

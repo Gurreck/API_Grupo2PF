@@ -75,6 +75,7 @@ public class VueloServiceImplementation implements IVueloService {
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<VueloDTO>> findByAvionId(Long avion) {
         return findList(vueloRepository.findByAvionId(avion));
     }
