@@ -11,7 +11,7 @@ public interface IAerolineaRepository extends JpaRepository<Aerolinea, Long> {
 
     public List<Aerolinea> findByNombreResponsableContainingIgnoreCase(String nombreResponsable);
 
-    public Aerolinea findByNombreAerolineaContainingIgnoreCase(String nombreAerolinea);
+    public List<Aerolinea> findByNombreAerolineaContainingIgnoreCase(String nombreAerolinea);
     
     public List<Aerolinea> findByEstado(boolean estado);
 }

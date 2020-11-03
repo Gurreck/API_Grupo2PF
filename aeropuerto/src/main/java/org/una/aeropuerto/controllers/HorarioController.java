@@ -1,22 +1,17 @@
 package org.una.aeropuerto.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.Date;
-import java.util.Optional;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.una.aeropuerto.dto.HorarioDTO;
 import org.una.aeropuerto.services.IHorarioService;
+import javax.validation.Valid;
+import java.util.Date;
+import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/horarios")
@@ -48,9 +43,10 @@ public class HorarioController {
         }
     }
     
-    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fichaFinal}")
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene los Horarios entre las fechas de registro especificadas", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
             return new ResponseEntity(horarioService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {

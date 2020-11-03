@@ -58,8 +58,8 @@ public class AreaTrabajoServiceImplementation implements IAreaTrabajoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<AreaTrabajoDTO> findByNombreAreaAproximateIgnoreCase(String area) {
-        return oneToDto(Optional.ofNullable(areaTrabajoRepository.findByNombreAreaContainingIgnoreCase(area)));
+    public Optional<List<AreaTrabajoDTO>> findByNombreAreaAproximateIgnoreCase(String area) {
+        return findList(areaTrabajoRepository.findByNombreAreaContainingIgnoreCase(area));
     }
 
     @Override

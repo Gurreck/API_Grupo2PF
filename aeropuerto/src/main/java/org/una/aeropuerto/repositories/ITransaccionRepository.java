@@ -6,13 +6,10 @@ import org.una.aeropuerto.entities.Transaccion;
 
 public interface ITransaccionRepository extends JpaRepository<Transaccion, Long> {
 
-  
-
     public List<Transaccion> findByEstado(boolean estado);
 
     public List<Transaccion> findByFechaRegistroBetween(Date startDate, Date endDate);
     
-    public List<Transaccion> findByUsuarioId(Long id);
-     
+    public List<Transaccion> findByUsuarioId(Long id);     
  
 }

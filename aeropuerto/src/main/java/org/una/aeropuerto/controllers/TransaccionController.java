@@ -21,6 +21,7 @@ import org.una.aeropuerto.dto.UsuarioDTO;
 import org.una.aeropuerto.services.ITransaccionService;
 
 import javax.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/transacciones")
@@ -54,7 +55,8 @@ public class TransaccionController {
     
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista con las Transacciones entre las fechas de registro especificadas", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+     @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
                 return new ResponseEntity<>(transaccionService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.una.aeropuerto.dto.TipoServicioDTO;
 import org.una.aeropuerto.services.ITipoServicioService;
-
 import javax.validation.Valid;
 
 /**

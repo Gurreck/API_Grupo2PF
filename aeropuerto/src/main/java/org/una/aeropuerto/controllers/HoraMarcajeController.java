@@ -9,10 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.una.aeropuerto.dto.HoraMarcajeDTO;
 import org.una.aeropuerto.services.IHoraMarcajeService;
-
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/horaMarcaje")
@@ -37,7 +37,8 @@ public class HoraMarcajeController {
       
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene la Hora de Marcaje entre las fechas de registro especificadas", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
             return new ResponseEntity(horaMarcajeService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {

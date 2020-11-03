@@ -5,7 +5,7 @@ import org.una.aeropuerto.entities.AreaTrabajo;
 
 public interface IAreaTrabajoRepository extends JpaRepository<AreaTrabajo, Long> {
 
-    public AreaTrabajo findByNombreAreaContainingIgnoreCase(String area);
+    public List<AreaTrabajo> findByNombreAreaContainingIgnoreCase(String area);
 
     public List<AreaTrabajo> findByNombreResponsableContainingIgnoreCase(String responsable);
  

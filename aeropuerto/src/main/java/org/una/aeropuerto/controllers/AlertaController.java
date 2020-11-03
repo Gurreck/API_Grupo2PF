@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -45,7 +46,8 @@ public class AlertaController {
     
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de Alertas entre las fechas de registro especificadas", response = AlertaDTO.class, responseContainer = "List", tags = "Alertas")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
             return new ResponseEntity(alertaService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {

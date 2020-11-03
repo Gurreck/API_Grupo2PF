@@ -16,7 +16,7 @@ public interface IRolService {
 
     public Optional<RolDTO> findById(Long id);
 
-    public Optional<RolDTO> findByNombreAproximateIgnoreCase(String nombre);
+    public Optional<List<RolDTO>> findByNombreAproximateIgnoreCase(String nombre);
     
     public Optional<List<RolDTO>> findByEstado(boolean estado);
     

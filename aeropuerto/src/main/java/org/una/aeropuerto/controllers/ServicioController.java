@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.una.aeropuerto.dto.ServicioDTO;
 import org.una.aeropuerto.services.IServicioService;
 import javax.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -67,7 +68,8 @@ public class ServicioController {
 
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de Servicios entre la fecha de registro especificada", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
             return new ResponseEntity(servicioService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
 

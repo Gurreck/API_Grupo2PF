@@ -9,10 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.una.aeropuerto.dto.AvionDTO;
 import org.una.aeropuerto.services.IAvionService;
-
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/aviones") 
@@ -66,7 +66,8 @@ public class AvionController {
     
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de Aviones entre la Fecha Especificada", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
             return new ResponseEntity(avionService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {

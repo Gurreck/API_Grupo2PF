@@ -62,8 +62,8 @@ public class AerolineaServiceImplementation implements IAerolineaService {
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<AerolineaDTO> findByNombreAerolineaAproximateIgnoreCase(String nombreAerolinea) {
-        return oneToDto(Optional.ofNullable(AerolineaRepository.findByNombreAerolineaContainingIgnoreCase(nombreAerolinea)));
+    public Optional<List<AerolineaDTO>> findByNombreAerolineaAproximateIgnoreCase(String nombreAerolinea) {
+        return findList(AerolineaRepository.findByNombreAerolineaContainingIgnoreCase(nombreAerolinea));
     }
     
     @Override

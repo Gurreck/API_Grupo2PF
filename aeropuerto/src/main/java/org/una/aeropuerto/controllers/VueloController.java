@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.una.aeropuerto.dto.VueloDTO;
 import org.una.aeropuerto.services.IVueloService;
 import javax.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/vuelos") 
@@ -61,7 +62,8 @@ public class VueloController {
 
     @GetMapping("/findByFechaSalidaBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de Vuelos entre la Fecha de Salida Especificada", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    public ResponseEntity<?> findByFechaSalidaBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+    public ResponseEntity<?> findByFechaSalidaBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
             return new ResponseEntity(vueloService.findByFechaSalidaBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {
@@ -71,7 +73,8 @@ public class VueloController {
 
     @GetMapping("/findByFechaLlegadaBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de Vuelos entre la Fecha de Llegada Especificada", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    public ResponseEntity<?> findByFechaLlegadaBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+    public ResponseEntity<?> findByFechaLlegadaBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
             return new ResponseEntity(vueloService.findByFechaLlegadaBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {

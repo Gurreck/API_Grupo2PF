@@ -12,7 +12,7 @@ public interface IAvionRepository extends JpaRepository<Avion, Long> {
 
     public List<Avion> findByTipoAvion(String tipoAvion);
 
-    public Optional<List<Avion>> findByFechaRegistroBetween(Date startDate, Date endDate);
+    public List<Avion> findByFechaRegistroBetween(Date startDate, Date endDate);
 
     public List<Avion> findByEstado(boolean estado);
     

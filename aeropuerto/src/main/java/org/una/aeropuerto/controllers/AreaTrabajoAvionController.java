@@ -11,6 +11,7 @@ import org.una.aeropuerto.services.IAreaTrabajoAvionService;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -38,7 +39,8 @@ public class AreaTrabajoAvionController {
 
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de Area de Trabajo con Avion entre las fechas de registro especificadas", response = AreaTrabajoAvionDTO.class, responseContainer = "List", tags = "Areas Trabajo Aviones")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date fechaInicio, @PathVariable(value = "fechaFinal") Date fechaFinal) {
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal) {
         try {
             return new ResponseEntity(areaTrabajoAvionService.findByFechaRegistroBetween(fechaInicio, fechaFinal), HttpStatus.OK);
         } catch (Exception e) {

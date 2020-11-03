@@ -6,8 +6,6 @@ import org.una.aeropuerto.entities.Horario;
 
 public interface IHorarioRepository extends JpaRepository<Horario, Long> {
 
-  
-
     public List<Horario> findByEstado(boolean estado);
 
     public List<Horario> findByFechaRegistroBetween(Date startDate, Date endDate);

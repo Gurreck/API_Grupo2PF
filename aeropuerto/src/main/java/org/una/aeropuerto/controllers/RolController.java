@@ -2,7 +2,7 @@
 
  import io.swagger.annotations.Api;
  import io.swagger.annotations.ApiOperation;
-import java.util.Date;
+ import java.util.Date;
  import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
@@ -10,9 +10,9 @@ import java.util.Date;
  import org.springframework.web.bind.annotation.*;
  import org.una.aeropuerto.dto.RolDTO;
  import org.una.aeropuerto.services.IRolService;
-
  import javax.validation.Valid;
  import java.util.Optional;
+ import org.springframework.format.annotation.DateTimeFormat;
 
  @RestController
 @RequestMapping("/roles")
@@ -67,7 +67,8 @@ public class RolController {
     
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de roles entre las fechas de registro especificadas", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
             return new ResponseEntity(rolService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {

@@ -9,10 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.una.aeropuerto.dto.PrecioDTO;
 import org.una.aeropuerto.services.IPrecioService;
-
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -40,7 +40,8 @@ public class PrecioController {
 
     @GetMapping("/findByFechaRegistroBetween/{fechaInicio}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista de Precios entre las fechas de registro especificadas", response = PrecioDTO.class, responseContainer = "List", tags = "Precios")
-    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicio") Date fechaInicio, @PathVariable(value = "fechaFinal") Date fechaFinal) {
+    public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date fechaInicio,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal) {
         try {
             return new ResponseEntity(precioService.findByFechaRegistroBetween(fechaInicio, fechaFinal), HttpStatus.OK);
         } catch (Exception e) {

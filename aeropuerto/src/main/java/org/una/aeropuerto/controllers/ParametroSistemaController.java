@@ -9,10 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.una.aeropuerto.dto.ParametroSistemaDTO;
 import org.una.aeropuerto.services.IParametroSistemaService;
-
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/parametroSistema")
@@ -68,7 +68,8 @@ public class ParametroSistemaController {
 
     @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
     @ApiOperation(value = "Obtiene una lista con los Parametros del Sistema entre las fechas de registro especificadas", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") Date startDate, @PathVariable(value = "fechaFinal") Date endDate) {
+     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+     @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
                 return new ResponseEntity<>(parametroSistemaService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {

@@ -58,8 +58,8 @@ public class RolServiceImplementation implements IRolService {
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<RolDTO> findByNombreAproximateIgnoreCase(String nombre) {
-        return oneToDto(rolRepository.findByNombreContainingIgnoreCase(nombre));
+    public Optional<List<RolDTO>> findByNombreAproximateIgnoreCase(String nombre) {
+        return findList(rolRepository.findByNombreContainingIgnoreCase(nombre));
     }
     
      @Override

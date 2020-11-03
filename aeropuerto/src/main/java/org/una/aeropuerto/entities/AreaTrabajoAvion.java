@@ -1,14 +1,9 @@
 package org.una.aeropuerto.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import lombok.*;
 import javax.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.Date;
 /**
  *
  * @author acer

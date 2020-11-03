@@ -60,8 +60,8 @@ public class TipoServicioServiceImplementation implements ITipoServicioService{
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<TipoServicioDTO> findByNombreAproximateIgnoreCase(String nombre) {
-        return oneToDto(Optional.ofNullable(tipoServicioRepository.findByNombreContainingIgnoreCase(nombre)));
+    public Optional<List<TipoServicioDTO>> findByNombreAproximateIgnoreCase(String nombre) {
+        return findList(tipoServicioRepository.findByNombreContainingIgnoreCase(nombre));
     }
     
     @Override

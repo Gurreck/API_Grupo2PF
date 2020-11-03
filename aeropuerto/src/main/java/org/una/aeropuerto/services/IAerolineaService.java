@@ -15,7 +15,7 @@ public interface IAerolineaService {
 
     public Optional<AerolineaDTO> findById(Long id);
 
-    public Optional<AerolineaDTO> findByNombreAerolineaAproximateIgnoreCase(String nombreAerolinea);
+    public Optional<List<AerolineaDTO>> findByNombreAerolineaAproximateIgnoreCase(String nombreAerolinea);
 
     public Optional<List<AerolineaDTO>> findByNombreResponsableAproximateIgnoreCase(String nombreResponsable);
     

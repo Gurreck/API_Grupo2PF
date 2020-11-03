@@ -1,5 +1,6 @@
 package org.una.aeropuerto.repositories;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.una.aeropuerto.entities.TipoServicio;
 
@@ -9,5 +10,5 @@ import org.una.aeropuerto.entities.TipoServicio;
  */
 public interface ITipoServicioRepository extends JpaRepository<TipoServicio, Long>{
     
-    public TipoServicio findByNombreContainingIgnoreCase(String nombre);
+    public List<TipoServicio> findByNombreContainingIgnoreCase(String nombre);
 }
