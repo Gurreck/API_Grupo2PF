@@ -139,6 +139,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         if (usuarioRepository.findById(id).isPresent()) {
             usuarioDTO = encriptarPassword(usuarioDTO);
             Usuario usuario = MapperUtils.EntityFromDto(usuarioDTO, Usuario.class);
+            usuario.setId(id);
             usuario = usuarioRepository.save(usuario);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class));
         } else {

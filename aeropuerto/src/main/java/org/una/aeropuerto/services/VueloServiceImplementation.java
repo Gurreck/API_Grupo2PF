@@ -93,6 +93,7 @@ public class VueloServiceImplementation implements IVueloService {
     public Optional<VueloDTO> update(VueloDTO vueloDTO, Long id) {
         if (vueloRepository.findById(id).isPresent()) {
             Vuelo vuelo = MapperUtils.EntityFromDto(vueloDTO, Vuelo.class);
+            vuelo.setId(id);
             vuelo= vueloRepository.save(vuelo);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(vuelo, VueloDTO.class));
 

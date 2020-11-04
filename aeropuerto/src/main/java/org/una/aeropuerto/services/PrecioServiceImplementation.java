@@ -80,6 +80,7 @@ public class PrecioServiceImplementation  implements IPrecioService{
     public Optional<PrecioDTO> update(PrecioDTO precioDTO, Long id) {
         if (precioRepository.findById(id).isPresent()) {
             Precio precio = MapperUtils.EntityFromDto(precioDTO, Precio.class);
+            precio.setId(id);
             precio = precioRepository.save(precio);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(precio, PrecioDTO.class));
         } else {

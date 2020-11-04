@@ -69,6 +69,7 @@ public class UsuarioAreaTrabajoServiceImplementation  implements IUsuarioAreaTra
     public Optional<UsuarioAreaTrabajoDTO> update(UsuarioAreaTrabajoDTO usuarioAreaTrabajoDTO, Long id) {
         if (usuarioAreaTrabajoRepository.findById(id).isPresent()) {
             UsuarioAreaTrabajo precio = MapperUtils.EntityFromDto(usuarioAreaTrabajoDTO, UsuarioAreaTrabajo.class);
+            precio.setId(id);
             precio = usuarioAreaTrabajoRepository.save(precio);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(precio, UsuarioAreaTrabajoDTO.class));
         } else {

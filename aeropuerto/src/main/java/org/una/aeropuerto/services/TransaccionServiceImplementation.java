@@ -82,6 +82,7 @@ public class TransaccionServiceImplementation implements ITransaccionService {
     public Optional<TransaccionDTO> update(TransaccionDTO transaccionDTO, Long id) {
         if (transaccionRepository.findById(id).isPresent()) {
             Transaccion transaccion = MapperUtils.EntityFromDto(transaccionDTO, Transaccion.class);
+            transaccion.setId(id);
             transaccion = transaccionRepository.save(transaccion);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(transaccion, TransaccionDTO.class));
         } else {

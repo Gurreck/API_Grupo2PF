@@ -85,6 +85,7 @@ public class AerolineaServiceImplementation implements IAerolineaService {
     public Optional<AerolineaDTO> update(AerolineaDTO aerolineaDTO, Long id) {
         if (AerolineaRepository.findById(id).isPresent()) {
             Aerolinea aerolinea = MapperUtils.EntityFromDto(aerolineaDTO, Aerolinea.class);
+            aerolinea.setId(id);
             aerolinea = AerolineaRepository.save(aerolinea);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(aerolinea, AerolineaDTO.class));
         } else {

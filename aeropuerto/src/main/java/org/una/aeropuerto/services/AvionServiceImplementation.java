@@ -100,6 +100,7 @@ public class AvionServiceImplementation implements IAvionService {
     public Optional<AvionDTO> update(AvionDTO avionDTO, Long id) {
         if (avionRepository.findById(id).isPresent()) {
             Avion avion = MapperUtils.EntityFromDto(avionDTO, Avion.class);
+            avion.setId(id);
             avion = avionRepository.save(avion);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(avion, AvionDTO.class));
         } else {

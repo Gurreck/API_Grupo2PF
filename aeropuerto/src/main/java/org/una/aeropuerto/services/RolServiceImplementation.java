@@ -93,6 +93,7 @@ public class RolServiceImplementation implements IRolService {
     public Optional<RolDTO> update(RolDTO rolDTO, Long id) {
         if (rolRepository.findById(id).isPresent()) {
             Rol rol = MapperUtils.EntityFromDto(rolDTO, Rol.class);
+            rol.setId(id);
             rol = rolRepository.save(rol);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(rol, RolDTO.class));
         } else {

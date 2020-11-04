@@ -81,6 +81,7 @@ public class HorarioServiceImplementation implements IHorarioService {
     public Optional<HorarioDTO> update(HorarioDTO horarioDTO, Long id) {
         if (horarioRepository.findById(id).isPresent()) {
             Horario horario = MapperUtils.EntityFromDto(horarioDTO, Horario.class);
+            horario.setId(id);
             horario = horarioRepository.save(horario);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(horario, HorarioDTO.class));
         } else {

@@ -89,6 +89,7 @@ public class ParametroSistemaServiceImplementation implements IParametroSistemaS
     public Optional<ParametroSistemaDTO> update(ParametroSistemaDTO parametroSistemaDTO, Long id) {
         if (parametroSistemaRepository.findById(id).isPresent()) {
             ParametroSistema parametroSistema = MapperUtils.EntityFromDto(parametroSistemaDTO, ParametroSistema.class);
+            parametroSistema.setId(id);
             parametroSistema = parametroSistemaRepository.save(parametroSistema);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(parametroSistema, ParametroSistemaDTO.class));
         } else {

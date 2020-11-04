@@ -78,6 +78,7 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
     public Optional<HoraMarcajeDTO> update(HoraMarcajeDTO horaMarcajeDTO, Long id) {
         if (horaMarcajeRepository.findById(id).isPresent()) {
             HoraMarcaje horaMarcaje = MapperUtils.EntityFromDto(horaMarcajeDTO, HoraMarcaje.class);
+            horaMarcaje.setId(id);
             horaMarcaje = horaMarcajeRepository.save(horaMarcaje);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(horaMarcaje, HoraMarcajeDTO.class));
         } else {

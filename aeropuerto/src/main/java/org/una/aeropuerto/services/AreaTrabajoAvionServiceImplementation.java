@@ -74,6 +74,7 @@ public class AreaTrabajoAvionServiceImplementation  implements IAreaTrabajoAvion
     public Optional<AreaTrabajoAvionDTO> update(AreaTrabajoAvionDTO areaTrabajoAvionDTO, Long id) {
         if (areaTrabajoAvionRepository.findById(id).isPresent()) {
             AreaTrabajoAvion precio = MapperUtils.EntityFromDto(areaTrabajoAvionDTO, AreaTrabajoAvion.class);
+            precio.setId(id);
             precio = areaTrabajoAvionRepository.save(precio);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(precio, AreaTrabajoAvionDTO.class));
         } else {

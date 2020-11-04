@@ -84,6 +84,7 @@ public class AlertaServiceImplementation implements IAlertaService{
     public Optional<AlertaDTO> update(AlertaDTO alertaDTO, Long id) {
         if (alertaRepository.findById(id).isPresent()) {
             Alerta alerta = MapperUtils.EntityFromDto(alertaDTO, Alerta.class);
+            alerta.setId(id);
             alerta = alertaRepository.save(alerta);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(alerta, AlertaDTO.class));
         } else {

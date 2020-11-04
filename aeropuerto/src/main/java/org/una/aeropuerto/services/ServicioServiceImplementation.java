@@ -104,6 +104,7 @@ public class ServicioServiceImplementation implements IServicioService {
     public Optional<ServicioDTO> update(ServicioDTO servicioDTO, Long id) {
         if (servicioRepository.findById(id).isPresent()) {
             Servicio servicio = MapperUtils.EntityFromDto(servicioDTO, Servicio.class);
+            servicio.setId(id);
             servicio = servicioRepository.save(servicio);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(servicio, ServicioDTO.class));
         } else {

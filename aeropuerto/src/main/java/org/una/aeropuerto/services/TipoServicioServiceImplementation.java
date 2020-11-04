@@ -77,6 +77,7 @@ public class TipoServicioServiceImplementation implements ITipoServicioService{
     public Optional<TipoServicioDTO> update(TipoServicioDTO tipoServicioDTO, Long id) {
         if (tipoServicioRepository.findById(id).isPresent()) {
             TipoServicio tipoServicio = MapperUtils.EntityFromDto(tipoServicioDTO, TipoServicio.class);
+            tipoServicio.setId(id);
             tipoServicio = tipoServicioRepository.save(tipoServicio);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(tipoServicio, TipoServicioDTO.class));
         } else {

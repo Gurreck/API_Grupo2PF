@@ -81,6 +81,7 @@ public class AreaTrabajoServiceImplementation implements IAreaTrabajoService {
     public Optional<AreaTrabajoDTO> update(AreaTrabajoDTO areaTrabajoDTO, Long id) {
         if (areaTrabajoRepository.findById(id).isPresent()) {
             AreaTrabajo areaTrabajo = MapperUtils.EntityFromDto(areaTrabajoDTO, AreaTrabajo.class);
+            areaTrabajo.setId(id);
             areaTrabajo = areaTrabajoRepository.save(areaTrabajo);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(areaTrabajo, AreaTrabajoDTO.class));
         } else {
