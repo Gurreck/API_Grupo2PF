@@ -63,6 +63,15 @@ public class HorarioController {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/findByEstadoAndUsuarioId/{estado}/{id}")
+    @ApiOperation(value = "Obtiene una lista de Horarios por medio del id del Usuario", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
+    public ResponseEntity<?> findByEstadoAndUsuarioId(@PathVariable(value = "estado") boolean estado, @PathVariable(value = "id") Long id) {
+        try {
+            return new ResponseEntity(horarioService.findByEstadoAndUsuarioId(estado,id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
     @PostMapping("/")
     @ApiOperation(value = "Permite crear un Horario", response = HorarioDTO.class, tags = "Horarios")

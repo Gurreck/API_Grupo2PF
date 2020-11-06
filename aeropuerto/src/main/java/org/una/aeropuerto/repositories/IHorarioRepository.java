@@ -12,5 +12,6 @@ public interface IHorarioRepository extends JpaRepository<Horario, Long> {
     
     public List<Horario> findByUsuarioId(Long id);
     
+    public List<Horario> findByEstadoAndUsuarioId(boolean estado,Long id);
  
 }

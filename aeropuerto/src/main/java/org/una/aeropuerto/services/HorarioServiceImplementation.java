@@ -69,6 +69,12 @@ public class HorarioServiceImplementation implements IHorarioService {
     }
     
     @Override
+    @Transactional(readOnly = true)
+    public Optional<List<HorarioDTO>> findByEstadoAndUsuarioId(boolean estado, Long id) {
+        return findList(horarioRepository.findByEstadoAndUsuarioId(estado, id));
+    }
+    
+    @Override
     @Transactional
     public HorarioDTO create(HorarioDTO horarioDTO) {
         Horario horario = MapperUtils.EntityFromDto(horarioDTO, Horario.class);
@@ -88,6 +94,8 @@ public class HorarioServiceImplementation implements IHorarioService {
             return null;
         }
     }
+
+    
 
     
 }

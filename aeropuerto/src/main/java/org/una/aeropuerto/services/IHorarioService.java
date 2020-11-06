@@ -20,6 +20,8 @@ public interface IHorarioService {
     
     public Optional<List<HorarioDTO>> findByUsuarioId(Long id);
     
+    public Optional<List<HorarioDTO>> findByEstadoAndUsuarioId(boolean estado, Long id);
+    
     public HorarioDTO create(HorarioDTO horario);
 
     public Optional<HorarioDTO> update(HorarioDTO horario, Long id);
