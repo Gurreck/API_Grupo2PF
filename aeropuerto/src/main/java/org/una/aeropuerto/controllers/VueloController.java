@@ -42,9 +42,9 @@ public class VueloController {
 
     @GetMapping("/findByAeropuerto/{aeropuerto}")
     @ApiOperation(value = "Obtiene una lista de Vuelos por medio del Nombre del Aeropuerto", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    public ResponseEntity<?> findByAeropuerto(@PathVariable(value = "aeropuerto") String term) {
+    public ResponseEntity<?> findByAeropuertoAproximateIgnoreCase(@PathVariable(value = "aeropuerto") String term) {
         try {
-            return new ResponseEntity(vueloService.findByAeropuerto(term), HttpStatus.OK);
+            return new ResponseEntity(vueloService.findByAeropuertoAproximateIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

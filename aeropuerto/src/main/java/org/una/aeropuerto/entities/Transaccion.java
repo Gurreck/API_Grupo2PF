@@ -34,6 +34,9 @@ public class Transaccion implements Serializable {
     @Setter(AccessLevel.NONE)
     private Date fechaRegistro;
     
+    @Column(name = "tipo")
+    private String tipo;
+    
     @ManyToOne 
     @JoinColumn(name="usuarios_id")
     private Usuario usuario;

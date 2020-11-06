@@ -52,8 +52,8 @@ public class VueloServiceImplementation implements IVueloService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<VueloDTO>> findByAeropuerto(String cedula) {
-        return findList(vueloRepository.findByAeropuerto(cedula));
+    public Optional<List<VueloDTO>> findByAeropuertoAproximateIgnoreCase(String cedula) {
+        return findList(vueloRepository.findByAeropuertoContainingIgnoreCase(cedula));
     }
     
     @Override

@@ -6,7 +6,7 @@ import org.una.aeropuerto.entities.Vuelo;
 
 public interface IVueloRepository extends JpaRepository<Vuelo, Long> {
 
-    public List<Vuelo> findByAeropuerto(String aeropueto);
+    public List<Vuelo> findByAeropuertoContainingIgnoreCase(String aeropueto);
 
     public List<Vuelo> findByEstado(boolean estado);
     

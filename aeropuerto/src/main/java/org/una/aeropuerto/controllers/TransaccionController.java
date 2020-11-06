@@ -74,6 +74,16 @@ public class TransaccionController {
         }
     }
     
+    @GetMapping("/findByTipo/{tipo}")
+    @ApiOperation(value = "Obtiene una lista de transacciones por medio del id del usuario", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+    public ResponseEntity<?> findByTipo(@PathVariable(value = "tipo") String tipo) {
+        try {
+            return new ResponseEntity(transaccionService.findByTipo(tipo), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @PostMapping("/")
     @ApiOperation(value = "Permite crear una Transaccion", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> create(@Valid @RequestBody TransaccionDTO transaccionDTO, BindingResult bindingResult) {

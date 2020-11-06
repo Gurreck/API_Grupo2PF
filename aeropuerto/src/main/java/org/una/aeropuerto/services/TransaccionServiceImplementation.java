@@ -70,6 +70,12 @@ public class TransaccionServiceImplementation implements ITransaccionService {
     }
     
     @Override
+    @Transactional(readOnly = true)
+    public Optional<List<TransaccionDTO>> findByTipo(String tipo) {
+        return findList(transaccionRepository.findByTipo(tipo));
+    }
+    
+    @Override
     @Transactional
     public TransaccionDTO create(TransaccionDTO transaccionDTO) {
         Transaccion transaccion = MapperUtils.EntityFromDto(transaccionDTO, Transaccion.class);

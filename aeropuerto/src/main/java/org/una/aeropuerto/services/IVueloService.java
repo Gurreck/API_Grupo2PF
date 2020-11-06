@@ -13,7 +13,7 @@ public interface IVueloService {
     
     public Optional<VueloDTO> findById(Long id);
 
-    public Optional<List<VueloDTO>> findByAeropuerto(String aeropueto);
+    public Optional<List<VueloDTO>> findByAeropuertoAproximateIgnoreCase(String aeropueto);
 
     public Optional<List<VueloDTO>> findByEstado(boolean nombreCompleto);
     
