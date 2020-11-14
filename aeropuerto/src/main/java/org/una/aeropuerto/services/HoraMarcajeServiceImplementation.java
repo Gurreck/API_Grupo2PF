@@ -66,6 +66,13 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
     }
     
     @Override
+    public Optional<HoraMarcajeDTO> findUltimaHoraMarcajeByUsuarioId(Long idUsuario) {
+        return oneToDto(horaMarcajeRepository.findUltimaHoraMarcajeByUsuarioId(idUsuario));
+    }
+
+    
+    
+    @Override
     @Transactional
     public HoraMarcajeDTO create(HoraMarcajeDTO horaMarcajeDTO) {
         HoraMarcaje horaMarcaje = MapperUtils.EntityFromDto(horaMarcajeDTO, HoraMarcaje.class);
@@ -86,5 +93,5 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
         }
     }     
 
-    
+
 }

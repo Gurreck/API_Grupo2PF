@@ -84,9 +84,19 @@ public class VueloController {
     
     @GetMapping("/findByAvionId/{id}")
     @ApiOperation(value = "Obtiene una lista de Vuelos por medio del Avion", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    public ResponseEntity<?> findByAerolineaId(@PathVariable(value = "id") Long term) {
+    public ResponseEntity<?> findByAvionId(@PathVariable(value = "id") Long term) {
         try {
             return new ResponseEntity(vueloService.findByAvionId(term), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/findByAerolineaId/{AerolineaId}")
+    @ApiOperation(value = "Obtiene una lista de Vuelos por medio del Id de una aerolinea", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
+    public ResponseEntity<?> findByAerolineaId(@PathVariable(value = "AerolineaId") Long id) {
+        try {
+            return new ResponseEntity(vueloService.findByAerolineaId(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

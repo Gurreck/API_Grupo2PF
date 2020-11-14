@@ -55,6 +55,15 @@ public class HoraMarcajeController {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/findUltimaHoraMarcajeByUsuarioId/{UsuarioId}")
+    @ApiOperation(value = "Obtiene la última hora de marcaje registrada de un usuario por medio del Id", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    public ResponseEntity<?> findUltimaHoraMarcajeByUsuarioId(@PathVariable(value = "UsuarioId") Long id) {
+        try {
+            return new ResponseEntity(horaMarcajeService.findUltimaHoraMarcajeByUsuarioId(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
     @PostMapping("/")
     @ApiOperation(value = "Permite crear una Hora de Marcaje", response = HoraMarcajeDTO.class, tags = "Hora Marcaje")
