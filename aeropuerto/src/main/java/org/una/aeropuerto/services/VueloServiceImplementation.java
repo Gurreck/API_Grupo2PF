@@ -81,6 +81,12 @@ public class VueloServiceImplementation implements IVueloService {
     }
 
     @Override
+    public Optional<List<VueloDTO>> findByAerolineaId(Long aerolineaId) {
+        return findList(vueloRepository.findByAerolineaId(aerolineaId));
+    }
+ 
+    
+    @Override
     @Transactional
     public VueloDTO create(VueloDTO vueloDTO) {
         Vuelo vuelo = MapperUtils.EntityFromDto(vueloDTO, Vuelo.class);
@@ -102,5 +108,5 @@ public class VueloServiceImplementation implements IVueloService {
         }
 
     }    
- 
+
 }

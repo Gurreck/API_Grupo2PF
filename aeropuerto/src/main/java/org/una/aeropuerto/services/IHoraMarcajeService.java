@@ -18,6 +18,8 @@ public interface IHoraMarcajeService {
     
     public Optional<List<HoraMarcajeDTO>> findByUsuarioId(Long id);
     
+    public Optional<HoraMarcajeDTO> findUltimaHoraMarcajeByUsuarioId(Long idUsuario); 
+    
     public HoraMarcajeDTO create(HoraMarcajeDTO horaMarcajeDTO);
 
     public Optional<HoraMarcajeDTO> update(HoraMarcajeDTO horaMarcajeDTO, Long id);

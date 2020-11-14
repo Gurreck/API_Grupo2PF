@@ -22,6 +22,8 @@ public interface IVueloService {
     public Optional<List<VueloDTO>> findByFechaSalidaBetween(Date startDate, Date endDate);
     
     public Optional<List<VueloDTO>> findByAvionId(Long avion);
+    
+    public Optional<List<VueloDTO>> findByAerolineaId(Long aerolineaId);
 
     public VueloDTO create(VueloDTO VueloDTO);
 
