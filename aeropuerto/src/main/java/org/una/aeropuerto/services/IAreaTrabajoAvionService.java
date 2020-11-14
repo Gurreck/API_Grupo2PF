@@ -10,6 +10,10 @@ public interface IAreaTrabajoAvionService {
     public Optional<AreaTrabajoAvionDTO> findById(Long id);
 
     public Optional<List<AreaTrabajoAvionDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
+    
+    public Optional<AreaTrabajoAvionDTO> findByAvionId(Long id);
+     
+    public Optional<List<AreaTrabajoAvionDTO>> findByAreaTrabajoId(Long id);
 
     public AreaTrabajoAvionDTO create(AreaTrabajoAvionDTO AreaTrabajoDTO);
 

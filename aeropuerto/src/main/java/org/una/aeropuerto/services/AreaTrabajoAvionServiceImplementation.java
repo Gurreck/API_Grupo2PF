@@ -59,6 +59,18 @@ public class AreaTrabajoAvionServiceImplementation  implements IAreaTrabajoAvion
     public Optional<List<AreaTrabajoAvionDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
         return findList(areaTrabajoAvionRepository.findByFechaRegistroBetween(startDate, endDate));
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<AreaTrabajoAvionDTO> findByAvionId(Long id) {
+           return oneToDto(areaTrabajoAvionRepository.findByAvionId(id));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<AreaTrabajoAvionDTO>> findByAreaTrabajoId(Long id) {
+           return findList(areaTrabajoAvionRepository.findByAreaTrabajoId(id));
+    }
 
     @Override
     @Transactional

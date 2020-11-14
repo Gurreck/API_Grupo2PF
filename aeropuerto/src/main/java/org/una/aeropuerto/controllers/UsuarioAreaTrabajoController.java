@@ -45,6 +45,26 @@ public class UsuarioAreaTrabajoController {
         }
     }
     
+    @GetMapping("/findByUsuarioId/{id}")
+    @ApiOperation(value = "Obtiene un Area de Trabajo con Usuario por medio del id del Usuario", response = UsuarioAreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo Usuarios")
+    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "id") Long id) {
+        try {
+            return new ResponseEntity(usuarioAreaTrabajoService.findByUsuarioId(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/findByAreaTrabajoId/{id}")
+    @ApiOperation(value = "Obtiene un Area de Trabajo con Usuario por medio del id del Area de Trabajo", response = UsuarioAreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo Usuarios")
+    public ResponseEntity<?> findByAreaTrabajoId(@PathVariable(value = "id") Long id) {
+        try {
+            return new ResponseEntity(usuarioAreaTrabajoService.findByAreaTrabajoId(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @PostMapping("/")
     @ApiOperation(value = "Permite crear una Area de Trabajo con Usuario", response = UsuarioAreaTrabajoDTO.class, tags = "Areas Trabajo Usuarios")
     public ResponseEntity<?> create(@Valid @RequestBody UsuarioAreaTrabajoDTO usuarioAreaTrabajoDTO, BindingResult bindingResult) {

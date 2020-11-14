@@ -18,7 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
 public class Usuario implements Serializable {
     
     @Id
@@ -31,6 +30,9 @@ public class Usuario implements Serializable {
     @Column(name = "nombre_completo", length = 50)
     private String nombreCompleto;
 
+    @Column(name = "telefono", length = 20)
+    private String telefono;
+    
     @Column
     private boolean estado;
 

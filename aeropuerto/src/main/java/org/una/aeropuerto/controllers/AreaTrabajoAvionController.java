@@ -47,6 +47,26 @@ public class AreaTrabajoAvionController {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/findByAvionId/{id}")
+    @ApiOperation(value = "Obtiene un Area de Trabajo con Avion por medio del id del Avion", response = AreaTrabajoAvionDTO.class, tags = "Areas Trabajo Aviones")
+    public ResponseEntity<?> findByAvionId(@PathVariable(value = "id") Long id) {
+        try {
+            return new ResponseEntity(areaTrabajoAvionService.findByAvionId(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/findByAreaTrabajoId/{id}")
+    @ApiOperation(value = "Obtiene un Area de Trabajo con Avion por medio del id del Area de Trabajo", response = AreaTrabajoAvionDTO.class, responseContainer = "List", tags = "Areas Trabajo Aviones")
+    public ResponseEntity<?> findByAreaTrabajoId(@PathVariable(value = "id") Long id) {
+        try {
+            return new ResponseEntity(areaTrabajoAvionService.findByAreaTrabajoId(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/")
     @ApiOperation(value = "Permite crear una Area de Trabajo con Avion", response = AreaTrabajoAvionDTO.class, tags = "Areas Trabajo Aviones")

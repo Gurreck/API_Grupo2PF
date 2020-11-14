@@ -2,6 +2,7 @@ package org.una.aeropuerto.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.net.URLDecoder;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,8 @@ public class UsuarioController {
     @ApiOperation(value = "Obtiene una lista de Usuarios por nombre completo", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     public ResponseEntity<?> findByNombreCompletoAproximateIgnoreCase(@PathVariable(value = "nombre") String nombre) {
         try {
-            return new ResponseEntity(usuarioService.findByNombreCompletoAproximateIgnoreCase(nombre), HttpStatus.OK);
+            String restUrl = URLDecoder.decode(nombre, "UTF-8");
+            return new ResponseEntity(usuarioService.findByNombreCompletoAproximateIgnoreCase(restUrl), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

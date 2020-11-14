@@ -15,6 +15,7 @@ public class UsuarioDTO {
     private Long id; 
     private String cedula; 
     private String nombreCompleto;   
+    private String telefono;
     private boolean estado; 
     private String passwordEncriptado;
     private Date fechaRegistro; 

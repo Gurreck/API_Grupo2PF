@@ -7,5 +7,9 @@ import org.una.aeropuerto.entities.UsuarioAreaTrabajo;
 public interface IUsuarioAreaTrabajoRepository extends JpaRepository<UsuarioAreaTrabajo, Long> {
 
      public List<UsuarioAreaTrabajo> findByFechaRegistroBetween(Date startDate, Date endDate);
+     
+     public List<UsuarioAreaTrabajo> findByUsuarioId(Long id);
+     
+     public List<UsuarioAreaTrabajo> findByAreaTrabajoId(Long id);
  
 }

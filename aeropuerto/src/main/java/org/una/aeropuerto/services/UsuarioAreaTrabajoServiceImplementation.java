@@ -54,6 +54,18 @@ public class UsuarioAreaTrabajoServiceImplementation  implements IUsuarioAreaTra
     public Optional<List<UsuarioAreaTrabajoDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
         return findList(usuarioAreaTrabajoRepository.findByFechaRegistroBetween(startDate, endDate));
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<UsuarioAreaTrabajoDTO>> findByUsuarioId(Long id) {
+           return findList(usuarioAreaTrabajoRepository.findByUsuarioId(id));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<UsuarioAreaTrabajoDTO>> findByAreaTrabajoId(Long id) {
+           return findList(usuarioAreaTrabajoRepository.findByAreaTrabajoId(id));
+    }
 
     @Override
     @Transactional
