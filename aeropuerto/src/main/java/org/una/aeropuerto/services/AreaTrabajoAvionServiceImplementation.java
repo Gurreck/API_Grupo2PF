@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.una.aeropuerto.dto.AreaTrabajoAvionDTO;
 import org.una.aeropuerto.entities.AreaTrabajoAvion;
 import org.una.aeropuerto.repositories.IAreaTrabajoAvionRepository;
-import org.una.aeropuerto.repositories.IPrecioRepository;
 import org.una.aeropuerto.utils.MapperUtils;
 
 /**
@@ -24,8 +23,8 @@ public class AreaTrabajoAvionServiceImplementation  implements IAreaTrabajoAvion
 
     private Optional<List<AreaTrabajoAvionDTO>> findList(List<AreaTrabajoAvion> list) {
         if (list != null) {
-            List<AreaTrabajoAvionDTO> precioDTO = MapperUtils.DtoListFromEntityList(list, AreaTrabajoAvionDTO.class);
-            return Optional.ofNullable(precioDTO);
+            List<AreaTrabajoAvionDTO> areaTrabajoAvionDTO = MapperUtils.DtoListFromEntityList(list, AreaTrabajoAvionDTO.class);
+            return Optional.ofNullable(areaTrabajoAvionDTO);
         } else {
             return null;
         }
@@ -85,10 +84,10 @@ public class AreaTrabajoAvionServiceImplementation  implements IAreaTrabajoAvion
     @Transactional
     public Optional<AreaTrabajoAvionDTO> update(AreaTrabajoAvionDTO areaTrabajoAvionDTO, Long id) {
         if (areaTrabajoAvionRepository.findById(id).isPresent()) {
-            AreaTrabajoAvion precio = MapperUtils.EntityFromDto(areaTrabajoAvionDTO, AreaTrabajoAvion.class);
-            precio.setId(id);
-            precio = areaTrabajoAvionRepository.save(precio);
-            return Optional.ofNullable(MapperUtils.DtoFromEntity(precio, AreaTrabajoAvionDTO.class));
+            AreaTrabajoAvion areaTrabajoAvion = MapperUtils.EntityFromDto(areaTrabajoAvionDTO, AreaTrabajoAvion.class);
+            areaTrabajoAvion.setId(id);
+            areaTrabajoAvion = areaTrabajoAvionRepository.save(areaTrabajoAvion);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(areaTrabajoAvion, AreaTrabajoAvionDTO.class));
         } else {
             return null;
         }

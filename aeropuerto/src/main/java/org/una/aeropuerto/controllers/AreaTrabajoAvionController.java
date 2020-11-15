@@ -87,9 +87,9 @@ public class AreaTrabajoAvionController {
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody AreaTrabajoAvionDTO areaTrabajoAvionDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
-                Optional<AreaTrabajoAvionDTO> precioUpdated = areaTrabajoAvionService.update(areaTrabajoAvionDTO, id);
-                if (precioUpdated.isPresent()) {
-                    return new ResponseEntity(precioUpdated, HttpStatus.OK);
+                Optional<AreaTrabajoAvionDTO> areaTrabajoAvionUpdated = areaTrabajoAvionService.update(areaTrabajoAvionDTO, id);
+                if (areaTrabajoAvionUpdated.isPresent()) {
+                    return new ResponseEntity(areaTrabajoAvionUpdated, HttpStatus.OK);
                 } else {
                     return new ResponseEntity(HttpStatus.NOT_FOUND);
                 }

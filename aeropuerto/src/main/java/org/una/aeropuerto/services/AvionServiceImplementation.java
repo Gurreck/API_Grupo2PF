@@ -59,8 +59,8 @@ public class AvionServiceImplementation implements IAvionService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<AvionDTO> findByMatricula(String matricula) {
-        return oneToDto(avionRepository.findByMatricula(matricula));
+    public Optional<List<AvionDTO>> findByMatriculaAproximate(String matricula) {
+        return findList(avionRepository.findByMatriculaContaining(matricula));
     }
 
     @Override

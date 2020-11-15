@@ -84,9 +84,9 @@ public class UsuarioAreaTrabajoController {
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody UsuarioAreaTrabajoDTO usuarioAreaTrabajoDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
-                Optional<UsuarioAreaTrabajoDTO> precioUpdated = usuarioAreaTrabajoService.update(usuarioAreaTrabajoDTO, id);
-                if (precioUpdated.isPresent()) {
-                    return new ResponseEntity(precioUpdated, HttpStatus.OK);
+                Optional<UsuarioAreaTrabajoDTO> usuarioAreaTrabajoUpdated = usuarioAreaTrabajoService.update(usuarioAreaTrabajoDTO, id);
+                if (usuarioAreaTrabajoUpdated.isPresent()) {
+                    return new ResponseEntity(usuarioAreaTrabajoUpdated, HttpStatus.OK);
                 } else {
                     return new ResponseEntity(HttpStatus.NOT_FOUND);
                 }

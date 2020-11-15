@@ -19,8 +19,8 @@ public class UsuarioAreaTrabajoServiceImplementation  implements IUsuarioAreaTra
 
     private Optional<List<UsuarioAreaTrabajoDTO>> findList(List<UsuarioAreaTrabajo> list) {
         if (list != null) {
-            List<UsuarioAreaTrabajoDTO> precioDTO = MapperUtils.DtoListFromEntityList(list, UsuarioAreaTrabajoDTO.class);
-            return Optional.ofNullable(precioDTO);
+            List<UsuarioAreaTrabajoDTO> usuarioAreaTrabajoDTO = MapperUtils.DtoListFromEntityList(list, UsuarioAreaTrabajoDTO.class);
+            return Optional.ofNullable(usuarioAreaTrabajoDTO);
         } else {
             return null;
         }
@@ -80,10 +80,10 @@ public class UsuarioAreaTrabajoServiceImplementation  implements IUsuarioAreaTra
     @Transactional
     public Optional<UsuarioAreaTrabajoDTO> update(UsuarioAreaTrabajoDTO usuarioAreaTrabajoDTO, Long id) {
         if (usuarioAreaTrabajoRepository.findById(id).isPresent()) {
-            UsuarioAreaTrabajo precio = MapperUtils.EntityFromDto(usuarioAreaTrabajoDTO, UsuarioAreaTrabajo.class);
-            precio.setId(id);
-            precio = usuarioAreaTrabajoRepository.save(precio);
-            return Optional.ofNullable(MapperUtils.DtoFromEntity(precio, UsuarioAreaTrabajoDTO.class));
+            UsuarioAreaTrabajo usuarioAreaTrabajo = MapperUtils.EntityFromDto(usuarioAreaTrabajoDTO, UsuarioAreaTrabajo.class);
+            usuarioAreaTrabajo.setId(id);
+            usuarioAreaTrabajo = usuarioAreaTrabajoRepository.save(usuarioAreaTrabajo);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(usuarioAreaTrabajo, UsuarioAreaTrabajoDTO.class));
         } else {
             return null;
         }

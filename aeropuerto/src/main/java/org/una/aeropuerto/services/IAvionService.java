@@ -16,7 +16,7 @@ public interface IAvionService {
 
     public Optional<AvionDTO> findById(Long id);
 
-    public Optional<AvionDTO> findByMatricula(String matricula);
+    public Optional<List<AvionDTO>> findByMatriculaAproximate(String matricula);
 
     public Optional<List<AvionDTO>> findByTipoAvion(String tipoAvion);
     

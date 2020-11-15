@@ -46,9 +46,9 @@ public class AvionController {
     
     @GetMapping("/findByMatricula/{matricula}")
     @ApiOperation(value = "Obtiene un Avion por medio de la Matricula", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
-    public ResponseEntity<?> findByMatricula(@PathVariable(value = "matricula") String term) {
+    public ResponseEntity<?> findByMatriculaAproximate(@PathVariable(value = "matricula") String term) {
         try {
-            return new ResponseEntity(avionService.findByMatricula(term), HttpStatus.OK);
+            return new ResponseEntity(avionService.findByMatriculaAproximate(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
