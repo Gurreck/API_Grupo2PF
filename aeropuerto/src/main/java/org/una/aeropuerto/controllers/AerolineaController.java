@@ -1,6 +1,7 @@
 package org.una.aeropuerto.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.net.URLDecoder;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,8 @@ public class AerolineaController {
     @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del nombre", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findByNombreAerolineaAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
         try {
-            return new ResponseEntity(aerolineaService.findByNombreAerolineaAproximateIgnoreCase(term), HttpStatus.OK);
+            String restUrl = URLDecoder.decode(term, "UTF-8");
+            return new ResponseEntity(aerolineaService.findByNombreAerolineaAproximateIgnoreCase(restUrl), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -60,6 +62,7 @@ public class AerolineaController {
     @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del nombre del responsable", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     public ResponseEntity<?> findByNombreResponsableAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
         try {
+            String restUrl = URLDecoder.decode(term, "UTF-8");
             return new ResponseEntity(aerolineaService.findByNombreResponsableAproximateIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);

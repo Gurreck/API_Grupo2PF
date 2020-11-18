@@ -8,10 +8,8 @@ import org.una.aeropuerto.dto.TransaccionDTO;
 import org.una.aeropuerto.entities.Transaccion;
 import org.una.aeropuerto.repositories.ITransaccionRepository;
 import org.una.aeropuerto.utils.MapperUtils;
-
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class TransaccionServiceImplementation implements ITransaccionService {
@@ -53,26 +51,20 @@ public class TransaccionServiceImplementation implements ITransaccionService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TransaccionDTO>> findByEstado(boolean estado) {
-        return findList(transaccionRepository.findByEstado(estado));
+    public Optional<List<TransaccionDTO>> findByEstadoAndTipo(boolean estado, String tipo) {
+        return findList(transaccionRepository.findByEstadoAndTipo(estado, tipo));
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TransaccionDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
-       return findList(transaccionRepository.findByFechaRegistroBetween(startDate, endDate));
+    public Optional<List<TransaccionDTO>> findByFechaRegistroBetweenAndTipo(Date startDate, Date endDate, String tipo) {
+       return findList(transaccionRepository.findByFechaRegistroBetweenAndTipo(startDate, endDate, tipo));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TransaccionDTO>> findByUsuarioId(Long id) {
-       return findList(transaccionRepository.findByUsuarioId(id));
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<List<TransaccionDTO>> findByTipo(String tipo) {
-        return findList(transaccionRepository.findByTipo(tipo));
+    public Optional<List<TransaccionDTO>> findByUsuarioIdAndTipo(Long id, String tipo) {
+       return findList(transaccionRepository.findByUsuarioIdAndTipo(id, tipo));
     }
     
     @Override

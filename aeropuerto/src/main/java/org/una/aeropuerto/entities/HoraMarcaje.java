@@ -53,11 +53,13 @@ public class HoraMarcaje implements Serializable {
     public void prePersist() {
         fechaRegistro = new Date();
         fechaModificacion = new Date();
+        horaEntrada = new Date();
     }
 
     @PreUpdate
     public void preUpdate() {
         fechaModificacion = new Date();
+        horaSalida = new Date();
     }
 }
 

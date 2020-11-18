@@ -4,8 +4,6 @@ import io.swagger.annotations.ApiOperation;
 import java.util.Date;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.una.aeropuerto.dto.TransaccionDTO;
 import org.una.aeropuerto.dto.UsuarioDTO;
 import org.una.aeropuerto.services.ITransaccionService;
-
 import javax.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,42 +40,32 @@ public class TransaccionController {
         }
     }
     
-    @GetMapping("/findByEstado/{estado}")
+    @GetMapping("/findByEstadoAndTipo/{estado}/{tipo}")
     @ApiOperation(value = "Obtiene una lista con las Transacciones por medio del estado", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
+    public ResponseEntity<?> findByEstadoAndTipo(@PathVariable(value = "estado") boolean estado, @PathVariable(value = "tipo") String tipo) {
         try {
-                return new ResponseEntity<>(transaccionService.findByEstado(estado), HttpStatus.OK);
+                return new ResponseEntity<>(transaccionService.findByEstadoAndTipo(estado, tipo), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
-    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
+    @GetMapping("/findByFechaRegistroBetweenAndTipo/{fechaInicial}/{fechaFinal}/{tipo}")
     @ApiOperation(value = "Obtiene una lista con las Transacciones entre las fechas de registro especificadas", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-     @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+     public ResponseEntity<?> findByFechaRegistroBetweenAndTipo(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+     @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate, @PathVariable(value = "tipo") String tipo) {
         try {
-                return new ResponseEntity<>(transaccionService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
+                return new ResponseEntity<>(transaccionService.findByFechaRegistroBetweenAndTipo(startDate, endDate, tipo), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
      
-     @GetMapping("/findByUsuarioId/{id}")
+     @GetMapping("/findByUsuarioIdAndTipo/{id}/{tipo}")
     @ApiOperation(value = "Obtiene una lista de transacciones por medio del id del usuario", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> findByUsuarioIdAndTipo(@PathVariable(value = "id") Long id, @PathVariable(value = "tipo") String tipo) {
         try {
-            return new ResponseEntity(transaccionService.findByUsuarioId(id), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @GetMapping("/findByTipo/{tipo}")
-    @ApiOperation(value = "Obtiene una lista de transacciones por medio del id del usuario", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    public ResponseEntity<?> findByTipo(@PathVariable(value = "tipo") String tipo) {
-        try {
-            return new ResponseEntity(transaccionService.findByTipo(tipo), HttpStatus.OK);
+            return new ResponseEntity(transaccionService.findByUsuarioIdAndTipo(id, tipo), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

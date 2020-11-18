@@ -6,12 +6,10 @@ import org.una.aeropuerto.entities.Transaccion;
 
 public interface ITransaccionRepository extends JpaRepository<Transaccion, Long> {
 
-    public List<Transaccion> findByEstado(boolean estado);
+    public List<Transaccion> findByEstadoAndTipo(boolean estado, String tipo);
 
-    public List<Transaccion> findByFechaRegistroBetween(Date startDate, Date endDate);
+    public List<Transaccion> findByFechaRegistroBetweenAndTipo(Date startDate, Date endDate, String tipo);
     
-    public List<Transaccion> findByUsuarioId(Long id);    
-    
-    public List<Transaccion> findByTipo(String tipo);     
+    public List<Transaccion> findByUsuarioIdAndTipo(Long id, String tipo);     
  
 }
