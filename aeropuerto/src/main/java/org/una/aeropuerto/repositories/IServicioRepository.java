@@ -21,6 +21,8 @@ public interface IServicioRepository extends JpaRepository<Servicio, Long> {
     
     public List<Servicio> findByTipoServicioId(Long tipoServicio);
     
+    public List<Servicio> findByFechaRegistroBetweenAndTipoServicioId(Date startDate, Date endDate, Long tipoServicio );
+    
     public List<Servicio> findByTipoServicioIdAndAvionId(Long tipoServicio, Long avion);
  
 }

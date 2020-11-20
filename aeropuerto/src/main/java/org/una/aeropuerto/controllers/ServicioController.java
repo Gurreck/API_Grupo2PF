@@ -107,6 +107,18 @@ public class ServicioController {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/findByFechaRegistroBetweenAndTipoServicioId/{fechaInicial}/{fechaFinal}/{idTipoServicio}")
+    @ApiOperation(value = "Obtiene una lista de Servicios entre la fecha de registro especificada", response = ServicioDTO.class, responseContainer = "List", tags = "Servicios")
+    public ResponseEntity<?> findByFechaRegistroBetweenAndTipoServicioId(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal,@PathVariable(value = "idTipoServicio") Long idTipoServicio){
+        try {
+            return new ResponseEntity(servicioService.findByFechaRegistroBetweenAndTipoServicioId(fechaInicio, fechaFinal, idTipoServicio), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/")
     @ApiOperation(value = "Permite crear un Servicio", response = ServicioDTO.class, tags = "Servicios")

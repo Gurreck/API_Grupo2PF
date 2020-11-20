@@ -88,6 +88,12 @@ public class ServicioServiceImplementation implements IServicioService {
     public Optional<List<ServicioDTO>> findByTipoServicioIdAndAvionId(Long tipoServicio, Long avion) {
         return findList(servicioRepository.findByTipoServicioIdAndAvionId(tipoServicio, avion));
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<ServicioDTO>> findByFechaRegistroBetweenAndTipoServicioId(Date startDate, Date endDate, Long tipoServicio ) {
+        return findList(servicioRepository.findByFechaRegistroBetweenAndTipoServicioId(startDate, endDate, tipoServicio ));
+    }
 
     @Override
     @Transactional
