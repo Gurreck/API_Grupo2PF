@@ -16,6 +16,8 @@ public interface IHoraMarcajeService {
     
     public Optional<List<HoraMarcajeDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
     
+    public Optional<List<HoraMarcajeDTO>> findByFechaRegistroBetweenAndUsuarioId(Date startDate, Date endDate, Long id);
+    
     public Optional<List<HoraMarcajeDTO>> findByUsuarioId(Long id);
     
     public Optional<HoraMarcajeDTO> findUltimaHoraMarcajeByUsuarioId(Long idUsuario); 

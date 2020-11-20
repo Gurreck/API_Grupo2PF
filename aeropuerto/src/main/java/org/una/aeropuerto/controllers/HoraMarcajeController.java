@@ -45,6 +45,17 @@ public class HoraMarcajeController {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/findByFechaRegistroBetweenAndUsuarioId/{fechaInicial}/{fechaFinal}/{idUsuario}")
+    @ApiOperation(value = "Obtiene la Hora de Marcaje entre las fechas de registro especificadas", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")
+    public ResponseEntity<?> findByFechaRegistroBetweenAndUsuarioId(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,@PathVariable(value = "idUsuario") Long idUsuario) {
+        try {
+            return new ResponseEntity(horaMarcajeService.findByFechaRegistroBetweenAndUsuarioId(startDate, endDate,idUsuario), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping("/findByUsuarioId/{id}")
     @ApiOperation(value = "Obtiene una lista de Horas de Marcaje por medio del id del usuario", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Hora Marcaje")

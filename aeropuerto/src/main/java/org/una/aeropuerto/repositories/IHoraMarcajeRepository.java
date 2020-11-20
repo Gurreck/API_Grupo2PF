@@ -10,6 +10,8 @@ public interface IHoraMarcajeRepository extends JpaRepository<HoraMarcaje, Long>
 
     public List<HoraMarcaje> findByFechaRegistroBetween(Date startDate, Date endDate);
     
+    public List<HoraMarcaje> findByFechaRegistroBetweenAndUsuarioId(Date startDate, Date endDate, Long id);
+    
     public List<HoraMarcaje> findByUsuarioId(Long id);
     
     @Query(value = "SELECT mar FROM HoraMarcaje mar WHERE mar.id IN (SELECT MAX(hora.id) FROM HoraMarcaje hora JOIN hora.usuario usu WHERE usu.id = ?1)")

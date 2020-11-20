@@ -70,7 +70,10 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
         return oneToDto(horaMarcajeRepository.findUltimaHoraMarcajeByUsuarioId(idUsuario));
     }
 
-    
+    @Override
+    public Optional<List<HoraMarcajeDTO>> findByFechaRegistroBetweenAndUsuarioId(Date startDate, Date endDate, Long id) {
+        return findList(horaMarcajeRepository.findByFechaRegistroBetweenAndUsuarioId(startDate, endDate, id));
+    }
     
     @Override
     @Transactional
