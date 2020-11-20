@@ -17,7 +17,11 @@ public interface ITransaccionService {
     
     public Optional<List<TransaccionDTO>> findByFechaRegistroBetweenAndTipo(Date startDate, Date endDate, String tipo);
     
+    public Optional<List<TransaccionDTO>> findByFechaRegistroBetweenAndTipoAndUsuarioUsuarioJefeId(Date startDate, Date endDate, String tipo, Long idJefe);
+    
     public Optional<List<TransaccionDTO>> findByUsuarioIdAndTipo(Long id, String tipo);
+    
+    public Optional<List<TransaccionDTO>> findByUsuarioIdAndTipoAndUsuarioUsuarioJefeId(Long id, String tipo, Long idJefe);
 
     public TransaccionDTO create(TransaccionDTO transaccion);
 

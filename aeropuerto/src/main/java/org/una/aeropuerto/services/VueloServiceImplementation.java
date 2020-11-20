@@ -85,6 +85,10 @@ public class VueloServiceImplementation implements IVueloService {
         return findList(vueloRepository.findByAerolineaId(aerolineaId));
     }
  
+    @Override
+    public Optional<VueloDTO> findUltimoVueloByAvionId(Long idAvion) {
+        return oneToDto(vueloRepository.findUltimoVueloByAvionId(idAvion));
+    }
     
     @Override
     @Transactional

@@ -2,6 +2,7 @@ package org.una.aeropuerto.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,8 @@ public class VueloController {
     @ApiOperation(value = "Obtiene una lista de Vuelos por medio del Nombre del Aeropuerto", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public ResponseEntity<?> findByAeropuertoAproximateIgnoreCase(@PathVariable(value = "aeropuerto") String term) {
         try {
-            return new ResponseEntity(vueloService.findByAeropuertoAproximateIgnoreCase(term), HttpStatus.OK);
+            String restUrl = URLDecoder.decode(term, "UTF-8");
+            return new ResponseEntity(vueloService.findByAeropuertoAproximateIgnoreCase(restUrl), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -102,6 +104,16 @@ public class VueloController {
         }
     }
 
+    @GetMapping("/findUltimoVueloByAvionId/{AvionId}")
+    @ApiOperation(value = "Obtiene el ultimo vuelo registrado por medio del Id del avion", response = VueloDTO.class, tags = "Vuelos")
+    public ResponseEntity<?> findUltimoVueloByAvionId(@PathVariable(value = "AvionId") Long id) {
+        try {
+            return new ResponseEntity(vueloService.findUltimoVueloByAvionId(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @PostMapping("/")
     @ApiOperation(value = "Permite crear un Vuelo", response = VueloDTO.class, tags = "Vuelos")
     public ResponseEntity<?> create(@Valid @RequestBody VueloDTO vueloDTO, BindingResult bindingResult) {

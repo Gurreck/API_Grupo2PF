@@ -114,12 +114,22 @@ public class ServicioController {
     @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal,@PathVariable(value = "idTipoServicio") Long idTipoServicio){
         try {
             return new ResponseEntity(servicioService.findByFechaRegistroBetweenAndTipoServicioId(fechaInicio, fechaFinal, idTipoServicio), HttpStatus.OK);
-
+    
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @GetMapping("/findUltimoServicioByAvionIdAndTipoId/{AvionId}/{TipoId}")
+    @ApiOperation(value = "Obtiene el ultimo vuelo registrado por medio del Id del avion", response = ServicioDTO.class, tags = "Servicios")
+    public ResponseEntity<?> findUltimoServicioByAvionIdAndTipoServicioId(@PathVariable(value = "AvionId") Long idAvion, @PathVariable(value = "TipoId") Long idTipo) {
+        try {
+            return new ResponseEntity(servicioService.findUltimoServicioByAvionIdAndTipoServicioId(idAvion,idTipo), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @PostMapping("/")
     @ApiOperation(value = "Permite crear un Servicio", response = ServicioDTO.class, tags = "Servicios")
     public ResponseEntity<?> create(@Valid @RequestBody ServicioDTO servicioDTO, BindingResult bindingResult) {

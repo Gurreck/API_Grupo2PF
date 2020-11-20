@@ -10,6 +10,10 @@ public interface ITransaccionRepository extends JpaRepository<Transaccion, Long>
 
     public List<Transaccion> findByFechaRegistroBetweenAndTipo(Date startDate, Date endDate, String tipo);
     
+    public List<Transaccion> findByFechaRegistroBetweenAndTipoAndUsuarioUsuarioJefeId(Date startDate, Date endDate, String tipo, Long idJefe);
+    
     public List<Transaccion> findByUsuarioIdAndTipo(Long id, String tipo);     
+    
+    public List<Transaccion> findByUsuarioIdAndTipoAndUsuarioUsuarioJefeId(Long id, String tipo, Long idJefe);     
  
 }

@@ -28,6 +28,8 @@ public interface IServicioService {
      public Optional<List<ServicioDTO>> findByFechaRegistroBetweenAndTipoServicioId(Date startDate, Date endDate, Long tipoServicio );
     
     public Optional<List<ServicioDTO>> findByTipoServicioIdAndAvionId(Long tipoServicio, Long avion);
+    
+    public Optional<ServicioDTO> findUltimoServicioByAvionIdAndTipoServicioId(Long idAvion, Long idTipo);
 
     public ServicioDTO create(ServicioDTO servicio);
 

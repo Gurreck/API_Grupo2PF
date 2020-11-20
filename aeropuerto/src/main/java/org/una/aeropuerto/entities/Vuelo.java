@@ -58,7 +58,7 @@ public class Vuelo implements Serializable {
 
     @PrePersist
     public void prePersist() {
-        estado=true;
+        estado=false;
     }
 
     @PreUpdate

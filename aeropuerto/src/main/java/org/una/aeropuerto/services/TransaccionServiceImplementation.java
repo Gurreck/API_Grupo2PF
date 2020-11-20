@@ -60,11 +60,23 @@ public class TransaccionServiceImplementation implements ITransaccionService {
     public Optional<List<TransaccionDTO>> findByFechaRegistroBetweenAndTipo(Date startDate, Date endDate, String tipo) {
        return findList(transaccionRepository.findByFechaRegistroBetweenAndTipo(startDate, endDate, tipo));
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<TransaccionDTO>> findByFechaRegistroBetweenAndTipoAndUsuarioUsuarioJefeId(Date startDate, Date endDate, String tipo, Long idJefe) {
+       return findList(transaccionRepository.findByFechaRegistroBetweenAndTipoAndUsuarioUsuarioJefeId(startDate, endDate, tipo, idJefe));
+    }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<List<TransaccionDTO>> findByUsuarioIdAndTipo(Long id, String tipo) {
        return findList(transaccionRepository.findByUsuarioIdAndTipo(id, tipo));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<TransaccionDTO>> findByUsuarioIdAndTipoAndUsuarioUsuarioJefeId(Long id, String tipo, Long idJefe) {
+       return findList(transaccionRepository.findByUsuarioIdAndTipoAndUsuarioUsuarioJefeId(id, tipo, idJefe));
     }
     
     @Override

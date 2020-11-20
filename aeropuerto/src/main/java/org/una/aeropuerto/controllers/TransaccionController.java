@@ -61,11 +61,32 @@ public class TransaccionController {
         }
     }
      
-     @GetMapping("/findByUsuarioIdAndTipo/{id}/{tipo}")
+    @GetMapping("/findByFechaRegistroBetweenAndTipoAndUsuarioUsuarioJefeId/{fechaInicial}/{fechaFinal}/{tipo}/{idJefe}")
+    @ApiOperation(value = "Obtiene una lista con las Transacciones entre las fechas de registro especificadas", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+     public ResponseEntity<?> findByFechaRegistroBetweenAndTipoAndUsuarioUsuarioJefeId(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+     @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate, @PathVariable(value = "tipo") String tipo, @PathVariable(value = "idJefe") Long idJefe) {
+        try {
+                return new ResponseEntity<>(transaccionService.findByFechaRegistroBetweenAndTipoAndUsuarioUsuarioJefeId(startDate, endDate, tipo, idJefe), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+     
+    @GetMapping("/findByUsuarioIdAndTipo/{id}/{tipo}")
     @ApiOperation(value = "Obtiene una lista de transacciones por medio del id del usuario", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> findByUsuarioIdAndTipo(@PathVariable(value = "id") Long id, @PathVariable(value = "tipo") String tipo) {
         try {
             return new ResponseEntity(transaccionService.findByUsuarioIdAndTipo(id, tipo), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/findByUsuarioIdAndTipoAndUsuarioUsuarioJefeId/{id}/{tipo}/{idJefe}")
+    @ApiOperation(value = "Obtiene una lista de transacciones por medio del id del usuario", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+    public ResponseEntity<?> findByUsuarioIdAndTipoAndUsuarioUsuarioJefeId(@PathVariable(value = "id") Long id, @PathVariable(value = "tipo") String tipo, @PathVariable(value = "idJefe") Long idJefe) {
+        try {
+            return new ResponseEntity(transaccionService.findByUsuarioIdAndTipoAndUsuarioUsuarioJefeId(id, tipo, idJefe), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

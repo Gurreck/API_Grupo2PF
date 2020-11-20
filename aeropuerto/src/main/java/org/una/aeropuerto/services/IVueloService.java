@@ -23,6 +23,8 @@ public interface IVueloService {
     
     public Optional<List<VueloDTO>> findByAvionId(Long avion);
     
+    public Optional<VueloDTO> findUltimoVueloByAvionId(Long idAvion); 
+    
     public Optional<List<VueloDTO>> findByAerolineaId(Long aerolineaId);
 
     public VueloDTO create(VueloDTO VueloDTO);

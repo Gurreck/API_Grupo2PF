@@ -96,6 +96,12 @@ public class ServicioServiceImplementation implements IServicioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<ServicioDTO> findUltimoServicioByAvionIdAndTipoServicioId(Long idAvion, Long idTipo){
+        return oneToDto(servicioRepository.findUltimoServicioByAvionIdAndTipoServicioId(idAvion, idTipo));
+    }
+     
+    @Override
     @Transactional
     public ServicioDTO create(ServicioDTO servicioDTO) {
 
