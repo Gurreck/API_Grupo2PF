@@ -47,28 +47,33 @@ public class ParametroSistemaServiceImplementation implements IParametroSistemaS
 
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<ParametroSistemaDTO>> findAll() {
         return findList(parametroSistemaRepository.findAll());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<ParametroSistemaDTO> findById(Long id) {
         return oneToDto(parametroSistemaRepository.findById(id));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<ParametroSistemaDTO>> findByEstado(boolean estado) {
         return findList(parametroSistemaRepository.findByEstado(estado));
     }
 
     @Override
-    public Optional<List<ParametroSistemaDTO>> findByNombre(String nombre) {
-        return findList(parametroSistemaRepository.findByNombre(nombre));
+    @Transactional(readOnly = true)
+    public Optional<List<ParametroSistemaDTO>> findByNombreAproximateIgnoreCase(String nombre) {
+        return findList(parametroSistemaRepository.findByNombreContainingIgnoreCase(nombre));
     }
 
     @Override
-    public Optional<List<ParametroSistemaDTO>> findByFechaRegistro(Date fechaRegistro) {
-        return findList(parametroSistemaRepository.findByFechaRegistro(fechaRegistro));
+    @Transactional(readOnly = true)
+    public Optional<List<ParametroSistemaDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
+       return findList(parametroSistemaRepository.findByFechaRegistroBetween(startDate, endDate));
     }
 
     @Override
@@ -84,6 +89,7 @@ public class ParametroSistemaServiceImplementation implements IParametroSistemaS
     public Optional<ParametroSistemaDTO> update(ParametroSistemaDTO parametroSistemaDTO, Long id) {
         if (parametroSistemaRepository.findById(id).isPresent()) {
             ParametroSistema parametroSistema = MapperUtils.EntityFromDto(parametroSistemaDTO, ParametroSistema.class);
+            parametroSistema.setId(id);
             parametroSistema = parametroSistemaRepository.save(parametroSistema);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(parametroSistema, ParametroSistemaDTO.class));
         } else {

@@ -6,11 +6,11 @@ import org.una.aeropuerto.entities.ParametroSistema;
 
 public interface IParametroSistemaRepository extends JpaRepository<ParametroSistema, Long> {
 
-    public List<ParametroSistema> findByNombre(String nombre);
+    public List<ParametroSistema> findByNombreContainingIgnoreCase(String nombre);
     
     public List<ParametroSistema> findByEstado(boolean estado);
 
-    public List<ParametroSistema> findByFechaRegistro(Date fechaRegistro);
+    public List<ParametroSistema> findByFechaRegistroBetween(Date startDate, Date endDate);
  
 }
 

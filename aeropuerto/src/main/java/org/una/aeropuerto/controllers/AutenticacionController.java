@@ -20,7 +20,7 @@ import org.una.aeropuerto.services.IAutenticacionService;
 
 @RestController
 @RequestMapping("/login") 
-@Api(tags = {"Login"})
+@Api(tags = {"Seguridad"})
 public class AutenticacionController {
     
     

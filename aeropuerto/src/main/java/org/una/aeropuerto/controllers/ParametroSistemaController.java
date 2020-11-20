@@ -9,10 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.una.aeropuerto.dto.ParametroSistemaDTO;
 import org.una.aeropuerto.services.IParametroSistemaService;
-
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/parametroSistema")
@@ -25,8 +25,8 @@ public class ParametroSistemaController {
 
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/")
-    @ApiOperation(value = "Obtiene una lista de todos los parametros del sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    @GetMapping("/findAll")
+    @ApiOperation(value = "Obtiene una lista de todos los Parametros del Sistema", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
     public ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity(parametroSistemaService.findAll(), HttpStatus.OK);
@@ -36,8 +36,8 @@ public class ParametroSistemaController {
     }
 
 
-    @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene un parametro del sistema por su Id", response = ParametroSistemaDTO.class, tags = "Parametros sistema")
+    @GetMapping("/findById/{id}")
+    @ApiOperation(value = "Obtiene un Parametro del Sistema por su Id", response = ParametroSistemaDTO.class, tags = "Parametros sistema")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity(parametroSistemaService.findById(id), HttpStatus.OK);
@@ -46,19 +46,19 @@ public class ParametroSistemaController {
         }
     }
 
-    @GetMapping("/nombre/{termino}")
-    @ApiOperation(value = "Obtiene una lista de parametros del sistema por medio del nombre", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public ResponseEntity<?> findByNombre(@PathVariable(value = "termino") String nombre) {
+    @GetMapping("/findByNombre/{nombre}")
+    @ApiOperation(value = "Obtiene una lista de Parametros del Sistema por medio del nombre", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    public ResponseEntity<?> findByNombreAproximateIgnoreCase(@PathVariable(value = "nombre") String nombre) {
         try {
-            return new ResponseEntity(parametroSistemaService.findByNombre(nombre), HttpStatus.OK);
+            return new ResponseEntity(parametroSistemaService.findByNombreAproximateIgnoreCase(nombre), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/estado/{termino}")
-    @ApiOperation(value = "Obtiene una lista de parametros del sistema por su estado", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "termino") boolean estado) {
+    @GetMapping("/findByEstado/{estado}")
+    @ApiOperation(value = "Obtiene una lista de Parametros del Sistema por su estado", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             return new ResponseEntity(parametroSistemaService.findByEstado(estado), HttpStatus.OK);
         } catch (Exception e) {
@@ -66,18 +66,19 @@ public class ParametroSistemaController {
         }
     }
 
-    @GetMapping("/fecha/{termino}")
-    @ApiOperation(value = "Obtiene una lista de parametros del sistema según la fecha de registro", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
-    public ResponseEntity<?> findByFechaRegistro(@PathVariable(value = "termino") Date fecha) {
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
+    @ApiOperation(value = "Obtiene una lista con los Parametros del Sistema entre las fechas de registro especificadas", response = ParametroSistemaDTO.class, responseContainer = "List", tags = "Parametros sistema")
+     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+     @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
-            return new ResponseEntity(parametroSistemaService.findByFechaRegistro(fecha), HttpStatus.OK);
+                return new ResponseEntity<>(parametroSistemaService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/")
-    @ApiOperation(value = "Permite crear un parametro del sistema", response = ParametroSistemaDTO.class, tags = "Parametros sistema")
+    @ApiOperation(value = "Permite crear un Parametro del Sistema", response = ParametroSistemaDTO.class, tags = "Parametros sistema")
     public ResponseEntity<?> create(@Valid @RequestBody ParametroSistemaDTO parametroSistemaDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -92,7 +93,7 @@ public class ParametroSistemaController {
 
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Permite modificar un parametro del sistema a partir de su Id", response = ParametroSistemaDTO.class, tags = "Parametros sistema")
+    @ApiOperation(value = "Permite modificar un Parametro del Sistema a partir de su Id", response = ParametroSistemaDTO.class, tags = "Parametros sistema")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody ParametroSistemaDTO parametroSistemaDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

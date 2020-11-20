@@ -65,7 +65,12 @@ public class PrecioServiceImplementation  implements IPrecioService{
     public Optional<List<PrecioDTO>> findByTipoServicioId(Long tipoServicioId) {
         return findList(precioRepository.findByTipoServicioId(tipoServicioId));
     }
-
+    
+    @Override
+    public Optional<List<PrecioDTO>> findByTipoServicioIdAndFechaRegistroBetween(Date fechInicio, Date fechaFinal, Long tipoServicio) {
+        return findList(precioRepository.findByTipoServicioIdAndFechaRegistroBetween(fechInicio, fechaFinal, tipoServicio));
+    }
+    
     @Override
     @Transactional
     public PrecioDTO create(PrecioDTO precioDTO) {
@@ -80,6 +85,7 @@ public class PrecioServiceImplementation  implements IPrecioService{
     public Optional<PrecioDTO> update(PrecioDTO precioDTO, Long id) {
         if (precioRepository.findById(id).isPresent()) {
             Precio precio = MapperUtils.EntityFromDto(precioDTO, Precio.class);
+            precio.setId(id);
             precio = precioRepository.save(precio);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(precio, PrecioDTO.class));
         } else {

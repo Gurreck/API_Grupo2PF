@@ -58,14 +58,14 @@ public class AreaTrabajoServiceImplementation implements IAreaTrabajoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AreaTrabajoDTO>> findByNombreArea(String area) {
-        return findList(areaTrabajoRepository.findByNombreArea(area));
+    public Optional<List<AreaTrabajoDTO>> findByNombreAreaAproximateIgnoreCase(String area) {
+        return findList(areaTrabajoRepository.findByNombreAreaContainingIgnoreCase(area));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AreaTrabajoDTO>> findByNombreResponsable(String nombreCompleto) {
-        return findList(areaTrabajoRepository.findByNombreResponsable(nombreCompleto));
+    public Optional<List<AreaTrabajoDTO>> findByNombreResponsableAproximateIgnoreCase(String nombreCompleto) {
+        return findList(areaTrabajoRepository.findByNombreResponsableContainingIgnoreCase(nombreCompleto));
     }
 
     @Override
@@ -81,6 +81,7 @@ public class AreaTrabajoServiceImplementation implements IAreaTrabajoService {
     public Optional<AreaTrabajoDTO> update(AreaTrabajoDTO areaTrabajoDTO, Long id) {
         if (areaTrabajoRepository.findById(id).isPresent()) {
             AreaTrabajo areaTrabajo = MapperUtils.EntityFromDto(areaTrabajoDTO, AreaTrabajo.class);
+            areaTrabajo.setId(id);
             areaTrabajo = areaTrabajoRepository.save(areaTrabajo);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(areaTrabajo, AreaTrabajoDTO.class));
         } else {

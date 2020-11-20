@@ -49,12 +49,6 @@ public class ServicioServiceImplementation implements IServicioService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioDTO>> findAll() {
-        return findList(servicioRepository.findAll());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Optional<ServicioDTO> findById(Long id) {
         return oneToDto(servicioRepository.findById(id));
     }
@@ -88,7 +82,25 @@ public class ServicioServiceImplementation implements IServicioService {
     public Optional<List<ServicioDTO>> findByTipoServicioId(Long id) {
         return findList(servicioRepository.findByTipoServicioId(id));
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<ServicioDTO>> findByTipoServicioIdAndAvionId(Long tipoServicio, Long avion) {
+        return findList(servicioRepository.findByTipoServicioIdAndAvionId(tipoServicio, avion));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<ServicioDTO>> findByFechaRegistroBetweenAndTipoServicioId(Date startDate, Date endDate, Long tipoServicio ) {
+        return findList(servicioRepository.findByFechaRegistroBetweenAndTipoServicioId(startDate, endDate, tipoServicio ));
+    }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<ServicioDTO> findUltimoServicioByAvionIdAndTipoServicioId(Long idAvion, Long idTipo){
+        return oneToDto(servicioRepository.findUltimoServicioByAvionIdAndTipoServicioId(idAvion, idTipo));
+    }
+     
     @Override
     @Transactional
     public ServicioDTO create(ServicioDTO servicioDTO) {
@@ -104,6 +116,7 @@ public class ServicioServiceImplementation implements IServicioService {
     public Optional<ServicioDTO> update(ServicioDTO servicioDTO, Long id) {
         if (servicioRepository.findById(id).isPresent()) {
             Servicio servicio = MapperUtils.EntityFromDto(servicioDTO, Servicio.class);
+            servicio.setId(id);
             servicio = servicioRepository.save(servicio);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(servicio, ServicioDTO.class));
         } else {

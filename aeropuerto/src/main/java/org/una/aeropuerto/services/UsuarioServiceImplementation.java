@@ -16,6 +16,7 @@ import org.una.aeropuerto.repositories.IUsuarioRepository;
 import org.una.aeropuerto.utils.MapperUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.una.aeropuerto.dto.RolDTO;
@@ -97,11 +98,6 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         return oneToDto(usuarioRepository.findByCedula(cedula));
     }
 
-   /* @Override
-    public Optional<List<Usuario>> findByEsJefe(boolean esJefe) {
-       return usuarioRepository.findByEsJefe(esJefe);
-    }*/
-
     @Override
     @Transactional(readOnly = true)
     public RolDTO findRolByCedula(String cedula) {
@@ -113,6 +109,18 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         } else {
             return null;
         }
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<UsuarioDTO>> findByUsuarioJefeId(Long id) {
+           return findList(usuarioRepository.findByUsuarioJefeId(id));
+    }
+    
+   @Override
+   @Transactional(readOnly = true)
+    public Optional<List<UsuarioDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
+       return findList(usuarioRepository.findByFechaRegistroBetween(startDate, endDate));
     }
 
     
@@ -131,11 +139,12 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         if (usuarioRepository.findById(id).isPresent()) {
             usuarioDTO = encriptarPassword(usuarioDTO);
             Usuario usuario = MapperUtils.EntityFromDto(usuarioDTO, Usuario.class);
+            usuario.setId(id);
             usuario = usuarioRepository.save(usuario);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class));
         } else {
             return null;
-        }
+        } 
     }
 
     @Override
@@ -153,6 +162,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         }
 
     }
- 
+
+
 }
 

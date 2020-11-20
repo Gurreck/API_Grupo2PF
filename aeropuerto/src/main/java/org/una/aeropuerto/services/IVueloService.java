@@ -11,17 +11,21 @@ import org.una.aeropuerto.dto.VueloDTO;
  */
 public interface IVueloService {
     
-    public Optional<List<VueloDTO>> findAll();
-
     public Optional<VueloDTO> findById(Long id);
 
-    public Optional<List<VueloDTO>> findByAeropuerto(String aeropueto);
+    public Optional<List<VueloDTO>> findByAeropuertoAproximateIgnoreCase(String aeropueto);
 
     public Optional<List<VueloDTO>> findByEstado(boolean nombreCompleto);
     
-    public Optional<List<VueloDTO>>findByFechaLlegada(Date startDate);
+    public Optional<List<VueloDTO>> findByFechaLlegadaBetween(Date startDate, Date endDate);
     
-    public Optional<List<VueloDTO>>findByFechaSalida(Date startDate);
+    public Optional<List<VueloDTO>> findByFechaSalidaBetween(Date startDate, Date endDate);
+    
+    public Optional<List<VueloDTO>> findByAvionId(Long avion);
+    
+    public Optional<VueloDTO> findUltimoVueloByAvionId(Long idAvion); 
+    
+    public Optional<List<VueloDTO>> findByAerolineaId(Long aerolineaId);
 
     public VueloDTO create(VueloDTO VueloDTO);
 

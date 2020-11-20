@@ -60,8 +60,8 @@ public class TipoServicioServiceImplementation implements ITipoServicioService{
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoServicioDTO>> findByNombre(String nombre) {
-        return findList(tipoServicioRepository.findByNombre(nombre));
+    public Optional<List<TipoServicioDTO>> findByNombreAproximateIgnoreCase(String nombre) {
+        return findList(tipoServicioRepository.findByNombreContainingIgnoreCase(nombre));
     }
     
     @Override
@@ -77,6 +77,7 @@ public class TipoServicioServiceImplementation implements ITipoServicioService{
     public Optional<TipoServicioDTO> update(TipoServicioDTO tipoServicioDTO, Long id) {
         if (tipoServicioRepository.findById(id).isPresent()) {
             TipoServicio tipoServicio = MapperUtils.EntityFromDto(tipoServicioDTO, TipoServicio.class);
+            tipoServicio.setId(id);
             tipoServicio = tipoServicioRepository.save(tipoServicio);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(tipoServicio, TipoServicioDTO.class));
         } else {

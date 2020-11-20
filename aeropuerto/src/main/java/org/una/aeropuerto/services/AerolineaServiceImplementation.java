@@ -10,7 +10,6 @@ import org.una.aeropuerto.entities.Aerolinea;
 import org.una.aeropuerto.repositories.IAerolineaRepository;
 import org.una.aeropuerto.utils.MapperUtils;
 
-
 @Service
 public class AerolineaServiceImplementation implements IAerolineaService {
 
@@ -56,14 +55,15 @@ public class AerolineaServiceImplementation implements IAerolineaService {
     }
     
     @Override
-    public Optional<List<AerolineaDTO>> findByNombreResponsable(String nombreResponsable) {
-        return findList(AerolineaRepository.findByNombreResponsable(nombreResponsable));
+    @Transactional(readOnly = true)
+    public Optional<List<AerolineaDTO>> findByNombreResponsableAproximateIgnoreCase(String nombreResponsable) {
+        return findList(AerolineaRepository.findByNombreResponsableContainingIgnoreCase(nombreResponsable));
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AerolineaDTO>> findByNombreAerolinea(String nombreAerolinea) {
-        return findList(AerolineaRepository.findByNombreAerolinea(nombreAerolinea));
+    public Optional<List<AerolineaDTO>> findByNombreAerolineaAproximateIgnoreCase(String nombreAerolinea) {
+        return findList(AerolineaRepository.findByNombreAerolineaContainingIgnoreCase(nombreAerolinea));
     }
     
     @Override
@@ -85,6 +85,7 @@ public class AerolineaServiceImplementation implements IAerolineaService {
     public Optional<AerolineaDTO> update(AerolineaDTO aerolineaDTO, Long id) {
         if (AerolineaRepository.findById(id).isPresent()) {
             Aerolinea aerolinea = MapperUtils.EntityFromDto(aerolineaDTO, Aerolinea.class);
+            aerolinea.setId(id);
             aerolinea = AerolineaRepository.save(aerolinea);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(aerolinea, AerolineaDTO.class));
         } else {

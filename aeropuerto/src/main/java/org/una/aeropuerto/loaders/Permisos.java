@@ -5,9 +5,7 @@ public enum Permisos {
     GESTOR("GES"),
     GERENTE("GER"),
     ADMINISTRADOR("ADM"),
-    AUDITOR("AUD"),
-    TORRE_CONTROL("TCO");
-
+    AUDITOR("AUD");
     
     
     private String codigo;

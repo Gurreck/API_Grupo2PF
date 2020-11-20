@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.una.aeropuerto.dto.ServicioDTO;
+import org.una.aeropuerto.entities.Servicio;
 
 
 /**
@@ -11,11 +12,8 @@ import org.una.aeropuerto.dto.ServicioDTO;
  * @author Esteban Vargas
  */
 public interface IServicioService {
-    
-    public Optional<List<ServicioDTO>> findAll();
 
     public Optional<ServicioDTO> findById(Long id);
-
 
     public Optional<List<ServicioDTO>> findByEstado(boolean estado);
     
@@ -23,9 +21,15 @@ public interface IServicioService {
     
     public Optional<List<ServicioDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
     
-    public Optional<List<ServicioDTO>>  findByAvionId(Long id);
+    public Optional<List<ServicioDTO>>  findByAvionId(Long avion);
     
-    public Optional<List<ServicioDTO>>  findByTipoServicioId(Long id);
+    public Optional<List<ServicioDTO>>  findByTipoServicioId(Long tipoServicio);
+    
+     public Optional<List<ServicioDTO>> findByFechaRegistroBetweenAndTipoServicioId(Date startDate, Date endDate, Long tipoServicio );
+    
+    public Optional<List<ServicioDTO>> findByTipoServicioIdAndAvionId(Long tipoServicio, Long avion);
+    
+    public Optional<ServicioDTO> findUltimoServicioByAvionIdAndTipoServicioId(Long idAvion, Long idTipo);
 
     public ServicioDTO create(ServicioDTO servicio);
 

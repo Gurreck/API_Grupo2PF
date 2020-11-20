@@ -1,6 +1,7 @@
 package org.una.aeropuerto.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.net.URLDecoder;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class AerolineaController {
     
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
     
-    @GetMapping("/") 
+    @GetMapping("/findAll")
     @ApiOperation(value = "Obtiene una lista de todas las Aerolineas", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     ResponseEntity<?> findAll() {
         try {
@@ -36,8 +37,7 @@ public class AerolineaController {
             return new ResponseEntity(e.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @GetMapping("/{id}") 
+    @GetMapping("/findById/{id}")
     @ApiOperation(value = "Obtiene la Aerolinea por medio del Id", response = AerolineaDTO.class, tags = "Aerolineas")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -47,29 +47,31 @@ public class AerolineaController {
         }
     }
     
-    @GetMapping("/nombreAerolinea/{termino}")
+    @GetMapping("/findByNombreAerolinea/{nombre}")
     @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del nombre", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    public ResponseEntity<?> findByNombreAerolinea(@PathVariable(value = "termino") String term) {
+    public ResponseEntity<?> findByNombreAerolineaAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
         try {
-            return new ResponseEntity(aerolineaService.findByNombreAerolinea(term), HttpStatus.OK);
+            String restUrl = URLDecoder.decode(term, "UTF-8");
+            return new ResponseEntity(aerolineaService.findByNombreAerolineaAproximateIgnoreCase(restUrl), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
-    @GetMapping("/nombreResponsable/{termino}")
+    @GetMapping("/findByNombreResponsable/{nombre}")
     @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del nombre del responsable", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "termino") String term) {
+    public ResponseEntity<?> findByNombreResponsableAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
         try {
-            return new ResponseEntity(aerolineaService.findByNombreResponsable(term), HttpStatus.OK);
+            String restUrl = URLDecoder.decode(term, "UTF-8");
+            return new ResponseEntity(aerolineaService.findByNombreResponsableAproximateIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
-    @GetMapping("/Estado/{termino}") 
+    @GetMapping("/findByEstado/{estado}")
     @ApiOperation(value = "Obtiene una lista de Aerolinea por medio del estado", response =  AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "termino") boolean estado) {
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             return new ResponseEntity(aerolineaService.findByEstado(estado), HttpStatus.OK);
         } catch (Exception e) {

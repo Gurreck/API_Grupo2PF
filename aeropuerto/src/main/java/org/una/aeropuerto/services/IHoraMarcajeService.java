@@ -12,15 +12,15 @@ import java.util.Optional;
  */
 public interface IHoraMarcajeService {
     
-    public Optional<List<HoraMarcajeDTO>> findAll();
-
     public Optional<HoraMarcajeDTO> findById(Long id);
     
-    public Optional<List<HoraMarcajeDTO>> findByHoraEntrada(Date horaEntrada);
-
-    public Optional<List<HoraMarcajeDTO>> findByHoraSalida(Date horaSalida);
-
-    public Optional<List<HoraMarcajeDTO>> findByFechaRegistro(Date fechaRegistro);
+    public Optional<List<HoraMarcajeDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
+    
+    public Optional<List<HoraMarcajeDTO>> findByFechaRegistroBetweenAndUsuarioId(Date startDate, Date endDate, Long id);
+    
+    public Optional<List<HoraMarcajeDTO>> findByUsuarioId(Long id);
+    
+    public Optional<HoraMarcajeDTO> findUltimaHoraMarcajeByUsuarioId(Long idUsuario); 
     
     public HoraMarcajeDTO create(HoraMarcajeDTO horaMarcajeDTO);
 

@@ -2,35 +2,14 @@ package org.una.aeropuerto.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import lombok.*;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 
 /**
  *
- * @author adrian
+ * @author Adrian
  */
 
 @Entity
@@ -39,7 +18,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
 public class Usuario implements Serializable {
     
     @Id
@@ -49,9 +27,12 @@ public class Usuario implements Serializable {
     @Column(length = 25, unique = true)
     private String cedula;
 
-    @Column(name = "nombre_completo", length = 100)
+    @Column(name = "nombre_completo", length = 50)
     private String nombreCompleto;
 
+    @Column(name = "telefono", length = 20)
+    private String telefono;
+    
     @Column
     private boolean estado;
 
@@ -67,13 +48,7 @@ public class Usuario implements Serializable {
     @Setter(AccessLevel.NONE)
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;
-    
-    @Column(length = 100, name = "correo")
-    private String correo;
-
-    @Column
-    private boolean esJefe;
-       
+           
     @ManyToOne 
     @JoinColumn(name="roles_id")
     private Rol rol;
@@ -81,21 +56,22 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
     private List<Transaccion> transacciones = new ArrayList<>();
     
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
     private List<HoraMarcaje> horaMarcaje= new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
-    private List<Horario> horarios= new ArrayList<>();
+    private List<Horario> horarios= new ArrayList<>();  
     
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "usuarios_areasTrabajo", 
-      joinColumns = @JoinColumn(name = "areas_trabajo_id", referencedColumnName = "id"), 
-      inverseJoinColumns = @JoinColumn(name = "usuarios_id", 
-      referencedColumnName = "id"))
-    private List<AreaTrabajo> areaTrabajo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<UsuarioAreaTrabajo> UsuariosAreasTrabajo = new ArrayList<>();
     
+    //Relacion a la misma tabla
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioJefe") 
+    private List<Usuario> usuarios = new ArrayList<>();
     
+    @ManyToOne 
+    @JoinColumn(name="usuarios_id")
+    private Usuario usuarioJefe;
     
     private static final long serialVersionUID = 1L;
 

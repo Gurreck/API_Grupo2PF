@@ -12,6 +12,7 @@ import org.una.aeropuerto.utils.MapperUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -47,31 +48,35 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
     }
 
     @Override
-    public Optional<List<HoraMarcajeDTO>> findAll() {
-       return findList(horaMarcajeRepository.findAll());
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public Optional<HoraMarcajeDTO> findById(Long id) {
         return oneToDto(horaMarcajeRepository.findById(id));
     }
-
+    
     @Override
-    public Optional<List<HoraMarcajeDTO>> findByHoraEntrada(Date horaEntrada) {
-        return  findList(horaMarcajeRepository.findByHoraEntrada(horaEntrada));
+    @Transactional(readOnly = true)
+    public Optional<List<HoraMarcajeDTO>> findByFechaRegistroBetween(Date startDate, Date endDate) {
+        return  findList(horaMarcajeRepository.findByFechaRegistroBetween(startDate, endDate));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<HoraMarcajeDTO>> findByUsuarioId(Long id) {
+        return  findList(horaMarcajeRepository.findByUsuarioId(id));
+    }
+    
+    @Override
+    public Optional<HoraMarcajeDTO> findUltimaHoraMarcajeByUsuarioId(Long idUsuario) {
+        return oneToDto(horaMarcajeRepository.findUltimaHoraMarcajeByUsuarioId(idUsuario));
     }
 
     @Override
-    public Optional<List<HoraMarcajeDTO>> findByHoraSalida(Date horaSalida) {
-        return  findList(horaMarcajeRepository.findByHoraSalida(horaSalida));
+    public Optional<List<HoraMarcajeDTO>> findByFechaRegistroBetweenAndUsuarioId(Date startDate, Date endDate, Long id) {
+        return findList(horaMarcajeRepository.findByFechaRegistroBetweenAndUsuarioId(startDate, endDate, id));
     }
-
+    
     @Override
-    public Optional<List<HoraMarcajeDTO>> findByFechaRegistro(Date fechaRegistro) {
-        return  findList(horaMarcajeRepository.findByFechaRegistro(fechaRegistro));
-    }
-
-    @Override
+    @Transactional
     public HoraMarcajeDTO create(HoraMarcajeDTO horaMarcajeDTO) {
         HoraMarcaje horaMarcaje = MapperUtils.EntityFromDto(horaMarcajeDTO, HoraMarcaje.class);
         horaMarcaje = horaMarcajeRepository.save(horaMarcaje);
@@ -79,15 +84,17 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService {
     }
 
     @Override
+    @Transactional
     public Optional<HoraMarcajeDTO> update(HoraMarcajeDTO horaMarcajeDTO, Long id) {
         if (horaMarcajeRepository.findById(id).isPresent()) {
             HoraMarcaje horaMarcaje = MapperUtils.EntityFromDto(horaMarcajeDTO, HoraMarcaje.class);
+            horaMarcaje.setId(id);
             horaMarcaje = horaMarcajeRepository.save(horaMarcaje);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(horaMarcaje, HoraMarcajeDTO.class));
         } else {
             return null;
         }
-    }
+    }     
 
-    
+
 }

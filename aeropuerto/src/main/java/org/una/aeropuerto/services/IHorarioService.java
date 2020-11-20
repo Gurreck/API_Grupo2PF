@@ -1,16 +1,14 @@
 
 package org.una.aeropuerto.services;
 
-import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.una.aeropuerto.dto.HorarioDTO;
-import org.una.aeropuerto.entities.Horario;
-import org.una.aeropuerto.entities.Rol;
 
 /**
  *
- * @author adria
+ * @author Adrian
  */
 public interface IHorarioService {
     
@@ -18,9 +16,11 @@ public interface IHorarioService {
     
     public Optional<List<HorarioDTO>> findByEstado(boolean estado);
     
-    public Optional<List<HorarioDTO>> findByDiaEntrada(String diaEntrada);
-
-    public Optional<List<HorarioDTO>> findByDiaSalida(String diaSalida);
+    public Optional<List<HorarioDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
+    
+    public Optional<List<HorarioDTO>> findByUsuarioId(Long id);
+    
+    public Optional<List<HorarioDTO>> findByEstadoAndUsuarioId(boolean estado, Long id);
     
     public HorarioDTO create(HorarioDTO horario);
 

@@ -1,26 +1,11 @@
 package org.una.aeropuerto.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import lombok.*;
+import javax.persistence.*;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
+import java.util.List;
 
 /**
  *
@@ -43,17 +28,17 @@ public class Vuelo implements Serializable {
     @Column
     private Float duracion;
     
-    @Column(name = "aeropuerto", length = 100)
+    @Column(name = "nombre_aeropuerto", length = 100)
     private String aeropuerto;
 
-    @Column(name = "fecha_salida", updatable = false)
+    @Column(name = "fecha_salida")
     @Temporal(TemporalType.TIMESTAMP) 
-    @Setter(AccessLevel.NONE)
+    @Setter(AccessLevel.PUBLIC)
     private Date fechaSalida;
 
     @Column(name = "fecha_llegada")
     @Temporal(TemporalType.TIMESTAMP) 
-    @Setter(AccessLevel.NONE)
+    @Setter(AccessLevel.PUBLIC)
     private Date fechaLlegada;
     
     @Column
@@ -66,13 +51,14 @@ public class Vuelo implements Serializable {
     @JoinColumn(name="aviones_id")
     private Avion avion;
     
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vuelo") 
+    private List<Alerta> alertas = new ArrayList<>();
+    
     private static final long serialVersionUID = 1L;
 
     @PrePersist
     public void prePersist() {
-        estado=true;
-        fechaSalida = new Date();
-        fechaLlegada = new Date();
+        estado=false;
     }
 
     @PreUpdate

@@ -46,39 +46,50 @@ public class VueloServiceImplementation implements IVueloService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<VueloDTO>> findAll() {
-        return findList(vueloRepository.findAll());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Optional<VueloDTO> findById(Long id) {
         return oneToDto(vueloRepository.findById(id));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<VueloDTO>> findByAeropuerto(String cedula) {
-        return findList(vueloRepository.findByAeropuerto(cedula));
+    public Optional<List<VueloDTO>> findByAeropuertoAproximateIgnoreCase(String cedula) {
+        return findList(vueloRepository.findByAeropuertoContainingIgnoreCase(cedula));
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<VueloDTO>> findByEstado(boolean estado) {
         return findList(vueloRepository.findByEstado(estado));
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<VueloDTO>> findByFechaLlegada(Date startDate) {
-        return findList(vueloRepository.findByFechaLlegada(startDate));
+    public Optional<List<VueloDTO>> findByFechaLlegadaBetween(Date startDate, Date endDate) {
+        return findList(vueloRepository.findByFechaLlegadaBetween(startDate, endDate));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<VueloDTO>> findByFechaSalida(Date startDate) {
-        return findList(vueloRepository.findByFechaSalida(startDate));
+    public Optional<List<VueloDTO>> findByFechaSalidaBetween(Date startDate, Date endDate) {
+        return findList(vueloRepository.findByFechaSalidaBetween(startDate, endDate));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<VueloDTO>> findByAvionId(Long avion) {
+        return findList(vueloRepository.findByAvionId(avion));
     }
 
+    @Override
+    public Optional<List<VueloDTO>> findByAerolineaId(Long aerolineaId) {
+        return findList(vueloRepository.findByAerolineaId(aerolineaId));
+    }
+ 
+    @Override
+    public Optional<VueloDTO> findUltimoVueloByAvionId(Long idAvion) {
+        return oneToDto(vueloRepository.findUltimoVueloByAvionId(idAvion));
+    }
+    
     @Override
     @Transactional
     public VueloDTO create(VueloDTO vueloDTO) {
@@ -92,6 +103,7 @@ public class VueloServiceImplementation implements IVueloService {
     public Optional<VueloDTO> update(VueloDTO vueloDTO, Long id) {
         if (vueloRepository.findById(id).isPresent()) {
             Vuelo vuelo = MapperUtils.EntityFromDto(vueloDTO, Vuelo.class);
+            vuelo.setId(id);
             vuelo= vueloRepository.save(vuelo);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(vuelo, VueloDTO.class));
 
@@ -99,6 +111,6 @@ public class VueloServiceImplementation implements IVueloService {
             return null;
         }
 
-    }
- 
+    }    
+
 }

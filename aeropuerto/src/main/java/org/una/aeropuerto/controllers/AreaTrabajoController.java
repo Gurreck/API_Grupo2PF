@@ -2,6 +2,7 @@ package org.una.aeropuerto.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.net.URLDecoder;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,8 @@ public class AreaTrabajoController {
     
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/")
-    @ApiOperation(value = "Obtiene una lista de todas las Areas de trabajo", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
+    @GetMapping("/findAll")
+    @ApiOperation(value = "Obtiene una lista de todas las Areas de Trabajo", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
     ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity(areaTrabajoService.findAll(), HttpStatus.OK);
@@ -39,8 +40,8 @@ public class AreaTrabajoController {
         }
     }
 
-    @GetMapping("/{id}")
-    @ApiOperation(value = "Obtiene el Area de trabajo por medio del Id", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
+    @GetMapping("/findById/{id}")
+    @ApiOperation(value = "Obtiene el Area de Trabajo por medio del Id", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity(areaTrabajoService.findById(id), HttpStatus.OK);
@@ -49,29 +50,31 @@ public class AreaTrabajoController {
         }
     }
 
-    @GetMapping("/area/{termino}")
-    @ApiOperation(value = "Obtiene el Area de trabajo por medio del nombre del area", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
-    public ResponseEntity<?> findByNombreArea(@PathVariable(value = "termino") String term) {
+    @GetMapping("/findByNombreArea/{nombre}")
+    @ApiOperation(value = "Obtiene el Area de Trabajo por medio del nombre del Area", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
+    public ResponseEntity<?> findByNombreAreaAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
          try {
-             return new ResponseEntity(areaTrabajoService.findByNombreArea(term), HttpStatus.OK);
+             String restUrl = URLDecoder.decode(term, "UTF-8");
+             return new ResponseEntity(areaTrabajoService.findByNombreAreaAproximateIgnoreCase(restUrl), HttpStatus.OK);
          } catch (Exception e) {
              return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
          }
     }
     
 
-    @GetMapping("/nombre/{termino}")
-    @ApiOperation(value = "Obtiene una lista con el Area de trabajo por medio del nombre del responsable", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
-    public ResponseEntity<?> findByNombreResponsable(@PathVariable(value = "termino") String term) {
+    @GetMapping("/findByNombreResponsable/{nombre}")
+    @ApiOperation(value = "Obtiene una lista con el Area de Trabajo por medio del nombre del Responsable", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas Trabajo")
+    public ResponseEntity<?> findByNombreResponsableAproximateIgnoreCase(@PathVariable(value = "nombre") String term) {
         try {
-            return new ResponseEntity(areaTrabajoService.findByNombreResponsable(term), HttpStatus.OK);
+            String restUrl = URLDecoder.decode(term, "UTF-8");
+            return new ResponseEntity(areaTrabajoService.findByNombreResponsableAproximateIgnoreCase(restUrl), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/")
-    @ApiOperation(value = "Permite crear un Area de trabajo", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
+    @ApiOperation(value = "Permite crear un Area de Trabajo", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
     public ResponseEntity<?> create(@Valid @RequestBody AreaTrabajoDTO areaTrabajoDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -85,7 +88,7 @@ public class AreaTrabajoController {
     }
 
     @PutMapping("/{id}") 
-    @ApiOperation(value = "Permite modificar un Area de trabajo a partir de su Id", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
+    @ApiOperation(value = "Permite modificar un Area de Trabajo a partir de su Id", response = AreaTrabajoDTO.class, tags = "Areas Trabajo")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody AreaTrabajoDTO areaTrabajoDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

@@ -1,4 +1,5 @@
 package org.una.aeropuerto.repositories;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,9 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
     public List<Usuario> findByNombreCompletoContainingIgnoreCase(String nombreCompleto);
     
-    public Optional<List<Usuario>> findByEsJefe(boolean esJefe);
+    public List<Usuario> findByUsuarioJefeId(Long id);
+    
+    public List<Usuario> findByFechaRegistroBetween(Date startDate, Date endDate);
+    
 }
 

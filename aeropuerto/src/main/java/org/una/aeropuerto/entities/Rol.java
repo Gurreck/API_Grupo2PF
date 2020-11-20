@@ -2,27 +2,10 @@ package org.una.aeropuerto.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import lombok.*;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  *
  * @author adrian
@@ -41,8 +24,8 @@ public class Rol implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipo", length = 100)
-    private String tipo;
+    @Column(name = "nombre", length = 50)
+    private String nombre;
 
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.DATE)

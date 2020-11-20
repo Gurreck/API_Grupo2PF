@@ -6,9 +6,12 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.una.aeropuerto.dto.AuthenticationRequest;
+import org.una.aeropuerto.dto.ParametroSistemaDTO;
+import org.una.aeropuerto.services.IParametroSistemaService;
 
 @Component
 public class JwtProvider {
@@ -16,11 +19,14 @@ public class JwtProvider {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration}")
     private int expiration;
 
+    @Autowired
+    private IParametroSistemaService parametroSistemaService;
+     
     public String generateToken(AuthenticationRequest authenticationRequest) {
-
+        ParametroSistemaDTO parametro = parametroSistemaService.findById(Long.parseLong("1")).get();
+        expiration = Integer.parseInt(parametro.getValor());
         return Jwts.builder().setSubject(authenticationRequest.getCedula())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000))

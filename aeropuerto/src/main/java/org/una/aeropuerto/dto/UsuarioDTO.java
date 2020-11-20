@@ -15,13 +15,13 @@ public class UsuarioDTO {
     private Long id; 
     private String cedula; 
     private String nombreCompleto;   
+    private String telefono;
     private boolean estado; 
     private String passwordEncriptado;
     private Date fechaRegistro; 
     private Date fechaModificacion; 
-    private String correo;
-    private boolean esJefe;
     private RolDTO rol;
+    private UsuarioDTO usuarioJefe;
      
 }
 

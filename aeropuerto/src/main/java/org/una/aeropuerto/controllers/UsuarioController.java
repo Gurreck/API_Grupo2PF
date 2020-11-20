@@ -2,6 +2,8 @@ package org.una.aeropuerto.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.net.URLDecoder;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.una.aeropuerto.dto.UsuarioDTO;
 import org.una.aeropuerto.services.IUsuarioService;
-
 import javax.validation.Valid;
 import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/usuarios") 
@@ -23,7 +25,7 @@ public class UsuarioController {
 
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
 
-    @GetMapping("/")
+    @GetMapping("/findAll")
     @ApiOperation(value = "Obtiene una lista de todos los Usuarios", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     public ResponseEntity<?> findAll() {
         try {
@@ -33,7 +35,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     @ApiOperation(value = "Obtiene un Usuario por su Id", response = UsuarioDTO.class, tags = "Usuarios")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -43,66 +45,47 @@ public class UsuarioController {
         }
     }
 
-
-    /*@PostMapping("/login")
-    @ResponseBody
-    @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = UsuarioDTO.class, tags = "Seguridad")
-    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequest authenticationRequest, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity("La información no esta bien formada o no coincide con el formato esperado", HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/findByCedula/{cedula}")
+    @ApiOperation(value = "Obtiene una lista de Usuarios por cédula aproximada", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
+    public ResponseEntity<?> findByCedulaAproximate(@PathVariable(value = "cedula") String cedula) {
         try {
-            AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-            String token = usuarioService.login(authenticationRequest);
-            if (!token.isBlank()) {
-                authenticationResponse.setJwt(token);
-                //TODO: Complete this   authenticationResponse.setUsuario(usuario);
-                //TODO: Complete this    authenticationResponse.setPermisos(permisosOtorgados);
-                return new ResponseEntity(authenticationResponse, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("Credenciales invalidos", HttpStatus.UNAUTHORIZED);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
-
-    @GetMapping("/cedula/{termino}")
-    @ApiOperation(value = "Obtiene una lista de Usuarios por cédula", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
-    public ResponseEntity<?> findByCedulaAproximate(@PathVariable(value = "termino") String term) {
-        try {
-            return new ResponseEntity(usuarioService.findByCedulaAproximate(term), HttpStatus.OK);
+            return new ResponseEntity(usuarioService.findByCedulaAproximate(cedula), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/nombre/{termino}")
+    @GetMapping("/findByNombre/{nombre}")
     @ApiOperation(value = "Obtiene una lista de Usuarios por nombre completo", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
-    public ResponseEntity<?> findByNombreCompletoAproximateIgnoreCase(@PathVariable(value = "termino") String term) {
+    public ResponseEntity<?> findByNombreCompletoAproximateIgnoreCase(@PathVariable(value = "nombre") String nombre) {
         try {
-            return new ResponseEntity(usuarioService.findByNombreCompletoAproximateIgnoreCase(term), HttpStatus.OK);
+            String restUrl = URLDecoder.decode(nombre, "UTF-8");
+            return new ResponseEntity(usuarioService.findByNombreCompletoAproximateIgnoreCase(restUrl), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-   /* @GetMapping("/jefe/")
-    @ApiOperation(value = "Obtiene una lista con los usuarios que sean jefes", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
-    public ResponseEntity<?> findByEsJefe(@PathVariable(value = "term") boolean term) {
+    
+    @GetMapping("/findByUsuarioJefeId/{id}")
+    @ApiOperation(value = "Obtiene un Usuario por medio del id de su jefe", response = UsuarioDTO.class, tags = "Usuarios")
+    public ResponseEntity<?> findByUsuarioJefeId(@PathVariable(value = "id") Long id) {
         try {
-            Optional<List<Usuario>> result = usuarioService.findByEsJefe(term);
-            if (result.isPresent()) {
-                List<UsuarioDTO> usuariosDTO = MapperUtils.DtoListFromEntityList(result.get(), UsuarioDTO.class);
-                return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(usuarioService.findByUsuarioJefeId(id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+    }
+    
+    @GetMapping("/findByFechaRegistroBetween/{fechaInicial}/{fechaFinal}")
+    @ApiOperation(value = "Obtiene una lista con los usuarios entre las fechas de registro especificadas", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
+     public ResponseEntity<?> findByFechaRegistroBetween(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+     @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        try {
+                return new ResponseEntity<>(usuarioService.findByFechaRegistroBetween(startDate, endDate), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/")
     @ApiOperation(value = "Permite crear un Usuario", response = UsuarioDTO.class, tags = "Usuarios")
