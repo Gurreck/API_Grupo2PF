@@ -14,6 +14,8 @@ public interface IAreaTrabajoAvionService {
     public Optional<AreaTrabajoAvionDTO> findByAvionId(Long id);
      
     public Optional<List<AreaTrabajoAvionDTO>> findByAreaTrabajoId(Long id);
+    
+    public Optional<List<AreaTrabajoAvionDTO>> findByFechaRegistroAndAerolineaAndZona(Date startDate, Date endDate, long idAerolinea, long idZona);
 
     public AreaTrabajoAvionDTO create(AreaTrabajoAvionDTO AreaTrabajoDTO);
 

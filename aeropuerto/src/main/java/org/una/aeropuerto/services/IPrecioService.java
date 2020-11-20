@@ -17,6 +17,8 @@ public interface IPrecioService {
     public Optional<List<PrecioDTO>> findByFechaRegistroBetween(Date startDate, Date endDate);
 
     public Optional<List<PrecioDTO>> findByTipoServicioId(Long tipoServicioId);
+    
+    public Optional<List<PrecioDTO>> findByTipoServicioIdAndFechaRegistroBetween(Date fechInicio, Date fechaFinal, Long tipoServicio);
 
     public PrecioDTO create(PrecioDTO precio);
 

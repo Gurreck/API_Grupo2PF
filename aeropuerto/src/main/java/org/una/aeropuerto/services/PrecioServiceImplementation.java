@@ -65,7 +65,12 @@ public class PrecioServiceImplementation  implements IPrecioService{
     public Optional<List<PrecioDTO>> findByTipoServicioId(Long tipoServicioId) {
         return findList(precioRepository.findByTipoServicioId(tipoServicioId));
     }
-
+    
+    @Override
+    public Optional<List<PrecioDTO>> findByTipoServicioIdAndFechaRegistroBetween(Date fechInicio, Date fechaFinal, Long tipoServicio) {
+        return findList(precioRepository.findByTipoServicioIdAndFechaRegistroBetween(fechInicio, fechaFinal, tipoServicio));
+    }
+    
     @Override
     @Transactional
     public PrecioDTO create(PrecioDTO precioDTO) {

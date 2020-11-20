@@ -70,6 +70,12 @@ public class AreaTrabajoAvionServiceImplementation  implements IAreaTrabajoAvion
     public Optional<List<AreaTrabajoAvionDTO>> findByAreaTrabajoId(Long id) {
            return findList(areaTrabajoAvionRepository.findByAreaTrabajoId(id));
     }
+    
+    
+    @Override
+    public Optional<List<AreaTrabajoAvionDTO>> findByFechaRegistroAndAerolineaAndZona(Date startDate, Date endDate, long idAerolinea, long idZona) {
+        return findList(areaTrabajoAvionRepository.findByFechaRegistroAndAerolineaAndZona(startDate, endDate, idAerolinea, idZona));
+    }
 
     @Override
     @Transactional

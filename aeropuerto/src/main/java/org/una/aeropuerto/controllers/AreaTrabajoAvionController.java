@@ -67,6 +67,17 @@ public class AreaTrabajoAvionController {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/findByFechaRegistroAndAerolineaAndZona/{fechaInicial}/{fechaFinal}/{idAerolinea}/{idZona}")
+    @ApiOperation(value = "Obtiene un Area de Trabajo entre fechas, por el aerolinea del avion y su zona", response = AreaTrabajoAvionDTO.class, responseContainer = "List", tags = "Areas Trabajo Aviones")
+    public ResponseEntity<?> findByFechaRegistroAndAerolineaAndZona(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal,@PathVariable(value = "idAerolinea") Long idAerolinea,@PathVariable(value = "idZona") Long idZona){
+        try {
+            return new ResponseEntity(areaTrabajoAvionService.findByFechaRegistroAndAerolineaAndZona(fechaInicio, fechaFinal, idAerolinea, idZona), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/")
     @ApiOperation(value = "Permite crear una Area de Trabajo con Avion", response = AreaTrabajoAvionDTO.class, tags = "Areas Trabajo Aviones")

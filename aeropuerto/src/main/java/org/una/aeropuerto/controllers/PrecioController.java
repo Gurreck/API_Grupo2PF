@@ -61,6 +61,18 @@ public class PrecioController {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/findByTipoServicioIdAndFechaRegistroBetween/{fechaInicio}/{fechaFinal}/{idTipoServicio}")
+    @ApiOperation(value = "Obtiene una lista de Precios entre fechas y por medio del id de un tipo de servicio", response = PrecioDTO.class, responseContainer = "List", tags = "Precios")
+    public ResponseEntity<?> findByTipoServicioIdAndFechaRegistroBetween(@PathVariable(value = "fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date fechaInicio,
+    @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal, @PathVariable(value = "idTipoServicio") Long idTipoServicio)  {
+        try {
+            return new ResponseEntity(precioService.findByTipoServicioIdAndFechaRegistroBetween(fechaInicio, fechaFinal, idTipoServicio), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/")
     @ApiOperation(value = "Permite crear un Precio", response = PrecioDTO.class, tags = "Precios")
